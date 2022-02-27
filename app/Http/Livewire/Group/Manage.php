@@ -15,8 +15,8 @@ class Manage extends Component
 
     protected $rules = [
         'group.name' => 'required|min:2',
-        'group.email' => 'required|min:2',
-        'group.name' => 'required|min:2',
+//        'newMember.name' => 'required|min:2',
+//        'newMember.email' => 'required|email',
     ];
 
     public function mount($key)
@@ -24,14 +24,11 @@ class Manage extends Component
         $this->group = Group::getFromUrlKey($key);
     }
 
-    public function rename()
+    public function addMember()
     {
-        $this->group->save();
-
-        session()->flash('message', 'Group renamed.');
-
-        return redirect()->to(route('group.manage', $this->group->urlKey));
+        $this->validate();
     }
+
 
     public function render()
     {

@@ -5,7 +5,7 @@
         @endif
         <input
             {{ $attributes->merge(['type' => 'text', 'name' => $name, 'id' => $name, 'placeholder' => $placeholder]) }}
-            class="block w-full border-0 px-1 py-2 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+            class="block w-full border-0 px-1 py-2 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm"
         >
     </div>
     @error($name)
