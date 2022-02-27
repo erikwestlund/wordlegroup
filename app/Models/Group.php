@@ -27,4 +27,9 @@ class Group extends Model
 
         return self::where(compact('id', 'key'))->firstOrFail();
     }
+
+    public function members()
+    {
+        return $this->hasMany(GroupMembership::class);
+    }
 }

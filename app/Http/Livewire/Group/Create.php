@@ -3,17 +3,22 @@
 namespace App\Http\Livewire\Group;
 
 use App\Models\Group;
+use App\Models\GroupMembership;
 use App\Models\User;
 use Livewire\Component;
 
 class Create extends Component
 {
-    public $groupName;
     public $email;
+
+    public $groupName;
+
+    public $userName;
 
     protected $rules = [
         'groupName' => 'required|min:2',
-        'email' => 'required|email',
+        'email'     => 'required|email',
+        'userName'  => 'required|min:2',
     ];
 
 
@@ -21,14 +26,21 @@ class Create extends Component
     {
         $this->validate();
 
-        $emailOwner = User::firstOrCreateFromEmail([
+        $user = User::firstOrCreateFromEmail([
             'email' => $this->email,
         ]);
 
         $group = Group::create([
-            'owner_id' => $emailOwner->id,
-            'name' => $this->groupName,
-            'key' => uniqid()
+            'owner_id' => $user->id,
+            'name'     => $this->groupName,
+            'key'      => uniqid(),
+        ]);
+
+        $groupMembership = GroupMembership::create([
+            'group_id' => $group->id,
+            'user_id'  => $user->id,
+            'name'     => $this->userName,
+            'key'      => uniqid(),
         ]);
 
         return redirect()->to(route('group.manage', $group->urlKey));
