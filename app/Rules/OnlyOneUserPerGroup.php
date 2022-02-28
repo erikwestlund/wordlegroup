@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use App\Models\Group;
 use App\Models\GroupMembership;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 
 class OnlyOneUserPerGroup implements Rule
@@ -17,7 +18,14 @@ class OnlyOneUserPerGroup implements Rule
 
     public function passes($attribute, $value)
     {
-        return false;
+        $user = User::where('email', $value)->first();
+
+        return $user ?
+            GroupMembership::where([
+                'group_id' => $this->group->id,
+                'user_id'  => $user->id,
+            ])->get()->isEmpty()
+            : true;
     }
 
     public function message()

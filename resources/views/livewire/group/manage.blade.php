@@ -34,14 +34,16 @@
                                         </thead>
                                         <tbody>
                                         <!-- Odd row -->
-                                        @foreach($group->members as $member)
+                                        @foreach($group->memberships as $membership)
                                             <tr class="bg-white">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $member->name }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $membership->user->name }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 
-                                                    <a
-                                                        href="#" class="text-indigo-600 hover:text-indigo-900"
-                                                    >Remove</a>
+                                                    <button
+                                                        class="text-indigo-600 hover:text-indigo-900"
+                                                        onclick="confirm('Are you sure you want to remove {{ $membership->user->name }} from your group? Their scores will be lost.') || event.stopImmediatePropagation()"
+                                                        wire:click="remove({{ $membership->id }}"
+                                                    >Remove</button>
                                                 </td>
                                             </tr>
                                         @endforeach

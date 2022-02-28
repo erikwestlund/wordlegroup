@@ -25,10 +25,10 @@ class Group extends Model
 
         [$id, $key] = explode('-', $urlKey);
 
-        return self::where(compact('id', 'key'))->firstOrFail();
+        return self::with('memberships.user')->where(compact('id', 'key'))->firstOrFail();
     }
 
-    public function members()
+    public function memberships()
     {
         return $this->hasMany(GroupMembership::class);
     }

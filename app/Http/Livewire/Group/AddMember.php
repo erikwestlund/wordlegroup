@@ -36,17 +36,16 @@ class AddMember extends Component
 
         $user = User::firstOrCreateFromEmail([
             'email' => $this->email,
+            'name' => $this->name,
         ]);
 
         $group = GroupMembership::create([
             'group_id' => $this->group->id,
             'user_id'  => $user->id,
-            'name'     => $this->name,
             'key'      => uniqid(),
         ]);
 
         session()->flash('message', 'Member added.');
-
 
         return redirect()->to(route('group.manage', $this->group->urlKey));
     }

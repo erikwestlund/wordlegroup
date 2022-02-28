@@ -28,6 +28,7 @@ class Create extends Component
 
         $user = User::firstOrCreateFromEmail([
             'email' => $this->email,
+            'name'  => $this->userName,
         ]);
 
         $group = Group::create([
@@ -39,7 +40,6 @@ class Create extends Component
         $groupMembership = GroupMembership::create([
             'group_id' => $group->id,
             'user_id'  => $user->id,
-            'name'     => $this->userName,
             'key'      => uniqid(),
         ]);
 

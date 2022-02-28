@@ -9,7 +9,11 @@ module.exports = {
       sans: ['Inter', 'sans-serif'],
       serif: ['IBM Plex Serif', 'serif'],
     },
-    extend: {},
+    extend: {
+      colors: {
+        current: 'currentColor',
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

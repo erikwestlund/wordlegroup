@@ -18,17 +18,19 @@
 
 <x-layout.navbar />
 
-<main class="py-8">
-
-    <div>
+<main>
+    <div x-data="{show: true}" x-show="show">
         @if (session()->has('message') && session('message'))
-            <div class="p-2 text-sm bg-green-700 text-white w-full max-w-2xl mx-auto mb-8 rounded">
+            <div class="w-full flex items-center justify-center p-2 text-sm bg-green-100 border-b border-green-700 text-green-800 text-center     w-full">
                 {{ session('message') }}
+                <button class="mx-2 px-1 text-semibold text-green-700 hover:text-green-900" type="button" @click="show=false"><x-icon-regular.check class="w-3 h-3" /></button>
             </div>
         @endif
     </div>
 
-    {{ $slot }}
+    <div class="py-8">
+        {{ $slot }}
+    </div>
 </main>
 
 
