@@ -5,14 +5,23 @@
 
         <div class="grid grid-cols-1 gap-y-8">
             <div class="col-span-1">
-                <h2 class="text-indigo-700 text-lg font-semibold">Add Member</h2>
+                <h2 class="text-green-700 text-lg font-semibold">Group URL</h2>
+                <div class="pt-6">
+                    <p>Your group page can be accessed at the following URL:</p>
+                    <p class="mt-4">
+                        <a class="text-green-600 hover:text-green-800 hover:underline" href="{{ $group->pageUrl }}">{{ $group->pageUrl }}</a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <h2 class="text-green-700 text-lg font-semibold">Add Member</h2>
                 <div class="pt-6">
                     <livewire:group.add-member :group="$group"/>
                 </div>
             </div>
 
             <div class="col-span-1">
-                <h2 class="text-indigo-700 text-lg font-semibold">Manage Members</h2>
+                <h2 class="text-green-700 text-lg font-semibold">Manage Members</h2>
 
                 <div class="mt-4">
                     <div class="flex flex-col">
@@ -40,7 +49,7 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 
                                                     <button
-                                                        class="text-indigo-600 hover:text-indigo-900"
+                                                        class="text-green-600 hover:text-green-900"
                                                         onclick="confirm('Are you sure you want to remove {{ $membership->user->name }} from your group? Their scores will be lost.') || event.stopImmediatePropagation()"
                                                         wire:click="remove({{ $membership->id }}"
                                                     >Remove</button>
@@ -59,7 +68,7 @@
             </div>
 
             <div class="col-span-1 pt-6">
-                <h2 class="text-indigo-700 text-lg font-semibold">Rename Group</h2>
+                <h2 class="text-green-700 text-lg font-semibold">Rename Group</h2>
 
                 <livewire:group.rename :group="$group"/>
             </div>

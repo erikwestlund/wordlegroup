@@ -18,4 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('/group/create', \App\Http\Livewire\Group\Create::class)->name('group.create');
-Route::get('/group/{key}', \App\Http\Livewire\Group\Manage::class)->name('group.manage');
+Route::get('/group/{key}', \App\Http\Livewire\Group\Page::class)->name('group.page');
+Route::get('/group/{key}/manage/{adminKey}', \App\Http\Livewire\Group\Manage::class)->name('group.manage');
+
+Route::get('/user/{key}', \App\Http\Livewire\Account::class)->name('account');
+Route::get('/user/{key}/record-score', \App\Http\Livewire\Score\Record::class)->name('score.record');

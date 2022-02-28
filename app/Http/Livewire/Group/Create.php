@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Group;
 
+use App\Events\GroupCreated;
+use App\Events\GroupMembershipCreated;
 use App\Models\Group;
 use App\Models\GroupMembership;
 use App\Models\User;
@@ -21,7 +23,6 @@ class Create extends Component
         'userName'  => 'required|min:2',
     ];
 
-
     public function store()
     {
         $this->validate();
@@ -29,13 +30,16 @@ class Create extends Component
         $user = User::firstOrCreateFromEmail([
             'email' => $this->email,
             'name'  => $this->userName,
+            'key'   => uniqid(),
         ]);
 
         $group = Group::create([
-            'owner_id' => $user->id,
+            'admin_id' => $user->id,
             'name'     => $this->groupName,
             'key'      => uniqid(),
         ]);
+
+        event(new GroupCreated($group));
 
         $groupMembership = GroupMembership::create([
             'group_id' => $group->id,
@@ -43,7 +47,9 @@ class Create extends Component
             'key'      => uniqid(),
         ]);
 
-        return redirect()->to(route('group.manage', $group->urlKey));
+        event(new GroupMembershipCreated($groupMembership));
+
+        return redirect()->to(route('group.manage', [$group->urlKey, $user->urlKey]));
     }
 
     public function render()

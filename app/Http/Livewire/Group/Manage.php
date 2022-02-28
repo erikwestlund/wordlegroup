@@ -13,9 +13,12 @@ class Manage extends Component
 
     public $group;
 
-    public function mount($key)
+    public $admin;
+
+    public function mount($key, $adminKey)
     {
         $this->group = Group::getFromUrlKey($key);
+        $this->admin = User::getFromUrlKey($adminKey);
     }
 
     public function remove($membershipId)

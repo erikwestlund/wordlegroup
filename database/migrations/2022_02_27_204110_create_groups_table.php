@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id')->constrained()->on('users');
+            $table->foreignId('admin_id')->constrained()->on('users');
             $table->string('name');
             $table->string('key')->unique();
             $table->timestamps();

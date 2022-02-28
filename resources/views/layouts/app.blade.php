@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
-    <script src="{{ mix('js/app.js') }}"></script>
 
+    @stack('scripts')
 
     @livewireStyles
 </head>
@@ -28,7 +28,7 @@
         @endif
     </div>
 
-    <div class="py-8">
+    <div class="px-6 py-8">
         {{ $slot }}
     </div>
 </main>
@@ -36,5 +36,7 @@
 
 
 @livewireScripts
+<script src="{{ mix('js/app.js') }}"></script>
+
 </body>
 </html>
