@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Rules\DateCantBeAfterToday;
 use App\Rules\DateMustBeValid;
 use App\Rules\ValidWordleBoard;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class Record extends Component
@@ -20,17 +21,26 @@ class Record extends Component
 
     public $board;
 
+    public $bricked;
+
     public function mount($key)
     {
         $this->user = User::getFromUrlKey($key);
-        $this->date = now()->format('Y-m-d');
+        $this->date = app(ParsesBoard::class)->activeBoardStartTime->format('Y-m-d');
     }
 
     public function storeScore($data)
     {
-        return Score::firstOrCreate(array_merge([
+        $date = Carbon::parse($data['date']);
+
+         Score::updateOrCreate([
             'user_id' => $this->user->id,
-        ], $data));
+            'date'    => $date->format('Y-m-d'),
+        ], [
+            'score'        => $data['score'],
+            'board_number' => $data['boardNumber'],
+            'board'        => $data['board'] ?? null,
+        ]);
     }
 
     public function recordScoreFromBoard()
@@ -42,12 +52,17 @@ class Record extends Component
         $data = app(ParsesBoard::class)->parse($this->board);
 
         $this->storeScore([
-            'score'        => $data['score'],
-            'board_number' => $data['boardNumber'],
-            'date'         => $data['date'],
-            'board'        => $this->board,
+            'score'       => $data['scoreNumber'],
+            'boardNumber' => $data['boardNumber'],
+            'date'        => $data['date'],
+            'board'       => $this->board,
         ]);
 
+        return $this->flashSuccessAndShowUserPage();
+    }
+
+    public function flashSuccessAndShowUserPage()
+    {
         session()->flash('message', 'Score recorded.');
 
         return redirect()->to(route('account', $this->user->urlKey));
@@ -57,8 +72,16 @@ class Record extends Component
     {
         $this->validate([
             'date'  => ['required', 'date', new DateMustBeValid()],
-            'score' => ['required'],
+            'score' => ['required_without:bricked'],
         ]);
+
+        $this->storeScore([
+            'score'       => $this->bricked ? 7 : $this->score,
+            'boardNumber' => app(ParsesBoard::class)->getBoardNumberFromDate($this->date),
+            'date'        => $this->date,
+        ]);
+
+        return $this->flashSuccessAndShowUserPage();
     }
 
     public function render()

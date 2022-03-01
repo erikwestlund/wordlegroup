@@ -6,33 +6,54 @@ use Carbon\Carbon;
 
 class ParsesBoard
 {
-    public $firstBoard;
+    public $firstBoardStartTime;
 
-    public $todaysBoard;
+    public $firstBoardEndTime;
+
+    public $activeBoardStartTime;
+    public $activeBoardEndTime;
+
+    public $activeBoardNumber;
+
 
     public function __construct()
     {
-        $this->firstBoard = Carbon::parse('2021-06-19');
-        $this->todaysBoard = $this->firstBoard->diffInDays(now());
+        $this->firstBoardStartTime = Carbon::parse('2021-06-19 06:00:00 GMT');
+        $this->firstBoardEndTime = $this->firstBoardStartTime->copy()->addDay()->subMicrosecond();
+
+        $this->activeBoardStartTime = now() <= Carbon::parse('Today 06:00:00 GMT')
+            ? Carbon::parse('Yesterday 06:00:00 GMT')
+            : Carbon::parse('Today 06:00:00 GMT');
+        $this->activeBoardEndTime = $this->activeBoardStartTime->copy()->addDay()->subMicrosecond();
+
+        $this->activeBoardNumber = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
     }
 
     public function parse($board)
     {
         $score = $this->getScoreFromBoard($board);
+
+        // Store fails as 7s
+        if($score) {
+            $scoreNumber = strtolower($score) === 'x' ? 7 : (int) $score;
+        } else {
+            $scoreNumber = null;
+        }
+
         $boardNumber = $this->getBoardNumberFromBoard($board);
         $date = $this->getDateFromBoardNumber($boardNumber);
 
         $valid = $score !== null && $boardNumber !== null && $date !== null;
 
-        return compact('score', 'boardNumber', 'date', 'valid');
+        return compact('score', 'scoreNumber', 'boardNumber', 'date', 'valid');
     }
 
     public function getScoreFromBoard($board)
     {
         // First, just check for a score out of 6.
-        preg_match_all('/(\d)\/6/', $board, $matches);
+        preg_match_all('/(\d|x|X)\/6/', $board, $matches);
 
-        return in_array($matches[1][0] ?? null, [1, 2, 4, 5, 6, 'X', 'x'])
+        return in_array($matches[1][0] ?? null, [1, 2, 3, 4, 5, 6, 'X', 'x'])
             ? $matches[1][0]
             : null;
     }
@@ -40,48 +61,41 @@ class ParsesBoard
     public function getBoardNumberFromBoard($board)
     {
         // First, just check for a score out of 6.
-        preg_match_all('/(\d+)\s(\d)\/6/', $board, $matches);
+        preg_match_all('/(\d+)\s(\d|x|X)\/6/', $board, $matches);
 
         $boardNumber = is_numeric($matches[1][0] ?? null)
             ? $matches[1][0]
             : null;
 
-        if(! $boardNumber) {
-            return null;
-        }
-
-        return $boardNumber > 0 && $boardNumber <= $this->todaysBoard
+        return $this->validateBoardNumber($boardNumber)
             ? $boardNumber
             : null;
     }
 
+    public function validateBoardNumber($boardNumber)
+    {
+        return $boardNumber > 0 && $boardNumber <= $this->activeBoardNumber;
+    }
+
     public function getBoardNumberFromDate($date)
     {
-        $date = Carbon::parse($date);
+        $day = Carbon::parse($date)->format('Y-m-d');
+        $date = Carbon::parse($day . ' 06:00:00 GMT');
 
-        if ($date > now()->addDay()->endOfDay()) {
-            return null;
-        }
+        $boardNumber = $this->firstBoardStartTime->copy()->diffInDays($date);
 
-        $boardNumber = $this->firstBoard->diffInDays($date);
-
-        return $boardNumber > 0 && $boardNumber <= $this->todaysBoard
+        return $this->validateBoardNumber($boardNumber)
             ? $boardNumber
             : null;
     }
 
     public function getDateFromBoardNumber($boardNumber)
     {
-        $date = $this->firstBoard->addDays($boardNumber);
+        return $this->firstBoardStartTime->copy()->addDays($boardNumber);
+    }
 
-        if ($date > now()->endOfDay()) {
-            return null;
-        }
-
-        if ($date < $this->firstBoard->startOfDay()) {
-            return null;
-        }
-
-        return $date;
+    public function validateWordleDate($date)
+    {
+        return $date > $this->firstBoardStartTime && $date <= $this->activeBoardEndTime;
     }
 }

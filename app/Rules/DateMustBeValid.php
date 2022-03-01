@@ -12,21 +12,21 @@ class DateMustBeValid implements Rule
 
     public function passes($attribute, $value)
     {
-        $date = Carbon::parse($value);
+        $day = Carbon::parse($value)->format('Y-m-d');
+
+        $date = Carbon::parse($day . ' 06:00:00 GMT');
 
         if(! $date) {
             $this->message = 'Enter a valid date.';
             return false;
         }
 
-        if($date->startOfDay() > now()->addDay()->endOfDay()) {
+        if($date > app(ParsesBoard::class)->activeBoardEndTime) {
             $this->message = 'No Wordle exists yet for this date.';
             return false;
         }
 
-        $date = app(ParsesBoard::class)->getBoardNumberFromDate($value);
-
-        if(! $date) {
+        if($date < app(ParsesBoard::class)->firstBoardStartTime) {
             $this->message = 'Wordle did not exist yet.';
             return false;
         }

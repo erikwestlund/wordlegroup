@@ -18,7 +18,7 @@ class ValidWordleBoard implements Rule
         $board = app(ParsesBoard::class)->parse($value);
 
         if($board['score'] === null) {
-            $this->message = 'Your board does not have a valid score';
+            $this->message = 'Your board does not have a valid score.';
             return false;
         }
 

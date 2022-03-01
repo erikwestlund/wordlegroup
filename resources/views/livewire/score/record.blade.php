@@ -70,6 +70,7 @@
                                         <input
                                             id="comments" aria-describedby="comments-description" name="comments"
                                             type="checkbox"
+                                            wire:model="bricked"
                                             class="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded"
                                         >
                                     </div>
