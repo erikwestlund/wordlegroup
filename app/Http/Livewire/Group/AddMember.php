@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Group;
 use App\Models\Group;
 use App\Models\GroupMembership;
 use App\Models\User;
-use App\Rules\OnlyOneUserPerGroup;
+use App\Rules\UserCanOnlyJoinGroupOnce;
 use Livewire\Component;
 
 class AddMember extends Component
@@ -21,7 +21,7 @@ class AddMember extends Component
     {
         return [
             'name'  => 'required|min:2',
-            'email' => ['required', 'email', new OnlyOneUserPerGroup($this->group)],
+            'email' => ['required', 'email', new UserCanOnlyJoinGroupOnce($this->group)],
         ];
     }
 

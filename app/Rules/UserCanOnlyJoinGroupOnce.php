@@ -7,7 +7,7 @@ use App\Models\GroupMembership;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 
-class OnlyOneUserPerGroup implements Rule
+class UserCanOnlyJoinGroupOnce implements Rule
 {
     public $group;
 
