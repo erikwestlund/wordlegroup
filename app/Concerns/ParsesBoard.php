@@ -6,15 +6,15 @@ use Carbon\Carbon;
 
 class ParsesBoard
 {
-    public $firstBoardStartTime;
-
-    public $firstBoardEndTime;
-
-    public $activeBoardStartTime;
     public $activeBoardEndTime;
 
     public $activeBoardNumber;
 
+    public $activeBoardStartTime;
+
+    public $firstBoardEndTime;
+
+    public $firstBoardStartTime;
 
     public function __construct()
     {
@@ -29,13 +29,25 @@ class ParsesBoard
         $this->activeBoardNumber = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
     }
 
+    public function getBoardNumberFromDate($date)
+    {
+        $day = Carbon::parse($date)->format('Y-m-d');
+        $date = Carbon::parse($day . ' 06:00:00 GMT');
+
+        $boardNumber = $this->firstBoardStartTime->copy()->diffInDays($date);
+
+        return $this->validateBoardNumber($boardNumber)
+            ? $boardNumber
+            : null;
+    }
+
     public function parse($board)
     {
         $score = $this->getScoreFromBoard($board);
 
         // Store fails as 7s
-        if($score) {
-            $scoreNumber = strtolower($score) === 'x' ? 7 : (int) $score;
+        if ($score) {
+            $scoreNumber = strtolower($score) === 'x' ? 7 : (int)$score;
         } else {
             $scoreNumber = null;
         }
@@ -72,26 +84,14 @@ class ParsesBoard
             : null;
     }
 
-    public function validateBoardNumber($boardNumber)
-    {
-        return $boardNumber > 0 && $boardNumber <= $this->activeBoardNumber;
-    }
-
-    public function getBoardNumberFromDate($date)
-    {
-        $day = Carbon::parse($date)->format('Y-m-d');
-        $date = Carbon::parse($day . ' 06:00:00 GMT');
-
-        $boardNumber = $this->firstBoardStartTime->copy()->diffInDays($date);
-
-        return $this->validateBoardNumber($boardNumber)
-            ? $boardNumber
-            : null;
-    }
-
     public function getDateFromBoardNumber($boardNumber)
     {
         return $this->firstBoardStartTime->copy()->addDays($boardNumber);
+    }
+
+    public function validateBoardNumber($boardNumber)
+    {
+        return $boardNumber > 0 && $boardNumber <= $this->activeBoardNumber;
     }
 
     public function validateWordleDate($date)
