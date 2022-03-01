@@ -62,7 +62,6 @@ class ParsesBoard
 
     public function getScoreFromBoard($board)
     {
-        // First, just check for a score out of 6.
         preg_match_all('/(\d|x|X)\/6/', $board, $matches);
 
         return in_array($matches[1][0] ?? null, [1, 2, 3, 4, 5, 6, 'X', 'x'])
@@ -72,7 +71,6 @@ class ParsesBoard
 
     public function getBoardNumberFromBoard($board)
     {
-        // First, just check for a score out of 6.
         preg_match_all('/(\d+)\s(\d|x|X)\/6/', $board, $matches);
 
         $boardNumber = is_numeric($matches[1][0] ?? null)
