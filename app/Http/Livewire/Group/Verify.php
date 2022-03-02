@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Group;
 
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use function Symfony\Component\Translation\t;
 
@@ -23,12 +24,14 @@ class Verify extends Component
 
     public function verify()
     {
-        if($this->token === $this->group->token) {
+        if ($this->token === $this->group->token) {
             $this->group->verify();
 
-            if(! $this->group->admin->verified()) {
+            if (!$this->group->admin->verified()) {
                 $this->group->admin->verifyEmail();
             }
+
+            Auth::loginUsingId($this->group->admin->id);
 
             session()->flash('message', 'Group verified.');
 
