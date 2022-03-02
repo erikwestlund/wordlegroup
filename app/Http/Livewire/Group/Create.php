@@ -22,24 +22,22 @@ class Create extends Component
     public $userName;
 
 
-
     protected function getRules()
     {
-        return [
-            'groupName' => 'required',
-            'email'     => [
-                Rule::requiredIf(!Auth::check()),
-                'email',
-                'unique:users'
-            ],
-            'userName'  => Rule::requiredIf(!Auth::check()),
-        ];
+        $rules = ['groupName' => 'required',];
+
+        if (!Auth::check()) {
+            $rules['email'] = ['required', 'email', 'unique:users',];
+            $rules['userName'] = 'required';
+        }
+
+        return $rules;
     }
 
     public function getMessages()
     {
         return [
-            'email.unique' => 'This email has been taken. <a class="underline hover:text-red-800 font-semibold" href="' . route('login') . '">Log in to proceed.</a>'
+            'email.unique' => 'This email has been taken. <a class="underline hover:text-red-800 font-semibold" href="' . route('login') . '">Log in to proceed.</a>',
         ];
     }
 
@@ -68,8 +66,8 @@ class Create extends Component
         }
 
         $groupMembership = GroupMembership::create([
-            'group_id'    => $group->id,
-            'user_id'     => $user->id,
+            'group_id' => $group->id,
+            'user_id'  => $user->id,
         ]);
 
         return Auth::check()

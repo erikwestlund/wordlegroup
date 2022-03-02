@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Concerns\Tokens;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Mail\UserVerification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Prunable;
 
@@ -37,6 +38,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return route('account', $this);
     }
+
+    public function getVerifyUrlAttribute()
+    {
+        return route('account.verify', $this) . '?token=' . $this->auth_token;
+    }
+
 
     public function verified()
     {
@@ -79,6 +86,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function validateAuthToken($authToken)
     {
         return $this->tokenNotExpired() && $this->auth_token === $authToken;
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->generateNewAuthToken();
+
+        Mail::to($this->email)
+            ->send(new UserVerification($this));
     }
 
     public function resetAuthToken()

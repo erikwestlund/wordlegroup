@@ -14,10 +14,6 @@ class SendVerificationEmail extends Component
 
     public $user;
 
-    protected $rules = [
-        'email' => ['required' ,'email']
-    ];
-
     public function mount(User $user)
     {
         $this->user = $user;
@@ -25,13 +21,11 @@ class SendVerificationEmail extends Component
 
     public function send()
     {
-        $this->validate();
-
         $this->user->sendEmailVerificationNotification();
 
         session()->flash('message', 'Verification request email sent.');
 
-        return redirect()->to(route('user.verify-email-notification', $this->user));
+        return redirect()->to(route('account.verify-email-notification', $this->user));
     }
 
     public function render()

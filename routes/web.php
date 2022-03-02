@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group(function(){
 Route::middleware(['guest'])->group(function(){
     Route::get('/login', \App\Http\Livewire\Account\Login::class)->name('login');
     Route::get('/register', \App\Http\Livewire\Account\Register::class)->name('register');
+    Route::get('/account/{user}/verify-email', \App\Http\Livewire\Account\VerifyEmailNotification::class)->name('account.verify-email-notification');
+    Route::get('/account/{user}/verify', \App\Http\Livewire\Account\Verify::class)->name('account.verify');
+
 });
 
 Route::get('/u/{user}', \App\Http\Livewire\Account\Home::class)->name('account.public-view');

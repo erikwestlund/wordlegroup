@@ -42,6 +42,8 @@ class Register extends Component
         ]);
 
         event(new Registered($user));
+
+        return redirect()->to(route('account.verify-email-notification', $user));
     }
 
     public function render()

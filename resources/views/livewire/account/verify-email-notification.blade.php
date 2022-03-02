@@ -1,4 +1,4 @@
-<x-layout.page-container heading="Check Your Email" title="">
+<x-layout.page-container heading="Check Your Email" title="Verify Your Email With Wordle Group">
 
     <div class="rounded border-green-800 text-green-800 bg-green-50 border p-4 text-sm">
         <p>We have sent you a link to verify your email address.</p>

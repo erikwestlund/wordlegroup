@@ -29,6 +29,8 @@ class Verify extends Component
 
             if (!$this->group->admin->verified()) {
                 $this->group->admin->verifyEmail();
+
+                $this->group->admin->resetAuthToken();
             }
 
             Auth::loginUsingId($this->group->admin->id, true);
@@ -38,7 +40,6 @@ class Verify extends Component
             return redirect()->to(route('group.home', $this->group));
         }
     }
-
 
     public function render()
     {

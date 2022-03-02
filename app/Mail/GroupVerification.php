@@ -12,8 +12,6 @@ class GroupVerification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    use Queueable, SerializesModels;
-
     public $group;
 
     public function __construct(Group $group)
