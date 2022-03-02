@@ -16,6 +16,8 @@ class WordleBoard
 
     public $firstBoardStartTime;
 
+    public $hardMode;
+
     public function __construct()
     {
         $this->firstBoardStartTime = Carbon::parse('2021-06-19 06:00:00 GMT');
@@ -54,10 +56,11 @@ class WordleBoard
 
         $boardNumber = $this->getBoardNumberFromBoard($board);
         $date = $this->getDateFromBoardNumber($boardNumber);
+        $hardMode = $this->getHardModeFromBoard($board);
 
         $valid = $score !== null && $boardNumber !== null && $date !== null;
 
-        return compact('score', 'scoreNumber', 'boardNumber', 'date', 'valid');
+        return compact('score', 'scoreNumber', 'boardNumber', 'date', 'hardMode', 'valid');
     }
 
     public function getScoreFromBoard($board)
@@ -67,6 +70,15 @@ class WordleBoard
         return in_array($matches[1][0] ?? null, [1, 2, 3, 4, 5, 6, 'X', 'x'])
             ? $matches[1][0]
             : null;
+    }
+
+    public function getHardModeFromBoard($board)
+    {
+        preg_match_all('/(\d|x|X)\/6(\*)/', $board, $matches);
+
+        $hardMode = $matches[2][0] ?? null;
+
+        return $hardMode === '*';
     }
 
     public function getBoardNumberFromBoard($board)

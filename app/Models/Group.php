@@ -35,6 +35,16 @@ class Group extends Model
         return $this->hasMany(GroupMembership::class, 'group_id');
     }
 
+    public function verified()
+    {
+        return (bool) $this->verified_at;
+    }
+
+    public function getAdminUrlAttribute()
+    {
+        return route('group.manage', $this);
+    }
+
     public function prunable()
     {
         return static::where('created_at', '<=', now()->subMinutes(config('settings.unverified_group_expires_minutes')))

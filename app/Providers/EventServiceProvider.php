@@ -9,6 +9,8 @@ use App\Listeners\SendGroupCreationEmail;
 use App\Listeners\SendGroupMembershipCreationEmail;
 use App\Listeners\SendUnverifiedGroupCreationEmail;
 use App\Listeners\SendUserVerificationEmail;
+use App\Models\Score;
+use App\Observers\ScoreObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -43,7 +45,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Score::observe(ScoreObserver::class);
     }
 
     /**

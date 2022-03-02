@@ -21,7 +21,6 @@ class Create extends Component
 
     public $userName;
 
-
     protected function getRules()
     {
         $rules = ['groupName' => 'required',];
@@ -44,6 +43,7 @@ class Create extends Component
     public function store()
     {
         $this->validate();
+
 
         $user = Auth::check()
             ? Auth::user()
@@ -71,12 +71,13 @@ class Create extends Component
         ]);
 
         return Auth::check()
-            ? redirect()->to(route('group.home', $group))
+            ? redirect()->to(route('group.manage', $group))
             : redirect()->to(route('group.verify-email-notification', $group));
     }
 
     public function render()
     {
+
         return view('livewire.group.create');
     }
 }

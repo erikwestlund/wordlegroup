@@ -5,42 +5,33 @@ namespace App\Http\Livewire\Score;
 use App\Concerns\WordleBoard;
 use App\Models\Score;
 use App\Models\User;
-use App\Rules\DateCantBeAfterToday;
 use App\Rules\DateMustBeValid;
 use App\Rules\ValidWordleBoard;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class Record extends Component
+class RecordForm extends Component
 {
-    public $user;
-
-    public $date;
-
-    public $score;
-
     public $board;
 
     public $bricked;
 
-    public function mount($key)
+    public $date;
+
+    public $hardMode;
+
+    public $recordingForSelf;
+
+    public $score;
+
+    public $user;
+
+    public function mount(User $user)
     {
-        $this->user = User::getFromUrlKey($key);
+        $this->user = $user;
+        $this->recordingForSelf = $this->user->id === Auth::user()->id;
         $this->date = app(WordleBoard::class)->activeBoardStartTime->format('Y-m-d');
-    }
-
-    public function storeScore($data)
-    {
-        $date = Carbon::parse($data['date']);
-
-         Score::updateOrCreate([
-            'user_id' => $this->user->id,
-            'date'    => $date->format('Y-m-d'),
-        ], [
-            'score'        => $data['score'],
-            'board_number' => $data['boardNumber'],
-            'board'        => $data['board'] ?? null,
-        ]);
     }
 
     public function recordScoreFromBoard()
@@ -56,16 +47,26 @@ class Record extends Component
             'boardNumber' => $data['boardNumber'],
             'date'        => $data['date'],
             'board'       => $this->board,
+            'hardMode'    => $data['hardMode'] ?? null,
         ]);
-
-        return $this->flashSuccessAndShowUserPage();
     }
 
-    public function flashSuccessAndShowUserPage()
+    public function storeScore($data)
     {
-        session()->flash('message', 'Score recorded.');
+        $date = Carbon::parse($data['date']);
 
-        return redirect()->to(route('account', $this->user->urlKey));
+        Score::updateOrCreate([
+            'user_id'           => $this->user->id,
+            'recording_user_id' => $this->user->id,
+            'date'              => $date->format('Y-m-d'),
+        ], [
+            'score'        => $data['score'],
+            'board_number' => $data['boardNumber'],
+            'board'        => $data['board'] ?? null,
+            'hard_mode'    => $data['hardMode'] ?? null,
+        ]);
+
+        $this->emitUp('scoreRecorded');
     }
 
     public function recordScoreManually()
@@ -81,11 +82,11 @@ class Record extends Component
             'date'        => $this->date,
         ]);
 
-        return $this->flashSuccessAndShowUserPage();
+        $this->emitUp('scoreRecorded');
     }
 
     public function render()
     {
-        return view('livewire.score.record');
+        return view('livewire.score.record-form');
     }
 }
