@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('group_memberships', function (Blueprint $table) {
+        Schema::create('group_membership_invitations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('group_id')->constrained()->on('groups');
             $table->foreignId('user_id')->constrained()->on('users');
+            $table->string('email')->nullable();
+            $table->string('token', 100)->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_memberships');
+        Schema::dropIfExists('group_membership_invitations');
     }
 };

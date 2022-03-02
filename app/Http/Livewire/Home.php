@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Livewire\Account;
+namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Home extends Component
 {
-    public $user;
-
     public function mount()
     {
-        $this->user = Auth::user();
+        if(Auth::check()) {
+            return redirect()->to(route('account.home'));
+        }
     }
 
     public function render()
     {
-        return view('livewire.account.home');
+        return view('livewire.home');
     }
 }

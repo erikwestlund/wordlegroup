@@ -9,3 +9,7 @@ html { font-family: 'Inter', sans-serif; }
 @supports (font-variation-settings: normal) {
     html { font-family: 'Inter var', sans-serif; }
 }
+
+.link {
+    @apply hover:underline text-gray-600
+}

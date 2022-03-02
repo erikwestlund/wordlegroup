@@ -1,5 +1,5 @@
 <div>
-    <x-layout.centered-header>{{ $group->name }}</x-layout.centered-header>
+    <x-layout.heading>{{ $group->name }}</x-layout.heading>
 
     <div class="mx-auto w-full max-w-lg mt-8">
 

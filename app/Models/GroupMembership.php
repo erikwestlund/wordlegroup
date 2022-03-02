@@ -9,7 +9,11 @@ class GroupMembership extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
+
+    protected $dates = ['verified_at', 'token_generated_at'];
+
+    protected $hidden = ['token', 'token_generated_at'];
 
     public function user()
     {

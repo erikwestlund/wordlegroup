@@ -31,7 +31,7 @@ class Verify extends Component
                 $this->group->admin->verifyEmail();
             }
 
-            Auth::loginUsingId($this->group->admin->id);
+            Auth::loginUsingId($this->group->admin->id, true);
 
             session()->flash('message', 'Group verified.');
 

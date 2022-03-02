@@ -36,6 +36,13 @@ class Create extends Component
         ];
     }
 
+    public function getMessages()
+    {
+        return [
+            'email.unique' => 'This email has been taken. <a class="underline hover:text-red-800 font-semibold" href="' . route('login') . '">Log in to proceed.</a>'
+        ];
+    }
+
     public function store()
     {
         $this->validate();
@@ -63,7 +70,6 @@ class Create extends Component
         $groupMembership = GroupMembership::create([
             'group_id'    => $group->id,
             'user_id'     => $user->id,
-            'verified_at' => Auth::check() ? now() : null,
         ]);
 
         return Auth::check()

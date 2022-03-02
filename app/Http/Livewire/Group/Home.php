@@ -18,6 +18,6 @@ class Home extends Component
 
     public function render()
     {
-        return view('livewire.group.page');
+        return view('livewire.group.home');
     }
 }

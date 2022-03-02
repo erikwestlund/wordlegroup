@@ -1,5 +1,5 @@
 <div>
-    <x-layout.centered-header>Record Score</x-layout.centered-header>
+    <x-layout.heading>Record Score</x-layout.heading>
 
     <div class="mx-auto w-full max-w-lg mt-8">
 

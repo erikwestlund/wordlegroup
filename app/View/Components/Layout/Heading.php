@@ -4,17 +4,20 @@ namespace App\View\Components\Layout;
 
 use Illuminate\View\Component;
 
-class CenteredHeader extends Component
+class Heading extends Component
 {
     public $textColor;
 
-    public function __construct($textColor = null)
+    public $wide;
+
+    public function __construct($textColor = null, $wide = false)
     {
         $this->textColor = $textColor;
+        $this->wide = $wide;
     }
 
     public function render()
     {
-        return view('components.layout.centered-header');
+        return view('components.layout.heading');
     }
 }

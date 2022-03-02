@@ -1,5 +1,7 @@
 module.exports = {
   content: [
+    "./app/View/Components/**/*.php",
+    "./app/Http/Livewire/**/*.php",
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
