@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Events\GroupCreated;
 use App\Events\GroupMembershipCreated;
+use App\Events\UnverifiedGroupCreated;
 use App\Listeners\SendGroupCreationEmail;
 use App\Listeners\SendGroupMembershipCreationEmail;
+use App\Listeners\SendUnverifiedGroupCreationEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        UnverifiedGroupCreated::class => [
+            SendUnverifiedGroupCreationEmail::class
         ],
         GroupCreated::class => [
             SendGroupCreationEmail::class

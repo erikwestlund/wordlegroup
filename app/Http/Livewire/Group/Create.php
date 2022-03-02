@@ -2,11 +2,15 @@
 
 namespace App\Http\Livewire\Group;
 
+use App\Concerns\Tokens;
 use App\Events\GroupCreated;
 use App\Events\GroupMembershipCreated;
+use App\Events\UnverifiedGroupCreated;
 use App\Models\Group;
 use App\Models\GroupMembership;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Create extends Component
@@ -17,39 +21,54 @@ class Create extends Component
 
     public $userName;
 
-    protected $rules = [
-        'groupName' => 'required|min:2',
-        'email'     => 'required|email',
-        'userName'  => 'required|min:2',
-    ];
+
+
+    protected function getRules()
+    {
+        return [
+            'groupName' => 'required',
+            'email'     => [
+                Rule::requiredIf(!Auth::check()),
+                'email',
+                'unique:users'
+            ],
+            'userName'  => Rule::requiredIf(!Auth::check()),
+        ];
+    }
 
     public function store()
     {
         $this->validate();
 
-        $user = User::firstOrCreateFromEmail([
-            'email' => $this->email,
-            'name'  => $this->userName,
-            'key'   => uniqid(),
-        ]);
+        $user = Auth::check()
+            ? Auth::user()
+            : User::firstOrCreate([
+                'email' => $this->email,
+                'name'  => $this->userName,
+            ]);
 
         $group = Group::create([
-            'admin_id' => $user->id,
-            'name'     => $this->groupName,
-            'key'      => uniqid(),
+            'admin_user_id' => $user->id,
+            'name'          => $this->groupName,
+            'verified_at'   => Auth::check() ? now() : null,
+            'token'         => Auth::check() ? null : app(Tokens::class)->generate(),
         ]);
 
-        event(new GroupCreated($group));
+        if (Auth::check()) {
+            event(new GroupCreated($group));
+        } else {
+            event(new UnverifiedGroupCreated($group));
+        }
 
         $groupMembership = GroupMembership::create([
-            'group_id' => $group->id,
-            'user_id'  => $user->id,
-            'key'      => uniqid(),
+            'group_id'    => $group->id,
+            'user_id'     => $user->id,
+            'verified_at' => Auth::check() ? now() : null,
         ]);
 
-        event(new GroupMembershipCreated($groupMembership));
-
-        return redirect()->to(route('group.manage', [$group->urlKey, $user->urlKey]));
+        return Auth::check()
+            ? redirect()->to(route('group.home', $group))
+            : redirect()->to(route('group.verify-email-notification', $group));
     }
 
     public function render()

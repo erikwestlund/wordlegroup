@@ -4,7 +4,7 @@ namespace App\Concerns;
 
 use Carbon\Carbon;
 
-class ParsesBoard
+class WordleBoard
 {
     public $activeBoardEndTime;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Score;
 
-use App\Concerns\ParsesBoard;
+use App\Concerns\WordleBoard;
 use App\Models\Score;
 use App\Models\User;
 use App\Rules\DateCantBeAfterToday;
@@ -26,7 +26,7 @@ class Record extends Component
     public function mount($key)
     {
         $this->user = User::getFromUrlKey($key);
-        $this->date = app(ParsesBoard::class)->activeBoardStartTime->format('Y-m-d');
+        $this->date = app(WordleBoard::class)->activeBoardStartTime->format('Y-m-d');
     }
 
     public function storeScore($data)
@@ -49,7 +49,7 @@ class Record extends Component
             'board' => ['required', new ValidWordleBoard()],
         ]);
 
-        $data = app(ParsesBoard::class)->parse($this->board);
+        $data = app(WordleBoard::class)->parse($this->board);
 
         $this->storeScore([
             'score'       => $data['scoreNumber'],
@@ -77,7 +77,7 @@ class Record extends Component
 
         $this->storeScore([
             'score'       => $this->bricked ? 7 : $this->score,
-            'boardNumber' => app(ParsesBoard::class)->getBoardNumberFromDate($this->date),
+            'boardNumber' => app(WordleBoard::class)->getBoardNumberFromDate($this->date),
             'date'        => $this->date,
         ]);
 

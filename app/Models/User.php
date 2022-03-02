@@ -31,7 +31,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'key'
+        'key',
+        'email_verified_at'
     ];
 
     /**
@@ -42,45 +43,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'auth_token'
     ];
-
-    public static function firstOrCreateFromEmail($data)
-    {
-        $record = self::firstOrCreate($data);
-
-        if ($record->password === null) {
-            $record->update([
-                'password' => bcrypt(uniqid('', false)),
-            ]);
-        }
-
-        return $record;
-    }
-
-    public static function getFromUrlKey($urlKey)
-    {
-        if (!Str::contains($urlKey, '-')) {
-            abort(404);
-        }
-
-        [$id, $key] = explode('-', $urlKey);
-
-        return self::with('memberships')->where(compact('id', 'key'))->firstOrFail();
-    }
 
     public function getAccountUrlAttribute()
     {
-        return route('account', $this->urlKey);
+        return route('account', $this);
     }
 
-    public function getRecordScoreUrlAttribute()
+    public function verified()
     {
-        return route('score.record', $this->urlKey);
+        return $this->email_verified_at !== null;
     }
 
-    public function getUrlKeyAttribute()
+    public function verifyEmail()
     {
-        return $this->id . '-' . $this->key;
+        $this->update(['email_verified_at' => now()]);
     }
 
     public function memberships()

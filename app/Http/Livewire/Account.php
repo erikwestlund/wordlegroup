@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Concerns\ParsesBoard;
+use App\Concerns\WordleBoard;
 use App\Models\User;
 use Livewire\Component;
 

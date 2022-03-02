@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Concerns\ParsesBoard;
+use App\Concerns\WordleBoard;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -21,12 +21,12 @@ class DateMustBeValid implements Rule
             return false;
         }
 
-        if($date > app(ParsesBoard::class)->activeBoardEndTime) {
+        if($date > app(WordleBoard::class)->activeBoardEndTime) {
             $this->message = 'No Wordle exists yet for this date.';
             return false;
         }
 
-        if($date < app(ParsesBoard::class)->firstBoardStartTime) {
+        if($date < app(WordleBoard::class)->firstBoardStartTime) {
             $this->message = 'Wordle did not exist yet.';
             return false;
         }

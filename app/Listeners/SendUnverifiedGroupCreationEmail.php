@@ -2,16 +2,17 @@
 
 namespace App\Listeners;
 
-use App\Mail\GroupCreated;
+use App\Events\GroupCreated;
+use App\Mail\UnverifiedGroupCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendGroupCreationEmail
+class SendUnverifiedGroupCreationEmail
 {
     public function handle($event)
     {
         Mail::to($event->group->admin->email)
-            ->send(new GroupCreated($event->group));
+            ->send(new UnverifiedGroupCreated($event->group));
     }
 }

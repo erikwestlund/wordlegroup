@@ -6,13 +6,13 @@ use App\Models\Group;
 use App\Models\User;
 use Livewire\Component;
 
-class Page extends Component
+class Home extends Component
 {
     public $group;
 
-    public function mount($key)
+    public function mount(Group $group)
     {
-        $this->group = Group::getFromUrlKey($key);
+        $this->group = $this->group;
     }
 
 

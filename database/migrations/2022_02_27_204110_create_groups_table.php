@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('admin_id')->constrained()->on('users');
+            $table->foreignId('admin_user_id')->constrained()->on('users');
             $table->string('name');
-            $table->string('key')->unique();
+            $table->string('token', 100)->nullable();
+            $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });
     }

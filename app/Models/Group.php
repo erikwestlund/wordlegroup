@@ -4,47 +4,45 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Support\Str;
 
 class Group extends Model
 {
     use HasFactory;
+    use Prunable;
+
+    protected $dates = ['verified_at'];
 
     protected $guarded = [];
 
-    public function getUrlKeyAttribute()
-    {
-        return $this->id . '-' . $this->key;
-    }
-
-    public function getAdminUrlAttribute()
-    {
-        return route('group.manage', [$this->urlKey, $this->admin->urlKey]);
-    }
-
-    public function getPageUrlAttribute()
-    {
-        return route('group.page', $this->urlKey);
-    }
-
-    public static function getFromUrlKey($urlKey)
-    {
-        if(! Str::contains($urlKey, '-')) {
-            abort(404);
-        }
-
-        [$id, $key] = explode('-', $urlKey);
-
-        return self::with('memberships.user')->where(compact('id', 'key'))->firstOrFail();
-    }
+    protected $hidden = [
+        'token',
+    ];
 
     public function admin()
     {
-        return $this->belongsTo(User::class, 'admin_id');
+        return $this->belongsTo(User::class, 'admin_user_id');
+    }
+
+    public function getVerifyUrlAttribute()
+    {
+        return route('group.verify', $this) . '?token=' . $this->token;
     }
 
     public function memberships()
     {
         return $this->hasMany(GroupMembership::class, 'group_id');
+    }
+
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subDay())
+                     ->whereNull('verified_at');
+    }
+
+    public function verify()
+    {
+        $this->update(['verified_at' => now(), 'token' => null]);
     }
 }

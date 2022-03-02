@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('group_id')->constrained()->on('groups');
             $table->foreignId('user_id')->constrained()->on('users');
+            $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });
     }

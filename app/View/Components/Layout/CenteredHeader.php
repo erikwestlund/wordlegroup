@@ -6,21 +6,13 @@ use Illuminate\View\Component;
 
 class CenteredHeader extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $textColor;
+
+    public function __construct($textColor = null)
     {
-        //
+        $this->textColor = $textColor;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
     public function render()
     {
         return view('components.layout.centered-header');
