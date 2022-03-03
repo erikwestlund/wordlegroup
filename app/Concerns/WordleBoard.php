@@ -101,7 +101,7 @@ class WordleBoard
 
     public function validateBoardNumber($boardNumber)
     {
-        return $boardNumber > 0 && $boardNumber <= $this->activeBoardNumber;
+        return $boardNumber >= 0 && $boardNumber <= $this->activeBoardNumber;
     }
 
     public function validateWordleDate($date)
