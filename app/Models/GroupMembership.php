@@ -24,4 +24,9 @@ class GroupMembership extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function scores()
+    {
+        return $this->belongsToMany(Score::class);
+    }
 }

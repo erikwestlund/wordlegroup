@@ -8,11 +8,11 @@ class ScoreObserver
 {
     public function created(Score $score)
     {
-        $score->syncToGroups();
+//        $score->syncToGroupMemberships();
     }
 
     public function saved(Score $score)
     {
-        $score->syncToGroups();
+//        $score->syncToGroupMemberships();
     }
 }

@@ -111,4 +111,9 @@ class User extends Authenticatable
         return static::where('created_at', '<', now()->subMinutes(config('settings.unverified_user_expires_minutes')))
                      ->whereNull('email_verified_at');
     }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
 }

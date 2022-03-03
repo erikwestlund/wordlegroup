@@ -31,21 +31,42 @@ class Score extends Model
         return $this->belongsTo(User::class, 'recording_user_id');
     }
 
-    public function syncToGroups()
+    public function syncToGroupMemberships()
     {
-        /**
-         * If this was recorded by the user, just sync it to each group.
-         */
-        if ($this->recordedByUser()) {
-            $this->user->memberships
-                ->each(function ($membership) {
-            // Need one to many relationship on memberships
-            // Link scores using pivot
-            // If owned, just sync.
-
-            // If not owned, swap any scores matching it by user with these, and sync.
-                });
-        }
+        // If this is a user-provided score, sync it to all groups.
+        // If it's an admin provided score, sync it only to the group the admin is sharing to.
+        // Put an "admin_group_id" or some such on the score record.
+//
+//        // Get earliest user recorded score from that day, taking the latest first.
+//        $userRecordedLatestScore = static::latest()
+//                                     ->where([
+//                                         'user_id'           => $this->user_id,
+//                                         'recording_user_id' => $this->user_id,
+//                                         'board_number'      => $this->board_number,
+//                                     ])
+//                                     ->latest()
+//                                     ->first();
+//
+//
+//        // If not,
+//
+//        $adminRecordedLatestScore = static::latest()
+//                                     ->where([
+//                                         'user_id'      => $this->user_id,
+//                                         'board_number' => $this->board_number,
+//                                     ])
+//                                     ->where('recording_user_id', '!=', $this->user_id)
+//                                     ->first();
+//
+//
+//
+//        // Prioritize latest score.
+//        $score = $userRecordedLatestScore ?? $adminRecordedLatestScore;
+//
+//        return [
+//            $userRecordedLatestScore,
+//            $adminRecordedLatestScore,
+//        ];
     }
 
 }
