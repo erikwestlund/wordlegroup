@@ -20,12 +20,12 @@ class WordleBoard
 
     public function __construct()
     {
-        $this->firstBoardStartTime = Carbon::parse('2021-06-19 06:00:00 GMT');
+        $this->firstBoardStartTime = Carbon::parse('2021-06-19 06:00:00 UTC');
         $this->firstBoardEndTime = $this->firstBoardStartTime->copy()->addDay()->subMicrosecond();
 
-        $this->activeBoardStartTime = now() <= Carbon::parse('Today 06:00:00 GMT')
-            ? Carbon::parse('Yesterday 06:00:00 GMT')
-            : Carbon::parse('Today 06:00:00 GMT');
+        $this->activeBoardStartTime = now() <= Carbon::parse('Today 06:00:00 UTC')
+            ? Carbon::parse('Yesterday 06:00:00 UTC')
+            : Carbon::parse('Today 06:00:00 UTC');
         $this->activeBoardEndTime = $this->activeBoardStartTime->copy()->addDay()->subMicrosecond();
 
         $this->activeBoardNumber = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
@@ -33,8 +33,7 @@ class WordleBoard
 
     public function getBoardNumberFromDate($date)
     {
-        $day = Carbon::parse($date)->format('Y-m-d');
-        $date = Carbon::parse($day . ' 06:00:00 GMT');
+        $date = app(WordleDate::class)->get($date);
 
         $boardNumber = $this->firstBoardStartTime->copy()->diffInDays($date);
 
@@ -96,7 +95,7 @@ class WordleBoard
 
     public function getDateFromBoardNumber($boardNumber)
     {
-        return $this->firstBoardStartTime->copy()->addDays($boardNumber);
+        return app(WordleDate::class)->get($this->firstBoardStartTime->copy()->addDays($boardNumber));
     }
 
     public function validateBoardNumber($boardNumber)

@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Casts\WordleDailyStartTime;
+use App\Concerns\SyncsScoresToGroupMemberships;
+use App\Concerns\WordleBoard;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +14,10 @@ class Score extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'date' => WordleDailyStartTime::class,
+    ];
 
     public function recordedByUser()
     {
@@ -31,42 +39,44 @@ class Score extends Model
         return $this->belongsTo(User::class, 'recording_user_id');
     }
 
+    public function scopeFor($query, User $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+    public function scopeRecordedBy($query, User $user)
+    {
+        return $query->where('recording_user_id', $user->id);
+    }
+
+    public function scopeRecordedByOwner($query, User $user)
+    {
+        return $query->whereRaw('user_id = recording_user_id');
+    }
+
+    public function scopeBoardNumber($query, $boardNumber)
+    {
+        return $query->where('board_number', $boardNumber);
+    }
+
+    public function scopeOnWordleDay($query, $date)
+    {
+        return $query->boardNumber(app(WordleBoard::class)->getBoardNumberFromDate($date));
+    }
+
+    public function validForMembership(GroupMembership $membership)
+    {
+        return $this->endOfWordleDay > $membership->created_at;
+    }
+
+    public function getEndOfWordleDayAttribute()
+    {
+        return $this->date->addHours(24)->subMicrosecond();
+    }
+
     public function syncToGroupMemberships()
     {
-        // If this is a user-provided score, sync it to all groups.
-        // If it's an admin provided score, sync it only to the group the admin is sharing to.
-        // Put an "admin_group_id" or some such on the score record.
-//
-//        // Get earliest user recorded score from that day, taking the latest first.
-//        $userRecordedLatestScore = static::latest()
-//                                     ->where([
-//                                         'user_id'           => $this->user_id,
-//                                         'recording_user_id' => $this->user_id,
-//                                         'board_number'      => $this->board_number,
-//                                     ])
-//                                     ->latest()
-//                                     ->first();
-//
-//
-//        // If not,
-//
-//        $adminRecordedLatestScore = static::latest()
-//                                     ->where([
-//                                         'user_id'      => $this->user_id,
-//                                         'board_number' => $this->board_number,
-//                                     ])
-//                                     ->where('recording_user_id', '!=', $this->user_id)
-//                                     ->first();
-//
-//
-//
-//        // Prioritize latest score.
-//        $score = $userRecordedLatestScore ?? $adminRecordedLatestScore;
-//
-//        return [
-//            $userRecordedLatestScore,
-//            $adminRecordedLatestScore,
-//        ];
+        app(SyncsScoresToGroupMemberships::class)->sync($this);
     }
 
 }
