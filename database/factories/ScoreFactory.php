@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Concerns\WordleBoard;
+use App\Concerns\WordleDate;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -27,15 +28,18 @@ class ScoreFactory extends Factory
         $hardMode = $this->faker->boolean();
         $hardModeAsterisk = $hardMode ? '*' : '';
 
-        $board = "Wordle {$boardNumber} {$scoreCharacter}/6{$hardModeAsterisk}
-
-⬜🟨⬜⬜⬜
+        $board = "⬜🟨⬜⬜⬜
 🟨⬜⬜🟨⬜
 ⬜⬜🟩⬜🟩
 🟩⬜🟩⬜🟩
 🟩🟩🟩🟩🟩";
 
         $user = User::factory();
+
+        $scoreTime = app(WordleDate::class)->get($date)
+                                           ->addHours(random_int(0, 23))
+                                           ->addMinutes(random_int(0, 59))
+                                           ->addSeconds(random_int(0, 59));
 
         return [
             'user_id'           => $user,
@@ -45,6 +49,8 @@ class ScoreFactory extends Factory
             'score'             => $score,
             'hard_mode'         => $hardMode,
             'board'             => $board,
+            'created_at'        => $scoreTime,
+            'updated_at'        => $scoreTime,
         ];
     }
 }

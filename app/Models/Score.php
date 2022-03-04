@@ -13,25 +13,20 @@ class Score extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
     protected $casts = [
         'date' => WordleDailyStartTime::class,
     ];
 
-    public function recordedByUser()
+    protected $guarded = [];
+
+    public function membershipsScoreRecords()
     {
-        return $this->user_id === $this->recording_user_id;
+        return $this->belongsToMany(self::class, 'group_membership_score');
     }
 
-    public function recordedByAdmin()
+    public function getEndOfWordleDayAttribute()
     {
-        return $this->user_id !== $this->recording_user_id;
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->date->addHours(24)->subMicrosecond();
     }
 
     public function recordingUser()
@@ -39,9 +34,19 @@ class Score extends Model
         return $this->belongsTo(User::class, 'recording_user_id');
     }
 
+    public function scopeBoardNumber($query, $boardNumber)
+    {
+        return $query->where('board_number', $boardNumber);
+    }
+
     public function scopeFor($query, User $user)
     {
         return $query->where('user_id', $user->id);
+    }
+
+    public function scopeOnWordleDay($query, $date)
+    {
+        return $query->boardNumber(app(WordleBoard::class)->getBoardNumberFromDate($date));
     }
 
     public function scopeRecordedBy($query, User $user)
@@ -54,29 +59,35 @@ class Score extends Model
         return $query->whereRaw('user_id = recording_user_id');
     }
 
-    public function scopeBoardNumber($query, $boardNumber)
+    public function syncToGroupMemberships()
     {
-        return $query->where('board_number', $boardNumber);
+        app(SyncsScoresToGroupMemberships::class)->sync($this);
     }
 
-    public function scopeOnWordleDay($query, $date)
+    public function user()
     {
-        return $query->boardNumber(app(WordleBoard::class)->getBoardNumberFromDate($date));
+        return $this->belongsTo(User::class);
     }
 
     public function validForMembership(GroupMembership $membership)
     {
-        return $this->endOfWordleDay > $membership->created_at;
+        // Must be from a board after joining group.
+        // And by either recording user or graph admin.
+        return $this->endOfWordleDay > $membership->created_at
+            && (
+                $this->recordedByUser() ||
+                $this->recordedByAdmin($membership)
+            );
     }
 
-    public function getEndOfWordleDayAttribute()
+    public function recordedByUser()
     {
-        return $this->date->addHours(24)->subMicrosecond();
+        return $this->user_id === $this->recording_user_id;
     }
 
-    public function syncToGroupMemberships()
+    public function recordedByAdmin(GroupMembership $membership)
     {
-        app(SyncsScoresToGroupMemberships::class)->sync($this);
+        return $this->recording_user_id === $membership->group->admin->id;
     }
 
 }

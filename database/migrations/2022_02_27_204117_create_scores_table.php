@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->on('users');
+            $table->foreignId('user_id')->constrained()->on('users')->cascadeOnDelete();
             $table->foreignId('recording_user_id')->constrained()->on('users');
             $table->date('date');
             $table->integer('board_number');

@@ -6,6 +6,7 @@ use App\Concerns\Tokens;
 use App\Mail\UserVerification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Prunable;
+    use HasApiTokens, HasFactory, Notifiable, Prunable, SoftDeletes;
 
     protected $dates = ['email_verified_at', 'auth_token_generated_at'];
 
@@ -115,5 +116,10 @@ class User extends Authenticatable
     public function scores()
     {
         return $this->hasMany(Score::class);
+    }
+
+    public function recordedScores()
+    {
+        return $this->belongsToMany(Score::class, 'group_membership_score');
     }
 }

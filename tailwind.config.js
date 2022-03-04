@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
+      board: ['sans-serif'],
       serif: ['IBM Plex Serif', 'serif'],
     },
     extend: {

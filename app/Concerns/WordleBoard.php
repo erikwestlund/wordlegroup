@@ -18,10 +18,13 @@ class WordleBoard
 
     public $hardMode;
 
+    public $wordleDate;
+
     public function __construct()
     {
-        $this->firstBoardStartTime = Carbon::parse('2021-06-19 06:00:00 UTC');
-        $this->firstBoardEndTime = $this->firstBoardStartTime->copy()->addDay()->subMicrosecond();
+        $this->wordleDate = app(WordleDate::class);
+        $this->firstBoardStartTime = $this->wordleDate->firstBoardStartTime;
+        $this->firstBoardEndTime = $this->wordleDate->firstBoardEndTime;
 
         $this->activeBoardStartTime = now() <= Carbon::parse('Today 06:00:00 UTC')
             ? Carbon::parse('Yesterday 06:00:00 UTC')
@@ -96,6 +99,15 @@ class WordleBoard
     public function getDateFromBoardNumber($boardNumber)
     {
         return app(WordleDate::class)->get($this->firstBoardStartTime->copy()->addDays($boardNumber));
+    }
+
+    public function extractBoard($entry)
+    {
+        preg_match_all('/.*\/(\d\*|\d)(.*)/s', $entry, $matches);
+
+        return isset($matches[2][0])
+            ? trim($matches[2][0])
+            : null;
     }
 
     public function validateBoardNumber($boardNumber)

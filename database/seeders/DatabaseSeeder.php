@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Concerns\WordleBoard;
+use App\Concerns\WordleDate;
 use App\Models\Group;
 use App\Models\GroupMembership;
 use App\Models\Score;
@@ -20,19 +21,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $seedCount = 5;
         $startBoard = random_int(1, app(WordleBoard::class)->activeBoardNumber - 20);
 
-        // Create 20 groups, each with 20 members, and 20 scores per member
-        collect(range(1, 20))->each(fn($i) => $this->createGroup($startBoard, $i));
+        // Create groups with members
+        collect(range(1, $seedCount))->each(fn($i) => $this->createGroup($seedCount, $startBoard, $i));
 
         // Now, for each user, randomly assign them to two other groups
+        // And then add the scores for each user.
         User::all()
-            ->each(function ($user) use ($startBoard) {
+            ->each(function ($user) use ($startBoard, $seedCount) {
                 $currentGroupMembership = GroupMembership::where('user_id', $user->id)->first();
                 $startOfWordleDay = app(WordleBoard::class)->getDateFromBoardNumber($startBoard);
                 $groupMembershipTime = $startOfWordleDay->subHour();
 
-                Group::where('id', '!=', $user->memberships()->first()->id)
+                Group::where('id', '!=', $user->memberships()->first()->group_id)
                      ->inRandomOrder()
                      ->take(2)
                      ->get()
@@ -43,14 +46,37 @@ class DatabaseSeeder extends Seeder
                              'created_at' => $groupMembershipTime,
                          ]);
                      });
+
+                Score::factory()
+                     ->count($seedCount)
+                     ->state(new Sequence(
+                         function ($sequence) use ($user, $startBoard, $seedCount) {
+                             $date = app(WordleBoard::class)->getDateFromBoardNumber($sequence->index + $startBoard);
+                             $scoreDateTime = $scoreTime = app(WordleDate::class)->get($date)
+                                                                                 ->addHours(random_int(0, 23))
+                                                                                 ->addMinutes(random_int(0, 59))
+                                                                                 ->addSeconds(random_int(0, 59));
+                             return [
+                                 'user_id'           => $user->id,
+                                 'recording_user_id' => $user->id,
+                                 'board_number'      => $sequence->index + $startBoard,
+                                 'date'              => $date,
+                                 'created_at'        => $scoreDateTime,
+                                 'updated_at'        => $scoreDateTime,
+                             ];
+                         },
+                     ))->create();
             });
+
+        // Now, create an admin score f
+
 
 //        $this->call([
 //            GroupMembershipSeeder::class,
 //        ]);
     }
 
-    public function createGroup($startBoard = null, $iteration = 1)
+    public function createGroup($seedCount = 5, $startBoard = null, $iteration = 1)
     {
         if (!$startBoard) {
             $earliestStartBoard = app(WordleBoard::class)->activeBoardNumber - 20;
@@ -67,7 +93,7 @@ class DatabaseSeeder extends Seeder
             $admin = User::factory()->create();
         }
 
-        // Create a gruop.
+        // Create a group.
         $group = Group::factory()
                       ->for($admin, 'admin')
                       ->state(['created_at' => $groupMembershipTime])
@@ -79,42 +105,10 @@ class DatabaseSeeder extends Seeder
                                           ->state(['created_at' => $groupMembershipTime])
                                           ->create();
 
-
-        $score = Score::factory()
-                      ->count(20)
-                      ->state(new Sequence(
-                          function ($sequence) use ($admin, $startBoard) {
-
-                              return [
-                                  'user_id'           => $admin,
-                                  'recording_user_id' => $admin,
-                                  'board_number'      => $sequence->index + $startBoard,
-                                  'date'              => app(WordleBoard::class)->getDateFromBoardNumber($sequence->index + $startBoard),
-                              ];
-                          },
-                      ))->create();
-
         // Create some members.
         $members = GroupMembership::factory()
                                   ->count(4)
                                   ->state(['group_id' => $group->id, 'created_at' => $groupMembershipTime])
                                   ->create();
-
-        // Add scores for each member.
-        $members->each(function ($membership) use ($startBoard) {
-            Score::factory()
-                 ->count(20)
-                 ->state(new Sequence(
-                     function ($sequence) use ($membership, $startBoard) {
-
-                         return [
-                             'user_id'           => $membership->user_id,
-                             'recording_user_id' => $membership->user_id,
-                             'board_number'      => $sequence->index + $startBoard,
-                             'date'              => app(WordleBoard::class)->getDateFromBoardNumber($sequence->index + $startBoard),
-                         ];
-                     },
-                 ))->create();
-        });
     }
 }

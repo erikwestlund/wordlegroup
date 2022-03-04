@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+\Auth::loginUsingId(1);
+
 Route::get('/', \App\Http\Livewire\Home::class)->name('home');
 
 Route::get('/group/create', \App\Http\Livewire\Group\Create::class)->name('group.create');

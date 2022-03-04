@@ -20,6 +20,11 @@ class GroupMembership extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function admin()
+    {
+        return $this->group->admin();
+    }
+
     public function group()
     {
         return $this->belongsTo(Group::class);
@@ -28,5 +33,11 @@ class GroupMembership extends Model
     public function scores()
     {
         return $this->belongsToMany(Score::class);
+    }
+
+    public function scoresForBoard($boardNumber)
+    {
+        return $this->scores()
+                    ->wherePivot('board_number', $boardNumber);
     }
 }

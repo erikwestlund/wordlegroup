@@ -22,25 +22,46 @@ class SyncsScoresToGroupMemberships
      */
     public function sync(Score $score)
     {
-        $scoresOwnedByUserFromDay = Score::for($score->user)
-                                         ->boardNumber($score->board_number)->get();
+        $scoresOwnedByUserFromDay = Score::with(['user.memberships.group.admin'])
+                                         ->for($score->user)
+                                         ->boardNumber($score->board_number)
+                                         ->latest()
+                                         ->get();
 
         $score->user
             ->memberships
-            ->each(function ($membership) use($scoresOwnedByUserFromDay) {
-                $correctScore = $this->getCorrectDailyScoreForMembershipFromPossibleScores($membership, $scoresOwnedByUserFromDay);
-                dd(
-                    $correctScore
+            ->each(function ($membership) use ($scoresOwnedByUserFromDay) {
+                $correctScore = $this->getCorrectDailyScoreForMembershipFromPossibleScores(
+                    $membership,
+                    $scoresOwnedByUserFromDay
                 );
+
+                if ($correctScore) {
+                    $membership->scoresForBoard($correctScore->board_number)
+                               ->syncWithPivotValues(
+                                   $correctScore->id,
+                                   [
+                                       'user_id'      => $correctScore->user_id,
+                                       'group_id'     => $membership->group_id,
+                                       'board_number' => $correctScore->board_number,
+                                   ]
+                               );
+                }
             });
 
     }
 
     public function getCorrectDailyScoreForMembershipFromPossibleScores($membership, $scores)
     {
-        return $scores->filter(function($score) use($membership) {
-            dd($score->endOfWordleDay, $membership->created_at, $score->validForMembership($membership));
-            return $score->validForMembership($membership);
-        });
+        // First, filter out any scores that are from boards after the Wordle Group was created
+        //  or that were created by someone who is not the score owner or the group administrator.
+        // Then sort it so the recording user is first.
+        // And take that record.
+        return $scores
+            ->filter(function ($score) use ($membership) {
+                return $score->validForMembership($membership);
+            })->sortByDesc(function ($score) use ($membership) {
+                return $score->recording_user_id === $membership->user_id;
+            })->first();
     }
 }

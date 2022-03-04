@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('group_membership_score', function (Blueprint $table) {
-            $table->foreignId('group_membership_id')->constrained()->on('groups');
-            $table->foreignId('score_id')->constrained()->on('scores');
+            $table->foreignId('user_id')->constrained()->on('users')->cascadeOnDelete();
+            $table->foreignId('group_id')->constrained()->on('groups')->cascadeOnDelete();
+            $table->foreignId('group_membership_id')->constrained()->on('group_memberships')->cascadeOnDelete();
+            $table->foreignId('score_id')->constrained()->on('scores')->cascadeOnDelete();
             $table->integer('board_number');
             $table->primary(['group_membership_id', 'score_id']);
         });

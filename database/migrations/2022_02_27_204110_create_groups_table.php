@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('token', 100)->nullable();
             $table->timestamp('verified_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

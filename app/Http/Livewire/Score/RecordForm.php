@@ -41,12 +41,13 @@ class RecordForm extends Component
         ]);
 
         $data = app(WordleBoard::class)->parse($this->board);
+        $board = app(WordleBoard::class)->extractBoard($this->board);
 
         $this->storeScore([
             'score'       => $data['scoreNumber'],
             'boardNumber' => $data['boardNumber'],
             'date'        => $data['date'],
-            'board'       => $this->board,
+            'board'       => $board,
             'hardMode'    => $data['hardMode'] ?? null,
         ]);
     }
