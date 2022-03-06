@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Casts\WordleDailyStartTime;
-use App\Concerns\SyncsScoresToGroupMemberships;
+use App\Concerns\SyncsDailyScoreToGroupMemberships;
+use App\Concerns\SyncsDailyScoreToUser;
+use App\Concerns\UpdatesGroupStats;
 use App\Concerns\WordleBoard;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,14 +21,14 @@ class Score extends Model
 
     protected $guarded = [];
 
-    public function membershipsScoreRecords()
-    {
-        return $this->belongsToMany(self::class, 'group_membership_score');
-    }
-
     public function getEndOfWordleDayAttribute()
     {
         return $this->date->addHours(24)->subMicrosecond();
+    }
+
+    public function membershipsScoreRecords()
+    {
+        return $this->belongsToMany(self::class, 'group_membership_score');
     }
 
     public function recordingUser()
@@ -59,9 +61,19 @@ class Score extends Model
         return $query->whereRaw('user_id = recording_user_id');
     }
 
+    public function scopeRecordingUserScoreFirst($query, $userId)
+    {
+        return $query->orderByRaw("FIELD(recording_user_id, '{$userId}') DESC");
+    }
+
+    public function syncToDailyScores()
+    {
+        app(SyncsDailyScoreToUser::class)->sync($this);
+    }
+
     public function syncToGroupMemberships()
     {
-        app(SyncsScoresToGroupMemberships::class)->sync($this);
+        app(SyncsDailyScoreToGroupMemberships::class)->sync($this);
     }
 
     public function user()
@@ -90,4 +102,8 @@ class Score extends Model
         return $this->recording_user_id === $membership->group->admin->id;
     }
 
+    public function updateMemberGroupStats()
+    {
+        $this->user->memberships->each->updateGroupStats();
+    }
 }

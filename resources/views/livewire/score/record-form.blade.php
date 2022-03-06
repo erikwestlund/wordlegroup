@@ -19,6 +19,7 @@
                             tip="Just paste in your board and we'll figure out the dare and score and save your board."
                             placeholder="Wordle 250 3/6..."
                             wire:model="board"
+                            class="font-system"
                         />
                     </div>
 

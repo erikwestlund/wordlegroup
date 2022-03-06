@@ -17,6 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('admin_user_id')->constrained()->on('users');
             $table->string('name');
+            $table->unsignedInteger('member_count')->default(0);
+            $table->unsignedInteger('scores_recorded')->default(0);
+            $table->unsignedFloat('score_mean')->nullable();
+            $table->unsignedFloat('score_median')->nullable();
+            $table->tinyInteger('score_mode')->nullable();
+            $table->jsonb('leaderboard')->nullable();
             $table->string('token', 100)->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->softDeletes();

@@ -8,11 +8,19 @@ class ScoreObserver
 {
     public function created(Score $score)
     {
-        $score->syncToGroupMemberships();
+        $this->runEvents($score);
     }
 
     public function saved(Score $score)
     {
+        $this->runEvents($score);
+    }
+
+    public function runEvents(Score $score)
+    {
+        $score->syncToDailyScores();
         $score->syncToGroupMemberships();
+        $score->user->updateStats();
+        $score->user->memberships->each(fn($membership) => $membership->group->updateStats());
     }
 }

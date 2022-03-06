@@ -21,9 +21,9 @@ class ScoreFeed extends Component
     {
         return view('livewire.account.score-feed', [
             'scores' => $this->user
-                ->scores()
+                ->dailyScores()
                 ->latest()
-                ->paginate(3)
+                ->paginate(6)
         ]);
     }
 }

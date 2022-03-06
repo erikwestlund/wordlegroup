@@ -7,7 +7,7 @@
         <x-layout.flash-message type="error">{{ session('errorMessage') }}</x-layout.flash-message>
     @endif
 
-    <div class="mx-auto w-full py-12 px-6 @if($wide) max-w-6xl @else max-w-lg @endif">
+    <div class="mx-auto w-full py-12 px-6 @if($wide) max-w-6xl @else max-w-xl @endif">
 
         @if($heading)
             <x-layout.heading :wide="$wide" :text-color="$headingTextColor">{{ $heading }}</x-layout.heading>

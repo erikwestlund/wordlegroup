@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $seedCount = 5;
+        $seedCount = 7;
         $startBoard = random_int(1, app(WordleBoard::class)->activeBoardNumber - 20);
 
         // Create groups with members

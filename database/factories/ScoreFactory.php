@@ -23,7 +23,7 @@ class ScoreFactory extends Factory
 
         $date = $this->faker->dateTimeBetween($wordleStart, now()->subDay());
         $boardNumber = app(WordleBoard::class)->getBoardNumberFromDate($date);
-        $score = $this->faker->numberBetween(1, 7);
+        $score = $this->faker->numberBetween(2, 7);
         $scoreCharacter = $score === 7 ? 'X' : $score;
         $hardMode = $this->faker->boolean();
         $hardModeAsterisk = $hardMode ? '*' : '';

@@ -56,15 +56,14 @@ class RecordForm extends Component
     {
         $date = Carbon::parse($data['date']);
 
-        Score::updateOrCreate([
+        Score::firstOrCreate([
             'user_id'           => $this->user->id,
             'recording_user_id' => $this->user->id,
             'date'              => $date->format('Y-m-d'),
-        ], [
-            'score'        => $data['score'],
-            'board_number' => $data['boardNumber'],
-            'board'        => $data['board'] ?? null,
-            'hard_mode'    => $data['hardMode'] ?? null,
+            'score'             => $data['score'],
+            'board_number'      => $data['boardNumber'],
+            'board'             => $data['board'] ?? null,
+            'hard_mode'         => $data['hardMode'] ?? null,
         ]);
 
         $this->emitUp('scoreRecorded');

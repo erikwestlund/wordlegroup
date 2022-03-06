@@ -60,4 +60,31 @@ class Group extends Model
     {
         $this->update(['verified_at' => now(), 'token' => null]);
     }
+
+
+    public function getMeanScore()
+    {
+        return (float)round($this->scores()->average('score'), 2);
+    }
+
+    public function getMedianScore()
+    {
+        return (float)round($this->scores->median('score'), 1);
+    }
+
+    public function getModeScore()
+    {
+        return $this->scores->mode('score')[0];
+    }
+
+    public function updateStats()
+    {
+        $this->update([
+            'member_count'    => $this->memberships()->count(),
+            'scores_recorded' => $this->scores()->count(),
+            'score_mean'      => $this->getMeanScore(),
+            'score_median'    => $this->getMedianScore(),
+            'score_mode'      => $this->getModeScore(),
+        ]);
+    }
 }

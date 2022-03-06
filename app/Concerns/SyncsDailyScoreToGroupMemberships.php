@@ -4,7 +4,7 @@ namespace App\Concerns;
 
 use App\Models\Score;
 
-class SyncsScoresToGroupMemberships
+class SyncsDailyScoreToGroupMemberships
 {
     /**
      * If this is a user-provided score, sync it to all groups.
@@ -25,7 +25,7 @@ class SyncsScoresToGroupMemberships
         $scoresOwnedByUserFromDay = Score::with(['user.memberships.group.admin'])
                                          ->for($score->user)
                                          ->boardNumber($score->board_number)
-                                         ->latest()
+                                         ->recordingUserScoreFirst($score->user->id)
                                          ->get();
 
         $score->user
@@ -55,13 +55,13 @@ class SyncsScoresToGroupMemberships
     {
         // First, filter out any scores that are from boards after the Wordle Group was created
         //  or that were created by someone who is not the score owner or the group administrator.
-        // Then sort it so the recording user is first.
-        // And take that record.
+        //  And take that record. (recording users always come first)
         return $scores
             ->filter(function ($score) use ($membership) {
                 return $score->validForMembership($membership);
-            })->sortByDesc(function ($score) use ($membership) {
-                return $score->recording_user_id === $membership->user_id;
             })->first();
+//            })->sortByDesc(function ($score) use ($membership) {
+//                return $score->recording_user_id === $membership->user_id;
+//            })->first();
     }
 }

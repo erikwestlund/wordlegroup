@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
@@ -118,8 +119,53 @@ class User extends Authenticatable
         return $this->hasMany(Score::class);
     }
 
-    public function recordedScores()
+    public function recordedGroupMembershipScores()
     {
         return $this->belongsToMany(Score::class, 'group_membership_score');
+    }
+
+    public function dailyScores()
+    {
+        return $this->belongsToMany(Score::class, 'user_score');
+    }
+
+    public function dailyScoresForBoard($boardNumber)
+    {
+        return $this->dailyScores()
+                    ->wherePivot('board_number', $boardNumber);
+    }
+
+    public function getAverageScoreAttribute()
+    {
+        return $this->scores()
+                    ->orderByRaw("FIELD(recording_user_id, {$this->id}) DESC")
+                    ->orderByDesc('board_number')
+                    ->groupBy('board_number')
+                    ->get();
+    }
+
+    public function getMeanDailyScore()
+    {
+        return (float)round($this->dailyScores()->average('score'), 2);
+    }
+
+    public function getMedianDailyScore()
+    {
+        return (float)round($this->dailyScores->median('score'), 1);
+    }
+
+    public function getModeDailyScore()
+    {
+        return $this->dailyScores->mode('score')[0];
+    }
+
+    public function updateStats()
+    {
+        $this->update([
+            'daily_scores_recorded' => $this->dailyScores()->count(),
+            'daily_score_mean'      => $this->getMeanDailyScore(),
+            'daily_score_median'    => $this->getMedianDailyScore(),
+            'daily_score_mode'      => $this->getModeDailyScore(),
+        ]);
     }
 }

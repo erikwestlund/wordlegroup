@@ -13,23 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('group_membership_score', function (Blueprint $table) {
+        Schema::create('user_score', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->on('users')->cascadeOnDelete();
-            $table->foreignId('group_id')->constrained()->on('groups')->cascadeOnDelete();
-            $table->foreignId('group_membership_id')->constrained()->on('group_memberships')->cascadeOnDelete();
             $table->foreignId('score_id')->constrained()->on('scores')->cascadeOnDelete();
             $table->integer('board_number');
-            $table->primary(['user_id', 'group_id', 'board_number'], 'unique_user_group_board_number');
+            $table->primary(['user_id', 'board_number'], 'unique_user_board_number');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('group_membership_score');
+        Schema::dropIfExists('user_score');
     }
 };
