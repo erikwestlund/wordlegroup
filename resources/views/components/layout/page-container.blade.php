@@ -13,7 +13,7 @@
             <x-layout.heading :wide="$wide" :text-color="$headingTextColor">{{ $heading }}</x-layout.heading>
         @endif
 
-        <div class="mt-8 text-gray-900">
+        <div class="@if($topPadding) mt-8 @endif text-gray-900">
             {{ $slot }}
         </div>
 

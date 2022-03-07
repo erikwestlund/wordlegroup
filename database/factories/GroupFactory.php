@@ -13,7 +13,7 @@ class GroupFactory extends Factory
     public function definition()
     {
         return [
-            'name'          => $this->faker->name(),
+            'name'          => $this->faker->company(),
             'token'         => app(Tokens::class)->generate(),
             'verified_at'   => null,
         ];

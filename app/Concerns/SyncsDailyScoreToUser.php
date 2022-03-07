@@ -20,8 +20,11 @@ class SyncsDailyScoreToUser
         $dailyScore = Score::with(['user'])
                            ->for($score->user)
                            ->boardNumber($score->board_number)
+                           ->latest()
                            ->recordingUserScoreFirst($score->user->id)
                            ->first();
+
+        ray($dailyScore);
 
         $score->user->dailyscoresForBoard($dailyScore->board_number)
                     ->syncWithPivotValues(

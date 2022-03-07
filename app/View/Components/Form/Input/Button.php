@@ -6,10 +6,11 @@ use Illuminate\View\Component;
 
 class Button extends Component
 {
+    public $primary;
 
-    public function __construct()
+    public function __construct($primary = true)
     {
-        //
+        $this->primary = $primary;
     }
 
     public function render()

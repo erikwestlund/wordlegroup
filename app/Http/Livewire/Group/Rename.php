@@ -27,7 +27,7 @@ class Rename extends Component
 
         session()->flash('message', 'Group renamed.');
 
-        return redirect()->to(route('group.manage', $this->group->urlKey));
+        return redirect()->to(route('group.home', $this->group->urlKey));
     }
 
 

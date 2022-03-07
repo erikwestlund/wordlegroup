@@ -37,7 +37,7 @@ class Verify extends Component
 
             session()->flash('message', 'Group verified.');
 
-            return redirect()->to(route('group.manage', $this->group));
+            return redirect()->to(route('group.home', $this->group));
         }
     }
 

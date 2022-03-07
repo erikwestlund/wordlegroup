@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedFloat('score_mean')->nullable();
             $table->unsignedFloat('score_median')->nullable();
             $table->tinyInteger('score_mode')->nullable();
+            $table->jsonb('score_distribution')->nullable();
             $table->jsonb('leaderboard')->nullable();
             $table->string('token', 100)->nullable();
             $table->timestamp('verified_at')->nullable();

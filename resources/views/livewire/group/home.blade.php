@@ -1,34 +1,61 @@
 <x-layout.page-container :heading="$group->name" :title="$group->name">
 
-    <div class="grid grid-cols-1 gap-y-8">
-        <div class="col-span-1">
-            <h2 class="text-green-700 text-lg font-semibold">Leaderboard</h2>
-            <div class="pt-6">
-                Leaderboard
+    <x-account.home-layout page="group">
+
+        <div class="grid grid-cols-1 gap-y-12 divide-gray-200 divide-y">
+
+            <div>
+                <x-layout.sub-heading class="text-center">Leaderboard</x-layout.sub-heading>
+                <div class="mt-8">
+                    @if($group->scores->isNotEmpty())
+                        <x-group.leaderboard :group="$group"/>
+                    @else
+                        <div class="text-gray-500 text-sm text-center">No one has recorded any scores. Invite some users
+                            below!
+                        </div>
+                    @endif
+                </div>
             </div>
+            @if($memberOfGroup)
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Record A Score</x-layout.sub-heading>
+                    @if($user->daily_scores_recorded === 0)
+                        <div class="text-gray-600 text-sm text-center mt-4">
+                            <p>
+                                You have not yet recorded any scores.
+                            </p>
+                            <p class="mt-4">
+                                To get started, just paste your board in the below text box.
+                            </p>
+                        </div>
+                    @endif
+                    <div class="mt-4">
+                        <livewire:score.record-form :quick="true" :user="$user"/>
+                    </div>
+                </div>
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Invite Someone to
+                        Join {{ $group->name }}</x-layout.sub-heading>
+                    <div class="mt-8 w-full flex justify-center">
+                        <div class="w-72">
+                            <livewire:group.invite-member :group="$group"/>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if($group->scores->isNotEmpty())
+
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Activity</x-layout.sub-heading>
+                    <div class="mt-8">
+
+                        <livewire:group.activity-feed :group="$group"/>
+                    </div>
+                </div>
+
+            @endif
+
         </div>
+    </x-account.home-layout>
 
-        <div class="col-span-1">
-            <h2 class="text-green-700 text-lg font-semibold">Group URL</h2>
-            <div class="pt-6">
-                <p>Your group page can be accessed at the following URL:</p>
-                <p class="mt-4">
-                    <a
-                        class="text-green-600 hover:text-green-800 hover:underline" href="{{ $group->pageUrl }}"
-                    >{{ $group->pageUrl }}</a>
-                </p>
-            </div>
-        </div>
-
-
-        <div class="col-span-1 pt-6">
-            <h2 class="text-green-700 text-lg font-semibold">Admin</h2>
-
-            <div class="mt-4">
-                Your group is administered by <span class="font-bold">{{ $group->admin->name }}.</span>
-            </div>
-
-        </div>
-
-    </div>
 </x-layout.page-container>

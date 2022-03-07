@@ -21,18 +21,18 @@ class Nav extends Component
                 'route' => route('account.home'),
                 'title' => 'Summary',
             ],
+            'groups'      => [
+                'route' => route('account.groups'),
+                'title' => 'My Groups',
+            ],
             'record-score'      => [
                 'route' => route('account.record-score'),
                 'title' => 'Record Score',
             ],
-            'groups'      => [
-                'route' => route('account.groups'),
-                'title' => 'Groups',
-            ],
-            'settings'        => [
-                'route' => route('account.home'),
-                'title' => 'Settings',
-            ],
+//            'settings'        => [
+//                'route' => route('account.home'),
+//                'title' => 'Settings',
+//            ],
         ];
     }
 

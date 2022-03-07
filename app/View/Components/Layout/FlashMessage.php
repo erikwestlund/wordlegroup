@@ -16,6 +16,8 @@ class FlashMessage extends Component
 
     public $buttonIconHoverFill;
 
+    public $buttonIconBg;
+
     public $type;
 
     public function __construct($type = 'success')
@@ -26,18 +28,20 @@ class FlashMessage extends Component
 
     protected function setColors($type)
     {
-        if($type === 'error') {
+        if ($type === 'error') {
             $this->bgColor = 'bg-red-100';
             $this->textColor = 'text-red-800';
             $this->borderColor = 'border-red-700';
             $this->buttonIconFill = 'fill-red-700';
             $this->buttonIconHoverFill = 'fill-red-900';
+            $this->buttonIconBg = 'hover:bg-red-200';
         } else {
             $this->bgColor = 'bg-green-100';
             $this->textColor = 'text-green-800';
             $this->borderColor = 'border-green-700';
             $this->buttonIconFill = 'fill-green-700';
             $this->buttonIconHoverFill = 'fill-green-900';
+            $this->buttonIconBg = 'hover:bg-green-200';
         }
     }
 

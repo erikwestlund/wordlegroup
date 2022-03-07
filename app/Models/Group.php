@@ -20,6 +20,10 @@ class Group extends Model
         'token',
     ];
 
+    protected $casts = [
+        'leaderboard' => 'collection'
+    ];
+
     public function admin()
     {
         return $this->belongsTo(User::class, 'admin_user_id');
@@ -27,7 +31,7 @@ class Group extends Model
 
     public function getAdminUrlAttribute()
     {
-        return route('group.manage', $this);
+        return route('group.home', $this);
     }
 
     public function getVerifyUrlAttribute()
@@ -64,27 +68,84 @@ class Group extends Model
 
     public function getMeanScore()
     {
-        return (float)round($this->scores()->average('score'), 2);
+        return $this->scores->isNotEmpty() ? (float)round($this->scores()->average('score'), 2) : null;
     }
 
     public function getMedianScore()
     {
-        return (float)round($this->scores->median('score'), 1);
+        return $this->scores->isNotEmpty() ? (float)round($this->scores->median('score'), 1) : null;
     }
 
     public function getModeScore()
     {
-        return $this->scores->mode('score')[0];
+        return $this->scores->isNotEmpty() ? (int) collect($this->scores->mode('score'))->min() : null;
     }
 
     public function updateStats()
     {
         $this->update([
-            'member_count'    => $this->memberships()->count(),
-            'scores_recorded' => $this->scores()->count(),
-            'score_mean'      => $this->getMeanScore(),
-            'score_median'    => $this->getMedianScore(),
-            'score_mode'      => $this->getModeScore(),
+            'member_count'       => $this->memberships()->count(),
+            'scores_recorded'    => $this->scores()->count(),
+            'score_mean'         => $this->getMeanScore(),
+            'score_median'       => $this->getMedianScore(),
+            'score_mode'         => $this->getModeScore(),
+            'score_distribution' => $this->getScoreDistribution(),
+            'leaderboard'        => $this->getLeaderBoard(),
         ]);
+    }
+
+    public function getLeaderBoard()
+    {
+        $userScores = $this->memberships
+            ->map(function ($membership) {
+                $userScores = $this->scores
+                    ->where('user_id', $membership->user_id)
+                    ->pluck('score');
+
+                return [
+                    'user_id' => $membership->user_id,
+                    'name'    => $membership->user->name,
+                    'stats'   => [
+                        'median' => round($userScores->average(), 1),
+                        'mean'   => round($userScores->average(), 2),
+                        'mode'   => collect($userScores->mode())->min(),
+                        'count'  => $userScores->count(),
+                    ],
+                ];
+            })
+            ->reject(fn($userScore) => $userScore['stats']['count'] === 0);
+
+
+        $placeNumbers = $userScores->pluck('stats.mean')
+                                   ->unique()
+                                   ->sort()
+                                   ->values()
+                                   ->map(function ($score, $index) {
+                                       return [
+                                           'place' => $index + 1,
+                                           'score' => $score,
+                                       ];
+                                   });
+
+        return $userScores
+            ->map(function ($userScore) use ($placeNumbers) {
+                $place = $placeNumbers->firstWhere('score', $userScore['stats']['mean'])['place'];
+
+                $userScore['place'] = $place;
+
+                return $userScore;
+            })
+            ->sortBy('place')
+            ->values();
+    }
+
+    public function getScoreDistribution()
+    {
+        return collect([1, 2, 3, 4, 5, 6, 7])
+            ->mapWithKeys(function ($number) {
+                return [
+                    $number === 7 ? 'X' : $number => $this->scores->where('score', $number)->count(),
+                ];
+            });
     }
 }

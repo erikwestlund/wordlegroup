@@ -4,7 +4,8 @@
     >
         {{ $slot }}
         <button
-            class="mx-2 px-1 text-semibold" type="button" @click="show=false"
+            class="mx-2 px-1 py-1 text-semibold rounded {{ $buttonIconBg }}"
+            type="button" @click="show=false"
         >
             <x-icon-regular.check :class="$buttonIconFill . ' ' . $buttonIconHoverFill"/>
         </button>

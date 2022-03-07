@@ -7,6 +7,7 @@
         <x-form.input.text
             :errors="$errors"
             name="email"
+            autofocus
             label="Email Address"
             wire:model="email"
             placeholder="your@email.address"

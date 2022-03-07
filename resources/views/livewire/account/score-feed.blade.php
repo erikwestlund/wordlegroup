@@ -1,5 +1,5 @@
 <div>
-    <ul role="list" class="flex flex-wrap justify-center sm:justify-between w-full">
+    <ul role="list" class="flex flex-wrap justify-center @if($scores->count() > 1) sm:justify-between @endif w-full">
         @foreach($scores as $score)
             <li class="py-4 px-4 text-center">
                 <div class="space-x-3 w-56  border rounded-lg">

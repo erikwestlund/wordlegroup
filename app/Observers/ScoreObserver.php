@@ -8,6 +8,11 @@ class ScoreObserver
 {
     public function created(Score $score)
     {
+//        $this->runEvents($score);
+    }
+
+    public function updated(Score $score)
+    {
         $this->runEvents($score);
     }
 

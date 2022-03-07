@@ -8,7 +8,7 @@
                 'name' => $name,
                  'id' => $name,
                  'placeholder' => $placeholder,
-                 'class' => 'max-w-lg shadow-sm block w-full focus:ring-green-500 focus:border-green-500 sm:text-sm border placeholder-gray-400 rounded-md ' . ($errors->has($name) ? 'border-red-600' : 'border-gray-300')
+                 'class' => 'max-w-xl shadow-sm block w-full focus:ring-green-500 focus:border-green-500 sm:text-sm border placeholder-gray-400 rounded-md ' . ($errors->has($name) ? 'border-red-600' : 'border-gray-300')
                ]) }}
             id="about"
             name="about"

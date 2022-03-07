@@ -6,5 +6,7 @@
 
 
 .link {
-    @apply hover:underline text-gray-600
+    @apply hover:underline text-green-700
 }
+
+[x-cloak] { display: none !important; }

@@ -27,6 +27,11 @@ class User extends Authenticatable
         'email_verified_at',
         'auth_token',
         'auth_token_generated_at',
+        'daily_scores_recorded',
+        'daily_score_mean',
+        'daily_score_median',
+        'daily_score_mode',
+        'score_distribution',
     ];
 
     protected $hidden = [
@@ -146,17 +151,17 @@ class User extends Authenticatable
 
     public function getMeanDailyScore()
     {
-        return (float)round($this->dailyScores()->average('score'), 2);
+        return $this->dailyScores->isNotEmpty() ? (float)round($this->dailyScores()->average('score'), 2) : null;
     }
 
     public function getMedianDailyScore()
     {
-        return (float)round($this->dailyScores->median('score'), 1);
+        return $this->dailyScores->isNotEmpty() ? (float)round($this->dailyScores->median('score'), 1) : null;
     }
 
     public function getModeDailyScore()
     {
-        return $this->dailyScores->mode('score')[0];
+        return $this->dailyScores->isNotEmpty() ? collect($this->dailyScores->mode('score'))->min() : null;
     }
 
     public function updateStats()
@@ -166,6 +171,17 @@ class User extends Authenticatable
             'daily_score_mean'      => $this->getMeanDailyScore(),
             'daily_score_median'    => $this->getMedianDailyScore(),
             'daily_score_mode'      => $this->getModeDailyScore(),
+            'score_distribution'    => $this->getScoreDistribution(),
         ]);
+    }
+
+    public function getScoreDistribution()
+    {
+        return collect([1, 2, 3, 4, 5, 6, 7])
+            ->mapWithKeys(function ($number) {
+                return [
+                    $number === 7 ? 'X' : $number => $this->dailyScores->where('score', $number)->count(),
+                ];
+            });
     }
 }

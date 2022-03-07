@@ -27,11 +27,14 @@ class RecordForm extends Component
 
     public $user;
 
-    public function mount(User $user)
+    public $quick;
+
+    public function mount(User $user, $quick = false)
     {
         $this->user = $user;
         $this->recordingForSelf = $this->user->id === Auth::user()->id;
         $this->date = app(WordleBoard::class)->activeBoardStartTime->format('Y-m-d');
+        $this->quick = $quick;
     }
 
     public function recordScoreFromBoard()
@@ -56,7 +59,7 @@ class RecordForm extends Component
     {
         $date = Carbon::parse($data['date']);
 
-        Score::firstOrCreate([
+        Score::create([
             'user_id'           => $this->user->id,
             'recording_user_id' => $this->user->id,
             'date'              => $date->format('Y-m-d'),
@@ -80,6 +83,7 @@ class RecordForm extends Component
             'score'       => $this->bricked ? 7 : $this->score,
             'boardNumber' => app(WordleBoard::class)->getBoardNumberFromDate($this->date),
             'date'        => $this->date,
+            'hardMode'    => $this->hardMode ?? false,
         ]);
 
         $this->emitUp('scoreRecorded');

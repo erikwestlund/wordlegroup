@@ -14,11 +14,14 @@ class PageContainer extends Component
 
     public $wide;
 
+    public $topPadding;
+
     public $errorMessage;
 
-    public function __construct($title, $heading = null, $wide = false, $headingTextColor = null, $errorMessage = null)
+    public function __construct($title, $topPadding = true, $heading = null, $wide = false, $headingTextColor = null, $errorMessage = null)
     {
         $this->heading = $heading;
+        $this->topPadding = $topPadding;
         $this->title = $title;
         $this->wide = $wide;
         $this->headingTextColor = $headingTextColor;
