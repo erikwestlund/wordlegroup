@@ -17,6 +17,12 @@
                 </div>
             </div>
             @if($memberOfGroup)
+                @unless($user->dismissed_email_notification)
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>
+                    <x-score.email-prompt class="text-gray-600 text-sm text-center mt-4" />
+                </div>
+                @endunless
                 <div class="pt-8">
                     <x-layout.sub-heading class="text-center">Record A Score</x-layout.sub-heading>
                     @if($user->daily_scores_recorded === 0)
@@ -31,6 +37,12 @@
                     @endif
                     <div class="mt-4">
                         <livewire:score.record-form :quick="true" :user="$user"/>
+                    </div>
+                    <div class="mt-8 text-center text-xs text-gray-500">
+                        <p>
+                            You can email your scores to <a class="link" href="mailto:scores@wordlegroup.com">scores@wordlegroup.com</a>.
+                            <a href="/email/WordleGroup.vcf" role="button" class="link">Add Wordle Group to your contacts</a>.
+                        </p>
                     </div>
                 </div>
                 <div class="pt-8">

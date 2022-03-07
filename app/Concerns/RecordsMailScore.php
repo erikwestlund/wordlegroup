@@ -24,7 +24,6 @@ class RecordsMailScore
                 return;
             }
 
-
             // Get the email. If we can't find a user, escape.
             $senderEmail = $sender['address'];
             $user = User::where('email', $senderEmail)->first();

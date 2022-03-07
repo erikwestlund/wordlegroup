@@ -1,9 +1,27 @@
 <div
-    class="grid grid-cols-1 @if($quick) gap-y-4 @endif"
+    class="grid grid-cols-1 @if($quick) gap-y-4 @else gap-y-12 @endif"
     @if($quick)
     x-data="{show: 'haveBoard'}"
     @endif
 >
+    @unless($user->dismissed_email_notification)
+        @unless($quick)
+            <div class="col-span-1">
+
+            <h2 class="text-green-700 text-lg font-semibold">
+                Email Your Scores
+            </h2>
+                <x-score.email-prompt class="mt-4 text-sm" />
+                <div class="mt-6">
+                    <livewire:score.dismiss-email-prompt-notification
+                        :user="$user"
+                        class="text-xs text-gray-600 hover:text-gray-800"
+                        back-route="account.record-score"
+                    />
+                </div>
+            </div>
+        @endunless
+    @endunless
     <div
         class="col-span-1"
         @if($quick)
@@ -36,7 +54,7 @@
                 </div>
 
                 <div class="col-span-1 flex items-center justify-between">
-                    <x-form.input.button loading-action="recordScoreFromBoard" class="w-44" :primary="! $quick">
+                    <x-form.input.button loading-action="recordScoreFromBoard" class="w-44 font-semibold" :primary="! $quick">
                         @if($recordingForSelf)
                             Record My Score
                         @else
@@ -62,7 +80,7 @@
         x-cloak
         @endif
     >
-        <form class="mt-12" wire:submit.prevent="recordScoreManually" class="mb-0">
+        <form wire:submit.prevent="recordScoreManually" class="mb-0">
 
             @unless($quick)
                 <h2 class="text-green-700 text-lg font-semibold">
@@ -138,7 +156,7 @@
                 </div>
 
                 <div class="col-span-1 flex items-center justify-between">
-                    <x-form.input.button  loading-action="recordScoreManually" class="w-44" :primary="! $quick">
+                    <x-form.input.button  loading-action="recordScoreManually" class="w-44  font-semibold" :primary="! $quick">
                         @if($recordingForSelf)
                             Record My Score
                         @else

@@ -32,6 +32,7 @@ class User extends Authenticatable
         'daily_score_median',
         'daily_score_mode',
         'score_distribution',
+        'dismissed_email_notification'
     ];
 
     protected $hidden = [
@@ -183,5 +184,10 @@ class User extends Authenticatable
                     $number === 7 ? 'X' : $number => $this->dailyScores->where('score', $number)->count(),
                 ];
             });
+    }
+
+    public function dismissEmailNotification()
+    {
+        $this->update(['dismissed_email_notification' => true]);
     }
 }

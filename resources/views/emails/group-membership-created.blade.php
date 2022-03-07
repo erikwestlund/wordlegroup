@@ -5,9 +5,11 @@ You are now a member of the Wordle Group **{{ $groupMembership->group->name }}**
 
 To record scores, visit:
 
-**[{{ $groupMembership->user->recordScoreUrl }}]({{ $groupMembership->user->recordScoreUrl }})**
+**[{{ route('account.record-score') }}]({{ route('account.record-score') }})**
 
-Bookmark this URL and do not share it with any who you do not want to be allowed to record scores for you.
+You can also email your scores to [scores@wordlegroup.com](mailto:scores@wordlegroup.com).
+
+[Add wordle group to your contacts.](https://wordlegroup.com/email/WordleGroup.vcf).
 
 Good Luck!<br>
 @endcomponent
