@@ -30,13 +30,13 @@
                         :rows="7"
                         :tip="$quick ? '' : 'Just paste in your board and we\'ll figure out the dare and score and save your board.'"
                         placeholder="Wordle 250 3/6..."
-                        wire:model="board"
+                        wire:model.lazy="board"
                         class="font-system"
                     />
                 </div>
 
                 <div class="col-span-1 flex items-center justify-between">
-                    <x-form.input.button :primary="! $quick">
+                    <x-form.input.button loading-action="recordScoreFromBoard" class="w-44" :primary="! $quick">
                         @if($recordingForSelf)
                             Record My Score
                         @else
@@ -96,7 +96,7 @@
                         placeholder="3"
                         min="1"
                         max="6"
-                        wire:model="score"
+                        wire:model.lazy="score"
                     />
                     <div class="@if($errors->has('score')) mt-4 @else mt-1 @endif text-gray-500 text-sm">
                         Click the checkbox below if you missed.
@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="col-span-1 flex items-center justify-between">
-                    <x-form.input.button :primary="! $quick">
+                    <x-form.input.button  loading-action="recordScoreManually" class="w-44" :primary="! $quick">
                         @if($recordingForSelf)
                             Record My Score
                         @else

@@ -8,9 +8,15 @@ class Button extends Component
 {
     public $primary;
 
-    public function __construct($primary = true)
+    public $loadingAction;
+
+    public $width;
+
+    public function __construct($primary = true, $loadingAction = null, $width = 'w-auto')
     {
         $this->primary = $primary;
+        $this->loadingAction = $loadingAction;
+        $this->width = $width;
     }
 
     public function render()

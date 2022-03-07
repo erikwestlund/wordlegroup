@@ -7,7 +7,7 @@
                     name="name"
                     label="Invitee's Name"
                     placeholder="Jane Doe"
-                    wire:model="name"
+                    wire:model.lazy="name"
                 />
             </div>
 
@@ -18,12 +18,12 @@
                     type="email"
                     label="Email Address"
                     placeholder="email@address.com"
-                    wire:model="email"
+                    wire:model.lazy="email"
                 />
             </div>
 
             <div class="col-span-1 flex justify-center">
-                <x-form.input.button :primary="false">
+                <x-form.input.button class="w-36" loading-action="invite" :primary="false">
                     Send Invitation
                 </x-form.input.button>
             </div>

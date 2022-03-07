@@ -20,13 +20,13 @@
                             autofocus
                             label="Your Name"
                             placeholder="Jane Doe"
-                            wire:model="name"
+                            wire:model.lazy="name"
                         />
                     </div>
 
 
                     <div class="col-span-1 flex justify-center">
-                        <x-form.input.button>
+                        <x-form.input.button loading-action="accept" class="w-36">
                             Join Group
                         </x-form.input.button>
                     </div>

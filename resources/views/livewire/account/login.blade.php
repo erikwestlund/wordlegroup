@@ -9,12 +9,12 @@
             name="email"
             autofocus
             label="Email Address"
-            wire:model="email"
+            wire:model.lazy="email"
             placeholder="your@email.address"
         />
 
         <div class="col-span-1">
-            <x-form.input.button type="submit">Send Log In Link</x-form.input.button>
+            <x-form.input.button type="submit" loading-action="send" class="w-40">Send Log In Link</x-form.input.button>
         </div>
 
         <div class="col-span-1 pt-6 text-sm">

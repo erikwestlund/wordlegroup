@@ -1,7 +1,7 @@
 <form wire:submit.prevent="store">
     <div class="mt-4 py-8 grid grid-cols-1 gap-y-8">
         <x-form.input.text
-            wire:model="groupName"
+            wire:model.lazy="groupName"
             :autofocus="$autofocus"
             name="groupName"
             :errors="$errors"
@@ -10,7 +10,7 @@
         />
         @unless(Auth::check())
             <x-form.input.text
-                wire:model="email"
+                wire:model.lazy="email"
                 name="email"
                 :errors="$errors"
                 type="email"
@@ -22,5 +22,5 @@
             />
         @endunless
     </div>
-    <x-form.input.button>Create</x-form.input.button>
+    <x-form.input.button loading-action="store" class="w-24">Create</x-form.input.button>
 </form>
