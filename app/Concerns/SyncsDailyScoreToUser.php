@@ -24,8 +24,6 @@ class SyncsDailyScoreToUser
                            ->recordingUserScoreFirst($score->user->id)
                            ->first();
 
-        ray($dailyScore);
-
         $score->user->dailyscoresForBoard($dailyScore->board_number)
                     ->syncWithPivotValues(
                         $dailyScore->id,
