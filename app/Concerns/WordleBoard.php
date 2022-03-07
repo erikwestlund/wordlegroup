@@ -3,6 +3,7 @@
 namespace App\Concerns;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class WordleBoard
 {
@@ -59,10 +60,11 @@ class WordleBoard
         $boardNumber = $this->getBoardNumberFromBoard($board);
         $date = $this->getDateFromBoardNumber($boardNumber);
         $hardMode = $this->getHardModeFromBoard($board);
+        $board = $this->extractBoard($board, $score);
 
         $valid = $score !== null && $boardNumber !== null && $date !== null;
 
-        return compact('score', 'scoreNumber', 'boardNumber', 'date', 'hardMode', 'valid');
+        return compact('score', 'scoreNumber', 'boardNumber', 'date', 'hardMode', 'valid', 'board');
     }
 
     public function getScoreFromBoard($board)
@@ -101,13 +103,48 @@ class WordleBoard
         return app(WordleDate::class)->get($this->firstBoardStartTime->copy()->addDays($boardNumber));
     }
 
-    public function extractBoard($entry)
+    public function extractBoard($entry, $score)
     {
         preg_match_all('/.*\/(\d\*|\d)(.*)/s', $entry, $matches);
 
-        return isset($matches[2][0])
-            ? trim($matches[2][0])
-            : null;
+        if (!isset($matches[2][0])) {
+            return null;
+        }
+
+        $board = trim($matches[2][0]);
+
+        if ($this->boardHasCorrectLineBreaks($board, $score)) {
+            return $board;
+        }
+
+        return $this->attemptBoardRepairForMissingLineBreaks($board);
+    }
+
+    public function attemptBoardRepairForMissingLineBreaks($board)
+    {
+        preg_match_all('/([^\s]{5})(\s+)/', $board, $matches);
+
+        // If we can't match the spaces, give up.
+        if (!isset($matches[2])) {
+            return $board;
+        }
+
+        // If we can, grab the space strings, replace each with new lines
+        foreach ($matches[2] as $spaceString) {
+            // Replace first occurrence of that string.
+            $pos = strpos($board, $spaceString);
+            if ($pos !== false) {
+                $board = substr_replace($board, "\n", $pos, strlen($spaceString));
+            }
+        }
+
+        return $board;
+    }
+
+    public function boardHasCorrectLineBreaks($board, $score)
+    {
+        // Should have at least Score - 1 line breaks
+        return Str::substrCount($board, "\n") === (int)($score - 1);
     }
 
     public function validateBoardNumber($boardNumber)

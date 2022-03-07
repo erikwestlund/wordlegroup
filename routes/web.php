@@ -24,6 +24,7 @@ Route::get('/group/{group}/verify', \App\Http\Livewire\Group\Verify::class)->nam
 
 Route::get('/group/invitation/{invitation}', \App\Http\Livewire\Group\Invitation::class)->name('group.invitation');
 
+Route::post('/score/email', \App\Http\Controllers\MailScoreMessageController::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', \App\Http\Controllers\LogoutController::class)->name('logout');

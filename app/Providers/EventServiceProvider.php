@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Events\GroupCreated;
 use App\Events\GroupMembershipCreated;
+use App\Events\ScoreEmailReceived;
 use App\Events\UnverifiedGroupCreated;
+use App\Listeners\RecordScoreFromEmail;
 use App\Listeners\SendGroupCreationEmail;
 use App\Listeners\SendGroupMembershipCreationEmail;
 use App\Listeners\SendUnverifiedGroupCreationEmail;
@@ -37,6 +39,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         GroupMembershipCreated::class => [
             SendGroupMembershipCreationEmail::class
+        ],
+        ScoreEmailReceived::class => [
+            RecordScoreFromEmail::class
         ]
     ];
 

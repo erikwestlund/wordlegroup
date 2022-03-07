@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "aws/aws-php-sns-message-validator": "^1.6",
         "aws/aws-sdk-php": "^3.212",
         "blade-ui-kit/blade-icons": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
@@ -14,6 +15,7 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
+        "php-mime-mail-parser/php-mime-mail-parser": "^7.0",
         "spatie/laravel-ray": "^1.29"
     },
     "require-dev": {
