@@ -13,7 +13,7 @@
                 </div>
             @endif
             @unless($user->dismissed_email_notification)
-            <div @if($user->daily_scores_recorded > 0) class="mt-8" @endif>
+            <div @if($user->daily_scores_recorded > 0) class="pt-8" @endif>
                 <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>
                 <x-score.email-prompt class="text-gray-600 text-sm text-center mt-4" />
                 <div class="mt-6 flex justify-center">
