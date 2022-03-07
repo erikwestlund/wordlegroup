@@ -22,7 +22,7 @@
                             <span
                                 class="text-gray-900 font-medium"
                             >{{ $membership->group->name }}</span>
-                            <p class="text-gray-500">{{ $membership->group->member_count }} {{ Str::plural('Member', $membership->group->member_count) }}@if($membership->group->leaderboard), Leader: {{ $membership->group->leaderboard->first()['name']  }}@endif</p>
+                            <p class="text-gray-500">{{ $membership->group->member_count }} {{ Str::plural('Member', $membership->group->member_count) }}@if($membership->group->leaderboard && isset($membership->group->leaderboard->first()['name'])), Leader: {{ $membership->group->leaderboard->first()['name']  }}@endif</p>
                         </div>
 
 
