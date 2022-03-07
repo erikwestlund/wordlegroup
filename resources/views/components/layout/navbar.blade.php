@@ -19,7 +19,7 @@
                     </a>
                     <a class="font-serif font-semibold text-sm sm:text-base mr-4 last:mr-0 border border-transparent bg-white text-green-900 px-2 sm:px-3 hover:bg-gray-100 py-1 sm:py-1 rounded-md inline-flex items-center" href="{{ route('group.create') }}">
                         <x-icon-regular.plus class="mr-2 fill-green-700" />
-                        Create Group
+                        Group
                     </a>
                 @endif
 
