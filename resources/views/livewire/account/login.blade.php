@@ -14,7 +14,7 @@
         />
 
         <div class="col-span-1">
-            <x-form.input.button type="submit" loading-action="send" class="w-40">Send Log In Link</x-form.input.button>
+            <x-form.input.button type="submit" loading-action="send" class="w-44">Send Log In Link</x-form.input.button>
         </div>
 
         <div class="col-span-1 pt-6 text-sm">
