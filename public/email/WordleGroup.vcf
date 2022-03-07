@@ -1,1 +1,11 @@
-BEGIN:VCARD VERSION:2.1 N:Wordle Group FN:Wordle Group ORG:Wordle Group URL;WORK:https://wordlegroup.com EMAIL;INTERNET:scores@wordlegroup.com END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//iPhone OS 15.3.1//EN
+N:;;;;
+FN:Wordle Group
+ORG:Wordle Group;
+EMAIL;type=INTERNET;type=HOME;type=pref:scores@wordlegroup.com
+item1.URL;type=pref:https://wordlegroup.com
+item1.X-ABLabel:_$!<HomePage>!$_
+X-ABShowAs:COMPANY
+END:VCARD
