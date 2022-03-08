@@ -85,6 +85,13 @@ class Login extends Component
         $this->codeSent = true;
     }
 
+    public function sendAgain()
+    {
+        $this->send();
+
+        $this->dispatchBrowserEvent('login-code-resent');
+    }
+
     public function render()
     {
         return view('livewire.account.login');
