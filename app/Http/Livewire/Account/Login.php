@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Account;
 
 use App\Mail\LoginEmail;
 use App\Models\User;
+use App\Rules\ValidLoginCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -15,29 +16,38 @@ class Login extends Component
 
     public $attempt;
 
-    protected $rules = [
-        'email' => ['required', 'exists:users'],
-    ];
+    public $loginCode;
+
+    public $codeSent;
+
+    public $user;
 
     public function mount(Request $request)
     {
         if ($request->input('id') && $request->input('token')) {
-            $this->attemptLogIn($request);
+            $this->attemptLogInThroughEmailLink($request);
         }
     }
 
-    protected function attemptLogIn($request)
+    protected function attemptLogInThroughEmailLink($request)
     {
         $this->user = User::find($request->input('id'));
 
         if (!$this->user || !$this->user->validateAuthToken($request->input('token'))) {
             $this->addError('attempt', 'This log in link is no longer valid.');
+
             return;
         }
 
+        return $this->logUserIn();
+    }
+
+    public function logUserIn()
+    {
         Auth::loginUsingId($this->user->id, true);
 
         $this->user->resetAuthToken();
+        $this->user->resetLoginCode();
 
         session()->flash('message', 'You have been logged in.');
 
@@ -51,20 +61,28 @@ class Login extends Component
         ];
     }
 
+    public function attemptLoginWithCode()
+    {
+        $this->validate(['loginCode' => ['required', new ValidLoginCode($this->user)]]);
+
+        return $this->logUserIn();
+    }
+
     public function send()
     {
-        $this->validate();
+        $this->validate(['email'     => ['required_without:login_code', 'exists:users'],]);
 
-        $user = User::where('email', $this->email)->first();
+        $this->user = User::where('email', $this->email)->first();
 
-        $user->generateNewAuthToken();
+        $this->user->generateNewAuthToken();
+        $this->user->generateNewLoginCode();
 
-        Mail::to($user)
-            ->send(new LoginEmail($user));
+        Mail::to($this->user)
+            ->send(new LoginEmail($this->user));
 
-        session()->flash('message', 'Log in email sent.');
+        $this->dispatchBrowserEvent('login-code-sent');
 
-        return redirect()->to(route('login'));
+        $this->codeSent = true;
     }
 
     public function render()

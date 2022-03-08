@@ -18,7 +18,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Prunable, SoftDeletes;
 
-    protected $dates = ['email_verified_at', 'auth_token_generated_at'];
+    protected $dates = ['email_verified_at', 'auth_token_generated_at', 'login_code_generated_at'];
 
     protected $fillable = [
         'name',
@@ -28,11 +28,13 @@ class User extends Authenticatable
         'auth_token',
         'auth_token_generated_at',
         'daily_scores_recorded',
+        'login_code',
+        'login_code_generated_at',
         'daily_score_mean',
         'daily_score_median',
         'daily_score_mode',
         'score_distribution',
-        'dismissed_email_notification'
+        'dismissed_email_notification',
     ];
 
     protected $hidden = [
@@ -40,35 +42,51 @@ class User extends Authenticatable
         'remember_token',
         'auth_token',
         'auth_token_generated_at',
+        'login_code',
+        'login_code_generated_at',
     ];
+
+    public function dailyScoresForBoard($boardNumber)
+    {
+        return $this->dailyScores()
+                    ->wherePivot('board_number', $boardNumber);
+    }
+
+    public function dailyScores()
+    {
+        return $this->belongsToMany(Score::class, 'user_score');
+    }
+
+    public function dismissEmailNotification()
+    {
+        $this->update(['dismissed_email_notification' => true]);
+    }
+
+    public function generateNewLoginCode()
+    {
+        $this->update([
+            'login_code'              => app(Tokens::class)->generateDigits(6),
+            'login_code_generated_at' => now(),
+        ]);
+    }
 
     public function getAccountUrlAttribute()
     {
         return route('account', $this);
     }
 
-    public function getVerifyUrlAttribute()
+    public function getAverageScoreAttribute()
     {
-        return route('account.verify', $this) . '?token=' . $this->auth_token;
+        return $this->scores()
+                    ->orderByRaw("FIELD(recording_user_id, {$this->id}) DESC")
+                    ->orderByDesc('board_number')
+                    ->groupBy('board_number')
+                    ->get();
     }
 
-
-    public function verified()
+    public function scores()
     {
-        return $this->email_verified_at !== null;
-    }
-
-    public function verifyEmail()
-    {
-        $this->update(['email_verified_at' => now()]);
-    }
-
-    public function generateNewAuthToken()
-    {
-        $this->update([
-            'auth_token'              => app(Tokens::class)->generate(),
-            'auth_token_generated_at' => now(),
-        ]);
+        return $this->hasMany(Score::class);
     }
 
     public function getLoginUrlAttribute()
@@ -76,37 +94,9 @@ class User extends Authenticatable
         return route('login') . '?id=' . $this->id . '&token=' . $this->auth_token;
     }
 
-    public function scopeTokenNotExpired($query)
+    public function getVerifyUrlAttribute()
     {
-        return $query->where('auth_token_generated_at', '>', now()->subDay());
-    }
-
-    public function tokenExpired()
-    {
-        return $this->auth_token_generated_at < now()->subHours(config('settings.auth_token_valid_hours'));
-    }
-
-    public function tokenNotExpired()
-    {
-        return !$this->tokenExpired();
-    }
-
-    public function validateAuthToken($authToken)
-    {
-        return $this->tokenNotExpired() && $this->auth_token === $authToken;
-    }
-
-    public function sendEmailVerificationNotification()
-    {
-        $this->generateNewAuthToken();
-
-        Mail::to($this->email)
-            ->send(new UserVerification($this));
-    }
-
-    public function resetAuthToken()
-    {
-        $this->update(['auth_token' => null, 'auth_token_generated_at' => null]);
+        return route('account.verify', $this) . '?token=' . $this->auth_token;
     }
 
     public function memberships()
@@ -120,34 +110,51 @@ class User extends Authenticatable
                      ->whereNull('email_verified_at');
     }
 
-    public function scores()
-    {
-        return $this->hasMany(Score::class);
-    }
-
     public function recordedGroupMembershipScores()
     {
         return $this->belongsToMany(Score::class, 'group_membership_score');
     }
 
-    public function dailyScores()
+    public function resetAuthToken()
     {
-        return $this->belongsToMany(Score::class, 'user_score');
+        $this->update(['auth_token' => null, 'auth_token_generated_at' => null]);
     }
 
-    public function dailyScoresForBoard($boardNumber)
+    public function resetLoginCode()
     {
-        return $this->dailyScores()
-                    ->wherePivot('board_number', $boardNumber);
+        $this->update(['login_code' => null, 'login_code_generated_at' => null]);
     }
 
-    public function getAverageScoreAttribute()
+    public function scopeTokenNotExpired($query)
     {
-        return $this->scores()
-                    ->orderByRaw("FIELD(recording_user_id, {$this->id}) DESC")
-                    ->orderByDesc('board_number')
-                    ->groupBy('board_number')
-                    ->get();
+        return $query->where('auth_token_generated_at', '>', now()->subDay());
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->generateNewAuthToken();
+
+        Mail::to($this->email)
+            ->send(new UserVerification($this));
+    }
+
+    public function generateNewAuthToken()
+    {
+        $this->update([
+            'auth_token'              => app(Tokens::class)->generate(),
+            'auth_token_generated_at' => now(),
+        ]);
+    }
+
+    public function updateStats()
+    {
+        $this->update([
+            'daily_scores_recorded' => $this->dailyScores()->count(),
+            'daily_score_mean'      => $this->getMeanDailyScore(),
+            'daily_score_median'    => $this->getMedianDailyScore(),
+            'daily_score_mode'      => $this->getModeDailyScore(),
+            'score_distribution'    => $this->getScoreDistribution(),
+        ]);
     }
 
     public function getMeanDailyScore()
@@ -165,17 +172,6 @@ class User extends Authenticatable
         return $this->dailyScores->isNotEmpty() ? collect($this->dailyScores->mode('score'))->min() : null;
     }
 
-    public function updateStats()
-    {
-        $this->update([
-            'daily_scores_recorded' => $this->dailyScores()->count(),
-            'daily_score_mean'      => $this->getMeanDailyScore(),
-            'daily_score_median'    => $this->getMedianDailyScore(),
-            'daily_score_mode'      => $this->getModeDailyScore(),
-            'score_distribution'    => $this->getScoreDistribution(),
-        ]);
-    }
-
     public function getScoreDistribution()
     {
         return collect([1, 2, 3, 4, 5, 6, 7])
@@ -186,8 +182,48 @@ class User extends Authenticatable
             });
     }
 
-    public function dismissEmailNotification()
+    public function validateAuthToken($authToken)
     {
-        $this->update(['dismissed_email_notification' => true]);
+        return $this->tokenNotExpired() && $this->auth_token === $authToken;
+    }
+
+    public function tokenNotExpired()
+    {
+        return !$this->tokenExpired();
+    }
+
+    public function tokenExpired()
+    {
+        return $this->auth_token_generated_at < now()->subHours(config('settings.auth_token_valid_hours'));
+    }
+
+    public function validateLogin($providedCode)
+    {
+        return $this->validLoginCode($providedCode) && $this->loginCodeActive();
+    }
+
+    public function validLoginCode($providedCode)
+    {
+        return $this->login_code === $providedCode;
+    }
+
+    public function loginCodeActive()
+    {
+        return !$this->loginCodeExpired();
+    }
+
+    public function loginCodeExpired()
+    {
+        return now() > $this->login_code_generated_at->addMinutes(config('settings.login_code_valid_minutes'));
+    }
+
+    public function verified()
+    {
+        return $this->email_verified_at !== null;
+    }
+
+    public function verifyEmail()
+    {
+        $this->update(['email_verified_at' => now()]);
     }
 }

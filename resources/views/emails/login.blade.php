@@ -1,7 +1,13 @@
 @component('mail::message')
 # Log In To Wordle Group
 
-Click the below link to log in to Wordle Group.
+To log into Wordle Group, enter the below code:
+
+`{{ $user->login_code }}`
+
+This code expires in 15 minutes.
+
+You can also just click the below link to log in automatically.
 
 @component('mail::button', ['url' => $user->loginUrl])
 Log In

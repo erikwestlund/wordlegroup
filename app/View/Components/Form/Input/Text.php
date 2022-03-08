@@ -8,12 +8,15 @@ use function view;
 
 class Text extends Component
 {
-    public $name;
-    public $label;
-    public $placeholder;
     public $errors;
 
-    public function __construct($name, $errors =  null, $label = '', $placeholder = '')
+    public $label;
+
+    public $name;
+
+    public $placeholder;
+
+    public function __construct($name, $errors = null, $label = '', $placeholder = '')
     {
         $this->name = $name;
         $this->label = $label;
