@@ -25,10 +25,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
     <link rel="shortcut icon" href="/favicons/favicon.ico">
-
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
-    <script src="{{ mix('js/app.js') }}"></script>
+    @stack('styles')
 
+    <script src="{{ mix('js/app.js') }}"></script>
     @stack('scripts')
 
     @livewireStyles

@@ -15,11 +15,17 @@ class Date extends Component
 
     public $options;
 
+    public $pickerName;
+
     public $placeholder;
 
-    public function __construct($name, $errors = null, $options = [], $label = '', $placeholder = '')
+    public $defaultValue;
+
+    public function __construct($name, $errors = null, $options = [], $label = '', $placeholder = '', $defaultValue = null)
     {
         $this->name = $name;
+        $this->defaultValue = $defaultValue ?? now()->format('Y-m-d');
+        $this->pickerName = 'picker_' . uniqid();
         $this->label = $label;
         $this->options = $this->getOptions($options);
         $this->placeholder = $placeholder;
@@ -30,9 +36,8 @@ class Date extends Component
     {
         return array_merge([
             'dateFormat' => 'Y-m-d',
+            'defaultDate' => now()->format('Y-m-d'),
             'enableTime' => false,
-            'altFormat'  => 'Y-m-d',
-            'altInput'   => true,
         ], $options);
     }
 
