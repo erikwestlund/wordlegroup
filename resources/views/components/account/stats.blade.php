@@ -21,6 +21,7 @@
         </div>
     </div>
     <div class="mt-6">
-        <div class="text-gray-500 text-sm text-center">Based on <span class="font-semibold">{{ $user->daily_scores_recorded }}</span> scores.</div>
+        <div class="text-gray-500 text-sm text-center">Based on <span class="font-semibold">{{ $user->daily_scores_recorded }}</span>
+            {{ Str::plural('score', $user->daily_scores_recorded ) }}.</div>
     </div>
 </div>
