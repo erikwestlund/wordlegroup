@@ -15,17 +15,18 @@
                         value="{{ $pageName }}" {{ $pageName === 'placeholder' ? ' disabled selected' : '' }}
                     >{{ $page['title'] }}</option>
                 @elseif($pageName === 'userGroups')
-                    <optgroup label="{{ $page['title'] }}">
-                        @foreach($user->memberships as $membership)
-                            <option
-                                value="group.{{ $membership->group_id }}" {{ $activePage === "group.{$membership->group_id}" ? ' selected' : '' }}>{{ $membership->group->name }}</option>
-                        @endforeach
-                    </optgroup>
+
                 @else
                     <option
                         value="{{ $pageName }}" {{ $activePage === $pageName ? ' selected' : '' }}>{{ $page['title'] }}</option>
                 @endif
             @endforeach
+            <optgroup label="Group Pages">
+                @foreach($user->memberships as $membership)
+                    <option
+                        value="group.{{ $membership->group_id }}" {{ $activePage === "group.{$membership->group_id}" ? ' selected' : '' }}>{{ $membership->group->name }}</option>
+                @endforeach
+            </optgroup>
         </select>
     </div>
     <div class="hidden sm:block">
