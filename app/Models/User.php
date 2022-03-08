@@ -214,6 +214,10 @@ class User extends Authenticatable
 
     public function loginCodeExpired()
     {
+        if( ! $this->login_code_generated_at) {
+            return true;
+        }
+        
         return now() > $this->login_code_generated_at->addMinutes(config('settings.login_code_valid_minutes'));
     }
 
