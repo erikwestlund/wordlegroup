@@ -1,4 +1,4 @@
-<x-layout.page-container title="Wordle Group | Keep Score With Friends" :top-padding="false">
+<x-layout.page-container title="Keep Score With Friends In Wordle - Wordle Group" :top-padding="false">
     <div class="w-full mt-2">
         <div>
             <div>
