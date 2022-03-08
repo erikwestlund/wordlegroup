@@ -5,7 +5,7 @@
 
     <title>@stack('title')</title>
 
-    <meta property="og:title" content="Keep Score In Wordle With Friends">
+    <meta property="og:title" content="Wordle Group - Keep Score In Wordle With Friends">
     <meta property="og:site_name" content="Wordle Group">
     <meta property="og:url" content="https://wordlegroup.com">
     <meta property="og:description" content="A free and easy way to keep score in Wordle with your friends.">
