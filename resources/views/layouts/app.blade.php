@@ -13,6 +13,8 @@
     <meta property="og:description" content="A free and easy way to keep score in Wordle with your friends.">
     <meta property="og:type" content="website">
 
+    @stack('meta')
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600;700&display=swap" rel="stylesheet">

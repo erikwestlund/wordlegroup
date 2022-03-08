@@ -4,6 +4,11 @@
     x-data="{show: 'haveBoard'}"
     @endif
 >
+
+    @push('meta')
+        <meta name="turbo-cache-control" content="no-cache">
+    @endpush
+
     @unless($user->dismissed_email_notification)
         @unless($quick)
             <div class="col-span-1">

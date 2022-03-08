@@ -34,7 +34,7 @@ class InviteMember extends Component
 
         GroupMembershipInvitation::createInvitation($this->group, $this->email, $this->name);
 
-        session()->flash('message', $this->email . ' has been invited to join ' . $this->group->name . '.');
+        session()->flash('message', $this->name . ' (' . $this->email . ') has been invited to join ' . $this->group->name . '.');
 
         return redirect()->to(route('group.home', $this->group));
     }

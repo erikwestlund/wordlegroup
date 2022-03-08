@@ -24,3 +24,8 @@
     animation: spin 1500ms linear infinite;
 
 }
+
+.turbo-progress-bar {
+    height: 3px;
+    background-color: white;
+}

@@ -6,57 +6,57 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                     <tr>
-                        <th scope="col" class="w-16 px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Place</th>
-                        <th scope="col" class="px-4 py-2 w-full text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
-                        <th scope="col" class="whitespace-nowrap text-right px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Avg. Score</th>
-                        <th scope="col" class="whitespace-nowrap text-right px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Games</th>
+                        <th scope="col" class="w-16 pl-1 pr-3 py-1 sm:px-4 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Pl.</span><span class="hidden sm:inline">Place</span></th>
+                        <th scope="col" class="px-1 py-1 sm:px-4 sm:py-2 w-full text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+                        <th scope="col" class="whitespace-nowrap text-right px-2 py-1 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Avg.</span><span class="hidden sm:inline">Avg. Score</span></th>
+                        <th scope="col" class="whitespace-nowrap text-right px-2 py-1 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Num.</span><span class="hidden sm:inline">Games</span></th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($group->leaderboard as $position)
                     <tr class="bg-white">
-                        <td class="text-center px-4 py-2 whitespace-nowrap
+                        <td class="text-center pl-1 pr-3 py-1 sm:px-4 sm:py-2 whitespace-nowrap
                             @if($position['place'] === 1)
-                            text-xl font-bold bg-yellow-200 text-yellow-700
+                            text-base sm:text-xl font-bold bg-yellow-200 text-yellow-700
                             @elseif($position['place'] === 2)
-                            text-lg font-semibold bg-gray-200 text-gray-800
+                            text-sm sm:text-lg font-semibold bg-gray-200 text-gray-800
                             @elseif($position['place'] === 3)
-                            text-sm font-medium bg-orange-100 text-orange-800
+                            text-sm sm:text-sm font-semibold bg-orange-100 text-orange-800
                             @else
                             text-xs font-medium text-gray-900
                             @endif
                         ">{{ $position['place'] }}</td>
-                        <td class="px-4 py-2 whitespace-nowrap
+                        <td class="px-1 py-1 sm:px-4 sm:py-2 whitespace-nowrap truncate
                             @if($position['place'] === 1)
-                            text-xl font-bold bg-yellow-200 text-yellow-700
+                            text-base sm:text-xl font-bold bg-yellow-200 text-yellow-700
                             @elseif($position['place'] === 2)
-                            text-lg font-semibold bg-gray-200 text-gray-800
+                            text-sm sm:text-lg font-bold sm:font-bold bg-gray-200 text-gray-800
                             @elseif($position['place'] === 3)
-                            text-sm font-medium bg-orange-100 text-orange-800
+                            text-sm sm:text-sm font-semibold bg-orange-100 text-orange-800
                             @else
-                            text-sm text-gray-900
+                            text-sm sm:text-sm text-gray-900
                             @endif
-                        ">{{ $position['name'] }}</td>
-                        <td class="pl-4 pr-5 py-2 whitespace-nowrap  text-right
+                        " title="{{ $position['name'] }}">{{ $position['name'] }}</td>
+                        <td class="px-2 py-1 sm:py-2 whitespace-nowrap text-right
                             @if($position['place'] === 1)
-                            text-xl font-bold bg-yellow-200 text-yellow-700
+                            text-base sm:text-xl font-bold bg-yellow-200 text-yellow-700
                             @elseif($position['place'] === 2)
-                            text-lg font-semibold bg-gray-200 text-gray-800
+                            text-sm sm:text-lg font-bold sm:font-bold bg-gray-200 text-gray-800
                             @elseif($position['place'] === 3)
-                            text-sm font-medium bg-orange-100 text-orange-800
+                            text-sm sm:text-sm font-semibold bg-orange-100 text-orange-800
                             @else
-                            text-sm text-gray-900
+                            text-sm sm:text-sm text-gray-900
                             @endif
                         ">{!! $position['stats']['mean'] ?: "&#x2014;" !!}</td>
-                        <td class="pl-4 pr-5 py-2 whitespace-nowrap  text-right
+                        <td class="px-2 py-1 sm:py-2 whitespace-nowrap  text-right
                             @if($position['place'] === 1)
-                            text-xl font-bold bg-yellow-200 text-yellow-700
+                            text-base sm:text-xl font-bold bg-yellow-200 text-yellow-700
                             @elseif($position['place'] === 2)
-                            text-lg font-semibold bg-gray-200 text-gray-800
+                            text-sm sm:text-lg font-bold sm:font-bold bg-gray-200 text-gray-800
                             @elseif($position['place'] === 3)
-                            text-sm font-medium bg-orange-100 text-orange-800
+                            text-sm sm:text-sm font-semibold bg-orange-100 text-orange-800
                             @else
-                            text-sm text-gray-900
+                            text-sm sm:text-sm text-gray-900
                             @endif
                         ">{{ $position['stats']['count'] }}</td>
                     </tr>
