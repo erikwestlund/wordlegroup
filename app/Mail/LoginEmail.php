@@ -21,7 +21,7 @@ class LoginEmail extends Mailable
 
     public function build()
     {
-        return $this->subject('Your Wordle Group Log In Code')
+        return $this->subject('Your Wordle Group Login Code')
                     ->markdown('emails.login', [
                         'user' => $this->user
                     ]);

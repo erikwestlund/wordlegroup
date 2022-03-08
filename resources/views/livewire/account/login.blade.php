@@ -17,7 +17,7 @@
         @if($codeSent)
 
             <div class="bg-green-50 border border-green-700 mb-2 rounded text-sm px-3 py-2 text-green-800">
-                We have sent you an email code. Enter it below.
+                We have emailed you a login code. Enter it below.
             </div>
 
             <x-form.input.text

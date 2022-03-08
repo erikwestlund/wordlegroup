@@ -202,9 +202,9 @@ class User extends Authenticatable
         return $this->validLoginCode($providedCode) && $this->loginCodeActive();
     }
 
-    public function validLoginCode($providedCode)
+    public function validLoginCode(string $providedCode)
     {
-        return $this->login_code === $providedCode;
+        return (string) $this->login_code ===  $providedCode;
     }
 
     public function loginCodeActive()

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('login_code')->nullable()->after('password');
+            $table->string('login_code')->nullable()->after('password');
             $table->timestamp('login_code_generated_at')->nullable()->after('login_code');
         });
     }
