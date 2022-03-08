@@ -68,7 +68,7 @@ class Invitation extends Component
             'group_id' => $this->invitation->group_id,
         ]);
 
-        Auth::loginUsingId($user->id);
+        Auth::loginUsingId($user->id, true);
 
         $this->invitation->delete();
 
