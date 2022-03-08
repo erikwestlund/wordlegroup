@@ -8,17 +8,20 @@ class Dropdown extends Component
 {
     public $name;
 
-    public $id;
+    public $width;
 
-    public $active;
+    public $id;
 
     public $label;
 
-    public function __construct($name, $label, $active = false)
+    public $buttonClass;
+
+    public function __construct($name, $label, $width = 'w-64 ', $buttonClass = null)
     {
         $this->name = $name;
         $this->label = $label;
-        $this->active = $active;
+        $this->buttonClass = $buttonClass;
+        $this->width = $width;
     }
 
     public function render()

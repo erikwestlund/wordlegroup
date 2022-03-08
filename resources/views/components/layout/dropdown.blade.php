@@ -30,7 +30,7 @@
             :aria-expanded="open"
             :aria-controls="$id('{{ $name }}')"
             type="button"
-            class="inline-flex items-center @if($active) bg-gray-100 text-gray-700 @else text-gray-500 hover:text-gray-700 @endif px-3 py-2 font-medium text-sm rounded-md"
+            class="{{ $buttonClass }} inline-flex items-center"
         >
             <span>{{ $label }}</span>
             <x-icon-regular.chevron-down x-show="! open" class="ml-2 h-3 w-3 text-gray-500" />
@@ -44,7 +44,7 @@
             x-on:click.outside="close($refs.button)"
             :id="$id('{{ $name }}')"
             style="display: none;"
-            class="absolute mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+            class="absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none {{$width}}"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="{{ $name }}"
