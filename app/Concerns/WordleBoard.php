@@ -105,13 +105,14 @@ class WordleBoard
 
     public function extractBoard($entry, $score)
     {
-        preg_match_all('/.*\/(\d\*|\d)(.*)/s', $entry, $matches);
+        preg_match_all('/([⬜🟨🟩⬛].*[⬜🟨🟩⬛])/s', $entry, $matches);
+//        preg_match_all('/.*\/(\d\*|\d)(.*)/s', $entry, $matches);
 
-        if (!isset($matches[2][0])) {
+        if (!isset($matches[1][0])) {
             return null;
         }
 
-        $board = trim($matches[2][0]);
+        $board = trim($matches[1][0]);
 
         if ($this->boardHasCorrectLineBreaks($board, $score)) {
             return $board;
