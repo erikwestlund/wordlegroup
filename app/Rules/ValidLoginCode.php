@@ -18,7 +18,7 @@ class ValidLoginCode implements Rule
 
     public function passes($attribute, $value)
     {
-        if ($this->user->validateLogin($value)) {
+        if ($this->user->validateLoginCode($value)) {
             return true;
         }
 

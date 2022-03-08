@@ -197,14 +197,14 @@ class User extends Authenticatable
         return $this->auth_token_generated_at < now()->subHours(config('settings.auth_token_valid_hours'));
     }
 
-    public function validateLogin($providedCode)
+    public function validateLoginCode($providedCode)
     {
         return $this->validLoginCode($providedCode) && $this->loginCodeActive();
     }
 
     public function validLoginCode(string $providedCode)
     {
-        return (string) $this->login_code ===  $providedCode;
+        return (string)$this->login_code === $providedCode;
     }
 
     public function loginCodeActive()
@@ -214,10 +214,10 @@ class User extends Authenticatable
 
     public function loginCodeExpired()
     {
-        if( ! $this->login_code_generated_at) {
+        if (!$this->login_code_generated_at) {
             return true;
         }
-        
+
         return now() > $this->login_code_generated_at->addMinutes(config('settings.login_code_valid_minutes'));
     }
 
