@@ -7,11 +7,14 @@
             name="tabs"
             class="block w-full focus:ring-green-500 focus:border-green-500 border-gray-300 rounded-md"
             x-data="{selected: '{{ $activePage }}', urlMap: {{ json_encode($pages, JSON_HEX_APOS) }} }"
-            x-model="selected"
-            x-on:change="window.location.href = urlMap[selected]['route']"
+            x-on:change="window.location.href = urlMap[$event.target.value]['route']"
         >
             @foreach($pages as $pageName => $page)
+                @if(isset($page['placeholder']) && $page['placeholder'])
+                <option value="{{ $pageName }}" {{ $pageName === 'placeholder' ? ' disabled selected' : '' }}>{{ $page['title'] }}</option>
+                @else
                 <option value="{{ $pageName }}" {{ $activePage === $pageName ? ' selected' : '' }}>{{ $page['title'] }}</option>
+                @endif
             @endforeach
         </select>
     </div>

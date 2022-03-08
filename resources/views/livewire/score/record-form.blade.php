@@ -1,5 +1,5 @@
 <div
-    class="grid grid-cols-1 @if($quick) gap-y-4 @else gap-y-12 @endif"
+    class="grid grid-cols-1 @if($quick) gap-y-4 @else gap-y-8 @endif divide-y divide-gray-200"
     @if($quick)
     x-data="{show: 'haveBoard'}"
     @endif
@@ -28,7 +28,7 @@
         x-show="show === 'haveBoard'"
         @endif
     >
-        <form wire:submit.prevent="recordScoreFromBoard" class="mb-0">
+        <form wire:submit.prevent="recordScoreFromBoard" class="mt-8 mb-0">
             @unless($quick)
                 <h2 class="text-green-700 text-lg font-semibold">
                     @if($recordingForSelf)
@@ -80,7 +80,7 @@
         x-cloak
         @endif
     >
-        <form wire:submit.prevent="recordScoreManually" class="mb-0">
+        <form wire:submit.prevent="recordScoreManually" class="mt-8 mb-0">
 
             @unless($quick)
                 <h2 class="text-green-700 text-lg font-semibold">

@@ -8,24 +8,33 @@ class Nav extends Component
 {
     public $activePage;
 
+    public $noneSelected;
+
     public function __construct($activePage)
     {
-        $this->activePage = $activePage;
+
+        $this->noneSelected = !in_array($activePage, collect($this->getPages())->keys()->toArray());
+        $this->activePage = $this->noneSelected ? 'navigation' : $activePage;
     }
 
 
     public function getPages()
     {
         return [
-            'home'        => [
+            'placeholder'   => [
+                'title'       => 'Navigation',
+                'placeholder' => true,
+                'route' => null
+            ],
+            'home'         => [
                 'route' => route('account.home'),
                 'title' => 'Summary',
             ],
-            'groups'      => [
+            'groups'       => [
                 'route' => route('account.groups'),
                 'title' => 'My Groups',
             ],
-            'record-score'      => [
+            'record-score' => [
                 'route' => route('account.record-score'),
                 'title' => 'Record Score',
             ],
