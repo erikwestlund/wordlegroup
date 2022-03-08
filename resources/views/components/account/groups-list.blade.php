@@ -20,10 +20,24 @@
                     >
                         <div class="flex-1 px-4 py-2 text-sm truncate">
                             <span
-                                class="text-gray-900 font-semibold"
+                                class="text-gray-900 font-bold"
                             >{{ $membership->group->name }}</span>
-                            <p class="text-gray-500 truncate">{{ $membership->group->member_count }} {{ Str::plural('Member', $membership->group->member_count) }}@if($membership->group->leaderboard && isset($membership->group->leaderboard->first()['name'])), Leader: {{ $membership->group->leaderboard->first()['name']  }}@endif</p>
-                        </div>
+                            <ul class="mt-0.5 text-sm">
+                                @if($membership->group->leaderboard && isset($membership->group->leaderboard->first()['name']))
+                                    <li>
+                                        <span class="font-medium">Leader:</span>
+                                        {{ $membership->group->leaderboard->first()['name']  }}, {{ number_format($membership->group->leaderboard->first()['stats']['mean'], 2) }}
+                                    </li>
+                                    <li>
+                                        <span class="font-medium">Avg. Score:</span>
+                                        {{ number_format($membership->group->score_mean, 2) }}
+                                    </li>
+                                    <li>
+                                        <span class="font-medium">My Place:</span>
+                                        {{ $membership->group->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $membership->group->leaderboard->pluck('place')->max() }}
+                                    </li>
+                                @endif
+                            </ul>                        </div>
 
 
                     </div>

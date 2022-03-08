@@ -44,7 +44,7 @@
             x-on:click.outside="close($refs.button)"
             :id="$id('{{ $name }}')"
             style="display: none;"
-            class="absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none {{$width}}"
+            class="z-50 absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none {{$width}}"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="{{ $name }}"
