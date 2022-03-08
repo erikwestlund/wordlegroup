@@ -38,10 +38,10 @@ class Nav extends Component
                 'route' => route('account.record-score'),
                 'title' => 'Record Score',
             ],
-//            'settings'        => [
-//                'route' => route('account.home'),
-//                'title' => 'Settings',
-//            ],
+            'settings'        => [
+                'route' => route('account.settings'),
+                'title' => 'Settings',
+            ],
         ];
     }
 

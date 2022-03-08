@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/account', \App\Http\Livewire\Account\Home::class)->name('account.home');
     Route::get('/account/groups', \App\Http\Livewire\Account\Groups::class)->name('account.groups');
+    Route::get('/account/settings', \App\Http\Livewire\Account\Settings::class)->name('account.settings');
     Route::get('/account/record-score', \App\Http\Livewire\Account\RecordScore::class)->name('account.record-score');
 //    Route::get('/group/{group}/manage', \App\Http\Livewire\Group\Manage::class)->name('group.manage');
     Route::get('/group/{group}/not-verified', \App\Http\Livewire\Group\NotVerifiedNotification::class)->name('group.not-verified');
