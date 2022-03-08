@@ -1,4 +1,4 @@
-<x-layout.page-container :heading="$group->name" :title="$group->name">
+<x-layout.page-container :heading="$group->name" :title="$group->name . ' Wordle Group'">
 
     <x-account.home-layout page="group">
 
