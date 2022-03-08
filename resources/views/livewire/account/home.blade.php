@@ -13,30 +13,46 @@
                 </div>
             @endif
             @unless($user->dismissed_email_notification)
-            <div @if($user->daily_scores_recorded > 0) class="pt-8" @endif>
-                <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>
-                <x-score.email-prompt class="text-gray-600 text-sm text-center mt-4" />
-                <div class="mt-6 flex justify-center">
-                    <livewire:score.dismiss-email-prompt-notification
-                        :user="$user"
-                        class="text-xs text-gray-600 hover:text-gray-800"
-                    />
+                <div @if($user->daily_scores_recorded > 0) class="pt-8" @endif>
+                    <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>
+                    <x-score.email-prompt class="text-gray-600 text-sm text-center mt-4"/>
+                    <div class="mt-6 flex justify-center">
+                        <livewire:score.dismiss-email-prompt-notification
+                            :user="$user"
+                            class="text-xs text-gray-600 hover:text-gray-800"
+                        />
+                    </div>
                 </div>
-            </div>
+
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">My Groups</x-layout.sub-heading>
+                    <div class="mt-8">
+                        <x-account.groups-list :user="$user"/>
+                    </div>
+                    <div class="mt-8 text-center">
+                        <a
+                            class="text-sm inline-flex items-center rounded-lg bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 px-4 py-2"
+                            href="{{ route('group.create') }}"
+                        >
+                            <x-icon-regular.plus class="h-3 w-3 mr-1.5 fill-gray-500"/>
+                            Create A New Group</a>
+                    </div>
+                </div>
+
             @endunless
             <div class="pt-8">
                 <x-layout.sub-heading class="text-center">Record A Score</x-layout.sub-heading>
                 @if($user->daily_scores_recorded === 0)
-                <div class="text-gray-600 text-sm text-center mt-4">
-                    <p>
-                        You have not yet recorded any scores.
-                    </p>
-                    <p class="mt-4">
-                        Don't have your board? <a
-                            class="text-green-700 hover:underline" href="{{ route('account.record-score') }}"
-                        >Click here to enter your score manually.</a>
-                    </p>
-                </div>
+                    <div class="text-gray-600 text-sm text-center mt-4">
+                        <p>
+                            You have not yet recorded any scores.
+                        </p>
+                        <p class="mt-4">
+                            Don't have your board? <a
+                                class="text-green-700 hover:underline" href="{{ route('account.record-score') }}"
+                            >Click here to enter your score manually.</a>
+                        </p>
+                    </div>
                 @endif
                 <div class="mt-4">
                     <livewire:score.record-form :quick="true" :user="$user"/>
@@ -44,25 +60,11 @@
                         <div class="mt-8 text-center text-xs text-gray-500">
                             <p>
                                 You can email your scores to <a class="link" href="mailto:scores@wordlegroup.com">scores@wordlegroup.com</a>.
-                                <a href="/email/WordleGroup.vcf" role="button" class="link">Add Wordle Group to your contacts</a>.
+                                <a href="/email/WordleGroup.vcf" role="button" class="link">Add Wordle Group to your
+                                    contacts</a>.
                             </p>
                         </div>
                     @endif
-                </div>
-            </div>
-
-            <div class="pt-8">
-                <x-layout.sub-heading class="text-center">My Groups</x-layout.sub-heading>
-                <div class="mt-8">
-                    <x-account.groups-list :user="$user"/>
-                </div>
-                <div class="mt-8 text-center">
-                    <a
-                        class="text-sm inline-flex items-center rounded-lg bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 px-4 py-2"
-                        href="{{ route('group.create') }}"
-                    >
-                        <x-icon-regular.plus class="h-3 w-3 mr-1.5 fill-gray-500"/>
-                        Create A New Group</a>
                 </div>
             </div>
 

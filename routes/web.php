@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//\Auth::logout(1);
+//\Auth::loginUsingId(1);
 
 Route::get('/', \App\Http\Livewire\Home::class)->name('home');
 
