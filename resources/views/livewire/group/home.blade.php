@@ -1,6 +1,6 @@
 <x-layout.page-container :heading="$group->name" :title="$group->name . ' Wordle Group'">
 
-    <x-account.home-layout page="group">
+    <x-account.home-layout :page="'group.' . $group->id">
 
         <div class="grid grid-cols-1 gap-y-12 divide-gray-200 divide-y">
 
@@ -54,15 +54,15 @@
                         </div>
                     @endif
                 </div>
-                    @if($group->scores->isNotEmpty())
-                        <div class="pt-8">
-                            <x-layout.sub-heading class="text-center">Group Activity</x-layout.sub-heading>
-                            <div class="mt-8">
+                @if($group->scores->isNotEmpty())
+                    <div class="pt-8">
+                        <x-layout.sub-heading class="text-center">Group Activity</x-layout.sub-heading>
+                        <div class="mt-8">
 
-                                <livewire:group.activity-feed :group="$group"/>
-                            </div>
+                            <livewire:group.activity-feed :group="$group"/>
                         </div>
-                    @endif
+                    </div>
+                @endif
                 <div class="pt-8">
                     <x-layout.sub-heading class="text-center">Invite Someone to
                         Join {{ $group->name }}</x-layout.sub-heading>
