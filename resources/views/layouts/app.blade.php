@@ -5,6 +5,8 @@
 
     <title>@stack('title')</title>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta property="og:title" content="Wordle Group - Keep Score In Wordle With Friends">
     <meta property="og:site_name" content="Wordle Group">
     <meta property="og:url" content="https://wordlegroup.com">
@@ -23,6 +25,7 @@
     <link rel="shortcut icon" href="/favicons/favicon.ico">
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
+    <script src="{{ mix('js/app.js') }}"></script>
 
     @stack('scripts')
 
@@ -39,8 +42,8 @@
 
 
 @livewireScripts
-<script src="{{ mix('js/app.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
+<script src="//unpkg.com/alpinejs" defer></script>
 
 
 </body>
