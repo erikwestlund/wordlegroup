@@ -37,11 +37,11 @@
                                         <div>
                                             @if($membership->group->scores_recorded > 0)
                                                 <p class="flex items-center text-sm text-gray-500 md:font-medium">
-                                                    Leader: {{ $membership->group->leaderboard->first()['name'] }}
+                                                    Leader: {{ $membership->group->leaderboard->first()['name'] }}, {{ number_format($membership->group->leaderboard->first()['stats']['mean'], 2) }}
                                                 </p>
                                                 <p class="mt-1 flex items-center text-sm text-gray-500">
                                                     Average
-                                                    Score: {{ $membership->group->leaderboard->first()['stats']['mean'] }}
+                                                    Score: {{ $membership->group->score_mean }}
                                                 </p>
                                             @else
                                                 <p class="mt-1 flex items-center text-sm text-gray-500">
