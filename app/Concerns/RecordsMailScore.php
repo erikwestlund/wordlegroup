@@ -35,14 +35,14 @@ class RecordsMailScore
             // Get the message text and parse the board.
             $emailText = $parser->getMessageBody('text');
 
-
             $board = app(WordleBoard::class)->parse($emailText);
+
             // Record the board.
             Score::create([
                 'user_id'           => $user->id,
                 'recording_user_id' => $user->id,
                 'date'              => $board['date'],
-                'score'             => $board['score'],
+                'score'             => $board['scoreNumber'],
                 'board_number'      => $board['boardNumber'],
                 'board'             => $board['board'] ?? null,
                 'hard_mode'         => $board['hardMode'] ?? null,
