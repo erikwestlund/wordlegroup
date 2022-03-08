@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "php-mime-mail-parser/php-mime-mail-parser": "^7.0",
+        "sentry/sentry-laravel": "^2.11",
         "spatie/laravel-ray": "^1.29",
         "tonysm/turbo-laravel": "^1.1"
     },

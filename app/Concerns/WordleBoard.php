@@ -60,7 +60,7 @@ class WordleBoard
         $boardNumber = $this->getBoardNumberFromBoard($board);
         $date = $this->getDateFromBoardNumber($boardNumber);
         $hardMode = $this->getHardModeFromBoard($board);
-        $board = $this->extractBoard($board, $score);
+        $board = $this->extractBoard($board, $scoreNumber);
 
         $valid = $score !== null && $boardNumber !== null && $date !== null;
 
@@ -106,7 +106,6 @@ class WordleBoard
     public function extractBoard($entry, $score)
     {
         preg_match_all('/([⬜🟨🟩⬛].*[⬜🟨🟩⬛])/s', $entry, $matches);
-//        preg_match_all('/.*\/(\d\*|\d)(.*)/s', $entry, $matches);
 
         if (!isset($matches[1][0])) {
             return null;
@@ -144,6 +143,7 @@ class WordleBoard
 
     public function boardHasCorrectLineBreaks($board, $score)
     {
+
         // Should have at least Score - 1 line breaks
         return Str::substrCount($board, "\n") === (int)($score - 1);
     }
