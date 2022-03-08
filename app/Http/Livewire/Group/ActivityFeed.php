@@ -24,7 +24,7 @@ class ActivityFeed extends Component
                 ->scores()
                 ->latest('created_at')
                 ->latest('date')
-                ->paginate(15)
+                ->paginate(6)
         ]);
     }
 }

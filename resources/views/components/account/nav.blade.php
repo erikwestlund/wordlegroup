@@ -11,9 +11,11 @@
         >
             @foreach($pages as $pageName => $page)
                 @if(isset($page['placeholder']) && $page['placeholder'])
-                <option value="{{ $pageName }}" {{ $pageName === 'placeholder' ? ' disabled selected' : '' }}>{{ $page['title'] }}</option>
+                    <option
+                        value="{{ $pageName }}" {{ $pageName === 'placeholder' ? ' disabled selected' : '' }}>{{ $page['title'] }}</option>
                 @else
-                <option value="{{ $pageName }}" {{ $activePage === $pageName ? ' selected' : '' }}>{{ $page['title'] }}</option>
+                    <option
+                        value="{{ $pageName }}" {{ $activePage === $pageName ? ' selected' : '' }}>{{ $page['title'] }}</option>
                 @endif
             @endforeach
         </select>
@@ -21,11 +23,13 @@
     <div class="hidden sm:block">
         <nav class="flex space-x-4" aria-label="Tabs">
             @foreach($pages as $pageName => $page)
-                <a
-                    href="{{ $page['route'] }}"
-                    class="@if($activePage === $pageName) bg-gray-100 text-gray-700 @else text-gray-500 hover:text-gray-700 @endif px-3 py-2 font-medium text-sm rounded-md"
-                    @if($activePage === $pageName) aria-current="page" @endif
-                > {{ $page['title'] }} </a>
+                @unless($pageName === 'placeholder')
+                    <a
+                        href="{{ $page['route'] }}"
+                        class="@if($activePage === $pageName) bg-gray-100 text-gray-700 @else text-gray-500 hover:text-gray-700 @endif px-3 py-2 font-medium text-sm rounded-md"
+                        @if($activePage === $pageName) aria-current="page" @endif
+                    > {{ $page['title'] }} </a>
+                @endunless
             @endforeach
         </nav>
     </div>

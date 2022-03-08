@@ -29,6 +29,6 @@
         @endforeach
     </ul>
     <div class="flex justify-center mt-8">
-        {{ $scores->links() }}
+        {{ $scores->onEachSide(1)->links() }}
     </div>
 </div>

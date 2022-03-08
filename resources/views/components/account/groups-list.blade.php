@@ -1,10 +1,10 @@
-<div  @if($user->memberships->count() <= 1) class="flex justify-center" @endif>
-    <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 @if($user->memberships()->count() > 1) sm:grid-cols-2 @else flex justify-center @endif">
+<div class="flex justify-center" >
+    <ul role="list" class="grid grid-cols-1 gap-5 sm:gap-6 w-full max-w-sm sm:max-w-md">
         @foreach($user->memberships as $membership)
-            <li class="col-span-1 flex shadow-sm rounded-md @if($user->memberships->count() <= 1) justify-center w-80 @endif">
+            <li class="col-span-1 flex shadow-sm rounded-md justify-center ">
                 <a
                     href="{{ route('group.home', $membership->group) }}"
-                    class="flex flex-grow"
+                    class="flex flex-grow overflow-hidden"
                     x-data="{hover: false}"
                     @mouseover="hover = true"
                     @mouseout="hover = false"
@@ -20,9 +20,9 @@
                     >
                         <div class="flex-1 px-4 py-2 text-sm truncate">
                             <span
-                                class="text-gray-900 font-medium"
+                                class="text-gray-900 font-semibold"
                             >{{ $membership->group->name }}</span>
-                            <p class="text-gray-500">{{ $membership->group->member_count }} {{ Str::plural('Member', $membership->group->member_count) }}@if($membership->group->leaderboard && isset($membership->group->leaderboard->first()['name'])), Leader: {{ $membership->group->leaderboard->first()['name']  }}@endif</p>
+                            <p class="text-gray-500 truncate">{{ $membership->group->member_count }} {{ Str::plural('Member', $membership->group->member_count) }}@if($membership->group->leaderboard && isset($membership->group->leaderboard->first()['name'])), Leader: {{ $membership->group->leaderboard->first()['name']  }}@endif</p>
                         </div>
 
 

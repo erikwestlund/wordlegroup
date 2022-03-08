@@ -18,16 +18,16 @@
             </div>
             @if($memberOfGroup)
                 @unless($user->dismissed_email_notification)
-                <div class="pt-8">
-                    <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>
-                    <x-score.email-prompt class="text-gray-600 text-sm text-center mt-4" />
-                    <div class="mt-6 flex justify-center">
-                        <livewire:score.dismiss-email-prompt-notification
-                            :user="$user"
-                            class="text-xs text-gray-600 hover:text-gray-800"
-                        />
+                    <div class="pt-8">
+                        <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>
+                        <x-score.email-prompt class="text-gray-600 text-sm text-center mt-4"/>
+                        <div class="mt-6 flex justify-center">
+                            <livewire:score.dismiss-email-prompt-notification
+                                :user="$user"
+                                class="text-xs text-gray-600 hover:text-gray-800"
+                            />
+                        </div>
                     </div>
-                </div>
                 @endunless
                 <div class="pt-8">
                     <x-layout.sub-heading class="text-center">Record A Score</x-layout.sub-heading>
@@ -48,11 +48,21 @@
                         <div class="mt-8 text-center text-xs text-gray-500">
                             <p>
                                 You can email your scores to <a class="link" href="mailto:scores@wordlegroup.com">scores@wordlegroup.com</a>.
-                                <a href="/email/WordleGroup.vcf" role="button" class="link">Add Wordle Group to your contacts</a>.
+                                <a href="/email/WordleGroup.vcf" role="button" class="link">Add Wordle Group to your
+                                    contacts</a>.
                             </p>
                         </div>
                     @endif
                 </div>
+                    @if($group->scores->isNotEmpty())
+                        <div class="pt-8">
+                            <x-layout.sub-heading class="text-center">Group Activity</x-layout.sub-heading>
+                            <div class="mt-8">
+
+                                <livewire:group.activity-feed :group="$group"/>
+                            </div>
+                        </div>
+                    @endif
                 <div class="pt-8">
                     <x-layout.sub-heading class="text-center">Invite Someone to
                         Join {{ $group->name }}</x-layout.sub-heading>
@@ -63,17 +73,7 @@
                     </div>
                 </div>
             @endif
-            @if($group->scores->isNotEmpty())
 
-                <div class="pt-8">
-                    <x-layout.sub-heading class="text-center">Activity</x-layout.sub-heading>
-                    <div class="mt-8">
-
-                        <livewire:group.activity-feed :group="$group"/>
-                    </div>
-                </div>
-
-            @endif
 
         </div>
     </x-account.home-layout>
