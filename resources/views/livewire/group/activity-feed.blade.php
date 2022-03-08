@@ -8,7 +8,7 @@
                     </div>
                     <div class="flex-1 space-y-1">
                         <div class="flex items-start justify-between">
-                            <div>
+                            <div class="pr-4">
                                 <h3 class="text-sm font-medium">{{ $score->user->name }}</h3>
                                 <p class="text-sm text-gray-500">Recorded
                                     a <span class="font-semibold">
