@@ -20,9 +20,9 @@ Route::get('/', \App\Http\Livewire\Home::class)->name('home');
 Route::get('/group/create', \App\Http\Livewire\Group\Create::class)->name('group.create');
 Route::get('/group/{group}/verify-email', \App\Http\Livewire\Group\VerifyEmailNotification::class)
     ->name('group.verify-email-notification');
-Route::get('/group/{group}/verify', \App\Http\Livewire\Group\Verify::class)->name('group.verify');
+Route::get('/group/{groupId}/verify', \App\Http\Livewire\Group\Verify::class)->name('group.verify');
 
-Route::get('/group/invitation/{invitation}', \App\Http\Livewire\Group\Invitation::class)->name('group.invitation');
+Route::get('/group/invitation/{invitationId}', \App\Http\Livewire\Group\Invitation::class)->name('group.invitation');
 
 Route::post('/score/email', \App\Http\Controllers\MailScoreMessageController::class);
 

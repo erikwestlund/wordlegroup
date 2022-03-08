@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Group;
 
+use App\Events\GroupMembershipCreated;
 use App\Models\Group;
 use App\Models\GroupMembership;
 use App\Models\GroupMembershipInvitation;
@@ -19,17 +20,23 @@ class Invitation extends Component
     public $email;
 
     protected $rules = [
-        'name' => ['required']
+        'name' => ['required'],
     ];
 
-    public function mount(Request $request, GroupMembershipInvitation $invitation)
+    public function mount(Request $request, $invitationId)
     {
+        $invitation = GroupMembershipInvitation::find($invitationId);
+
+        if (!$invitation) {
+            return redirect()->to(route('home'));
+        }
+
         $this->invitation = $invitation;
         $this->token = $request->input('token');
 
         $this->verifyToken();
 
-        if(Auth::check()) {
+        if (Auth::check()) {
             Auth::logout();
         }
 
@@ -49,10 +56,11 @@ class Invitation extends Component
 
     public function accept()
     {
-        $user = User::create([
-            'email'             => $this->email,
-            'name'              => $this->name,
+        $user = User::firstOrCreate([
+            'email' => $this->email,
+        ], [
             'email_verified_at' => now(),
+            'name'              => $this->name,
         ]);
 
         $groupMembership = GroupMembership::create([
@@ -63,6 +71,8 @@ class Invitation extends Component
         Auth::loginUsingId($user->id);
 
         $this->invitation->delete();
+
+        event(new GroupMembershipCreated($groupMembership));
 
         session()->flash('message', 'You have successfully joined ' . $this->invitation->group->name . '.');
 

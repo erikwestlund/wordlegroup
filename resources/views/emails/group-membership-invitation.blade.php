@@ -1,7 +1,7 @@
 @component('mail::message')
 Hi {{ $invitation->name }},
 
-**{{ $invitation->invitingUser->name }}** has invited you to join their World Group *{{ $invitation->group->name }}*.
+**{{ $invitation->invitingUser->name }}** has invited you to join their Wordle Group *{{ $invitation->group->name }}*.
 
 Wordle Group lets you keep track of your scores and compete with friends.
 

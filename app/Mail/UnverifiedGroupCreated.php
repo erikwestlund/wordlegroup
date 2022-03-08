@@ -21,7 +21,7 @@ class UnverifiedGroupCreated extends Mailable
 
     public function build()
     {
-        return $this->subject('Verify Your Wordle Group "' . $this->group->name . '"')
+        return $this->subject('Verify Your Email For Wordle Group "' . $this->group->name . '"')
                     ->markdown('emails.unverified-group-created', [
                         'group' => $this->group,
                     ]);
