@@ -149,7 +149,7 @@
                             >
                         </div>
                         <div class="ml-3 text-sm">
-                            <label for="comments" class="font-semibold text-gray-700">X/6</label>
+                            <label for="bricked" class="font-semibold text-gray-700">X/6</label>
                             <p id="comments-description" class="text-gray-500">Oops, I bricked out.</p>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                             >
                         </div>
                         <div class="ml-3 text-sm">
-                            <label for="comments" class="font-semibold text-gray-700">Hard Mode</label>
+                            <label for="hardMode" class="font-semibold text-gray-700">Hard Mode</label>
                         </div>
                     </div>
 
