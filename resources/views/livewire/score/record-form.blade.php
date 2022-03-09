@@ -69,11 +69,7 @@
                     <x-form.input.button
                         loading-action="recordScoreFromBoard" class="w-44 font-semibold" :primary="! $quick"
                     >
-                        @if($recordingForSelf)
-                            Record My Score
-                        @else
-                            Record Score
-                        @endif
+                        Record Score
                     </x-form.input.button>
                     @if($quick)
                         <button
