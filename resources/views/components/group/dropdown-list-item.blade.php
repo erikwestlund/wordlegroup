@@ -1,9 +1,11 @@
 <a href="{{ route('group.home', $groupMembership->group) }}">
     <div class="flex">
         <div class="font-bold text-green-700">{{ $groupMembership->group->name }}</div>
-        @if($groupMembership->group->isAdmin($user))
+        <div>
+        	@if($groupMembership->group->isAdmin($user))
             <x-group.admin-badge class="ml-2" />
-        @endif
+        	@endif
+        </div>
     </div>
     <div class="mt-1">
         <ul class=" text-sm">
