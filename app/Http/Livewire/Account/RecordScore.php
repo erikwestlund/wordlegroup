@@ -21,6 +21,8 @@ class RecordScore extends Component
 {
     public $user;
 
+    public $group;
+
     protected $listeners = ['scoreRecorded'];
 
     public function mount()

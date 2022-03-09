@@ -4,7 +4,6 @@
 
 /*@import 'flatpickr/dist/flatpickr.min.css';*/
 
-
 .link {
     @apply hover:underline text-green-700
 }
@@ -28,4 +27,8 @@
 .turbo-progress-bar {
     height: 3px;
     background-color: white;
+}
+
+input::-webkit-date-and-time-value {
+    @apply mt-0 text-left w-full;
 }

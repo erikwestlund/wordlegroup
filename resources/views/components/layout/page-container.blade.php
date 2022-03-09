@@ -11,6 +11,14 @@
 
         @if($heading)
             <x-layout.heading :wide="$wide" :text-color="$headingTextColor">{{ $heading }}</x-layout.heading>
+
+            @if($captionSlot)
+                {{ $captionSlot  }}
+            @elseif($captionClass)
+                <div @if($captionClass) class="{{ $captionClass }}" @endif>
+                    {{ $caption }}
+                </div>
+            @endif
         @endif
 
         <div class="@if($topPadding) mt-8 @endif text-gray-900">

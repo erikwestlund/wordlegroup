@@ -6,21 +6,37 @@ use Illuminate\View\Component;
 
 class PageContainer extends Component
 {
-    public $heading;
+    public $caption;
 
-    public $title;
+    public $captionClass;
 
-    public $headingTextColor;
-
-    public $wide;
-
-    public $topPadding;
+    public $captionSlot;
 
     public $errorMessage;
 
-    public function __construct($title, $topPadding = true, $heading = null, $wide = false, $headingTextColor = null, $errorMessage = null)
-    {
+    public $heading;
+
+    public $headingTextColor;
+
+    public $title;
+
+    public $topPadding;
+
+    public $wide;
+
+    public function __construct(
+        $title,
+        $topPadding = true,
+        $heading = null,
+        $caption = null,
+        $captionClass = null,
+        $wide = false,
+        $headingTextColor = null,
+        $errorMessage = null
+    ) {
         $this->heading = $heading;
+        $this->caption = $caption;
+        $this->captionClass = $captionClass;
         $this->topPadding = $topPadding;
         $this->title = $title;
         $this->wide = $wide;

@@ -20,7 +20,7 @@
 
                 <x-layout.sub-heading text-color="text-green-700">Create A Group</x-layout.sub-heading>
 
-                <livewire:group.create-form :autofocus="true" />
+                <livewire:group.create-form :autofocus="false" />
 
             </div>
         </div>

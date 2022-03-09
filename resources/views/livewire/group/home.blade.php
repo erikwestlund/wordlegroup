@@ -1,6 +1,16 @@
-<x-layout.page-container :heading="$group->name" :title="$group->name . ' Wordle Group'">
+<x-layout.page-container
+    :heading="$group->name"
+    :title="$group->name . ' Wordle Group'"
+>
+    @if($group->admin_user_id === $user->id)
+    <x-slot name="captionSlot">
+        <div class="flex justify-center mt-4">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Admin</span>
+        </div>
+    </x-slot>
+    @endif
 
-    <x-account.home-layout :page="'group.' . $group->id">
+    <x-account.home-layout :page="'group.' . $group->id ">
 
         <div class="grid grid-cols-1 gap-y-12 divide-gray-200 divide-y">
 
