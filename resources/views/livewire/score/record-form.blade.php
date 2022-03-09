@@ -9,7 +9,7 @@
         <meta name="turbo-cache-control" content="no-cache">
     @endpush
 
-    @unless($user->dismissed_email_notification && $quick)
+    @unless($user->dismissed_email_notification)
         <div class="col-span-1">
 
             <h2 class="text-green-700 text-lg font-semibold">
