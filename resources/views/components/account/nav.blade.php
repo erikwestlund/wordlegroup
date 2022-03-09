@@ -44,28 +44,7 @@
                                 <li
                                     class="block px-4 py-2 border-b border-gray-200 last:border-0 text-gray-500 hover:bg-gray-50"
                                 >
-                                    <a href="{{ route('group.home', $membership->group) }}">
-                                        <div class="font-bold text-green-700"
-                                        >{{ $membership->group->name }}</div>
-                                        <div class="mt-1">
-                                            <ul class=" text-sm">
-                                                @if($membership->group->leaderboard && isset($membership->group->leaderboard->first()['name']))
-                                                    <li class="mt-0.5 first:mt-0">
-                                                        <span class="font-medium">Leader:</span>
-                                                        {{ $membership->group->leaderboard->first()['name']  }}, {{ number_format($membership->group->leaderboard->first()['stats']['mean'], 2) }}
-                                                    </li>
-                                                    <li class="mt-0.5 first:mt-0">
-                                                        <span class="font-medium">Avg. Score:</span>
-                                                        {{ number_format($membership->group->score_mean, 2) }}
-                                                    </li>
-                                                    <li class="mt-0.5 first:mt-0">
-                                                        <span class="font-medium">My Place:</span>
-                                                        {{ $membership->group->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $membership->group->leaderboard->pluck('place')->max() }}
-                                                    </li>
-                                                @endif
-                                              </ul>
-                                        </div>
-                                    </a>
+                                    <x-group.dropdown-list-item :group-membership="$membership" />
                                 </li>
                             @endforeach
                         </ul>

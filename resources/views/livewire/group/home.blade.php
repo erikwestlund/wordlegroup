@@ -5,7 +5,7 @@
     @if($group->admin_user_id === $user->id)
     <x-slot name="captionSlot">
         <div class="flex justify-center mt-4">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Admin</span>
+            <x-group.admin-badge />
         </div>
     </x-slot>
     @endif
@@ -52,7 +52,7 @@
                         </div>
                     @endif
                     <div class="mt-4">
-                        <livewire:score.record-form :quick="true" :user="$user"/>
+                        <livewire:score.record-form :quick="true" :user="$user" :group="$group" />
                     </div>
                     @if($user->dismissed_email_notification)
                         <div class="mt-8 text-center text-xs text-gray-500">

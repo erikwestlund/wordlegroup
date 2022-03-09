@@ -9,24 +9,23 @@
         <meta name="turbo-cache-control" content="no-cache">
     @endpush
 
-    @unless($user->dismissed_email_notification)
-        @unless($quick)
-            <div class="col-span-1">
+    @unless($user->dismissed_email_notification && $quick)
+        <div class="col-span-1">
 
             <h2 class="text-green-700 text-lg font-semibold">
                 Email Your Scores
             </h2>
-                <x-score.email-prompt class="mt-4 text-sm" />
-                <div class="mt-6">
-                    <livewire:score.dismiss-email-prompt-notification
-                        :user="$user"
-                        class="text-xs text-gray-600 hover:text-gray-800"
-                        back-route="account.record-score"
-                    />
-                </div>
+            <x-score.email-prompt class="mt-4 text-sm"/>
+            <div class="mt-6">
+                <livewire:score.dismiss-email-prompt-notification
+                    :user="$user"
+                    class="text-xs text-gray-600 hover:text-gray-800"
+                    back-route="account.record-score"
+                />
             </div>
-        @endunless
+        </div>
     @endunless
+
     <div
         class="col-span-1"
         @if($quick)
@@ -44,7 +43,15 @@
                 </h2>
             @endunless
 
-            <div class="grid grid-cols-a @if($quick) gap-y-4 @else gap-y-8 @endif">
+            <div class="grid grid-cols-1 @if($quick) gap-y-4 @else gap-y-8 @endif">
+                @if($group && $isGroupAdmin)
+                    <x-group.user-select
+                        name="user"
+                        wire:model="recordForUserId"
+                        :group="$group"
+                        :selected-user="$user"
+                    />
+                @endif
                 <div class="col-span-1">
                     <x-form.input.textarea
                         :errors="$errors"
@@ -59,7 +66,9 @@
                 </div>
 
                 <div class="col-span-1 flex items-center justify-between">
-                    <x-form.input.button loading-action="recordScoreFromBoard" class="w-44 font-semibold" :primary="! $quick">
+                    <x-form.input.button
+                        loading-action="recordScoreFromBoard" class="w-44 font-semibold" :primary="! $quick"
+                    >
                         @if($recordingForSelf)
                             Record My Score
                         @else
@@ -161,7 +170,9 @@
                 </div>
 
                 <div class="col-span-1 flex items-center justify-between">
-                    <x-form.input.button  loading-action="recordScoreManually" class="w-44  font-semibold" :primary="! $quick">
+                    <x-form.input.button
+                        loading-action="recordScoreManually" class="w-44  font-semibold" :primary="! $quick"
+                    >
                         @if($recordingForSelf)
                             Record My Score
                         @else
@@ -173,7 +184,7 @@
                             type="button"
                             class="text-sm text-green-700 hover:text-green-800"
                             @click="show = 'haveBoard'"
-                        >I  have my board.
+                        >I have my board.
                         </button>
                     @endif
                 </div>

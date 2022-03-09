@@ -39,7 +39,7 @@ class Home extends Component
     {
         session()->flash('message', 'Score recorded.');
 
-        return redirect()->to(route('account.home'));
+        return redirect()->to(route('group.home', $this->group));
     }
 
     public function render()

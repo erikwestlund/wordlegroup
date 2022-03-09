@@ -148,4 +148,9 @@ class Group extends Model
                 ];
             });
     }
+
+    public function isAdmin(User $user)
+    {
+        return $this->admin_user_id === $user->id;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Score;
 
 use App\Concerns\WordleBoard;
+use App\Models\Group;
 use App\Models\Score;
 use App\Models\User;
 use App\Rules\DateMustBeValid;
@@ -19,7 +20,15 @@ class RecordForm extends Component
 
     public $date;
 
+    public $group;
+
     public $hardMode;
+
+    public $isGroupAdmin;
+
+    public $quick;
+
+    public $recordForUserId;
 
     public $recordingForSelf;
 
@@ -27,14 +36,21 @@ class RecordForm extends Component
 
     public $user;
 
-    public $quick;
-
-    public function mount(User $user, $quick = false)
+    public function mount(User $user, Group $group = null, $quick = false)
     {
         $this->user = $user;
+        $this->recordForUserId = $user->id;
         $this->recordingForSelf = $this->user->id === Auth::user()->id;
         $this->date = app(WordleBoard::class)->activeBoardStartTime->format('Y-m-d');
         $this->quick = $quick;
+
+        $this->group = $group;
+        $this->isGroupAdmin = $group ? $this->getIsGroupAdmin($group, $user) : false;
+    }
+
+    public function getIsGroupAdmin(Group $group, User $user)
+    {
+        return $group->isAdmin($user);
     }
 
     public function recordScoreFromBoard()
@@ -59,7 +75,7 @@ class RecordForm extends Component
         $date = Carbon::parse($data['date']);
 
         Score::create([
-            'user_id'           => $this->user->id,
+            'user_id'           => $this->recordForUserId,
             'recording_user_id' => $this->user->id,
             'date'              => $date->format('Y-m-d'),
             'score'             => $data['score'],
@@ -86,6 +102,11 @@ class RecordForm extends Component
         ]);
 
         $this->emitUp('scoreRecorded');
+    }
+
+    public function updatedRecordForUserId($userId)
+    {
+        $this->recordingForSelf = (int)$userId === Auth::user()->id;
     }
 
     public function render()

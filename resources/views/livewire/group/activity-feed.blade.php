@@ -12,7 +12,7 @@
                                 <h3 class="text-sm font-medium">{{ $score->user->name }}</h3>
                                 <p class="text-sm text-gray-500">Recorded
                                     a <span class="font-semibold">
-                                        {{ $score->score === 7 ? 'X' : $score->score }}/6
+                                        {{ $score->score === 7 ? 'X' : $score->score }}/6{{ $score->hard_mode ? '*' : '' }}
                                     </span>
                                      on <span class="font-semibold">Wordle {{ $score->board_number }}</span>.
                                 </p>
