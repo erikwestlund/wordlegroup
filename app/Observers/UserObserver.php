@@ -6,7 +6,7 @@ use App\Models\User;
 
 class UserObserver
 {
-    public function update(User $user)
+    public function saved(User $user)
     {
         $user->updateStats();
         $user->memberships->each(fn($membership) => $membership->group->updateStats());

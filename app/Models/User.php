@@ -148,7 +148,8 @@ class User extends Authenticatable
 
     public function updateStats()
     {
-        $this->update([
+
+        $this->updateQuietly([
             'daily_scores_recorded' => $this->dailyScores()->count(),
             'daily_score_mean'      => $this->getMeanDailyScore(),
             'daily_score_median'    => $this->getMedianDailyScore(),
