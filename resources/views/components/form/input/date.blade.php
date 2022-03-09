@@ -19,7 +19,8 @@
             x-data="{
                 value: '{{ $defaultValue }}',
                 init() {
-                     let {{ $pickerName }} = flatpickr(this.$refs.{{ $pickerName }}, {{json_encode((object)$options)}})
+                    let {{ $pickerName }} = flatpickr(this.$refs.{{ $pickerName }}, {{json_encode((object)$options)}})
+                    this.$watch('value', () => {{ $pickerName }}.setDate(this.value))
                 }
             }"
             x-ref="{{ $pickerName }}"

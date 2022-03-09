@@ -76,7 +76,7 @@
                             type="button"
                             class="text-sm text-green-700 hover:text-green-800"
                             @click="show = 'manual'"
-                        >I don't have my board.
+                        >I don't have the board.
                         </button>
                     @endif
                 </div>
@@ -103,7 +103,14 @@
             @endunless
 
             <div class="grid grid-cols-a @if($quick) gap-y-4 @else gap-y-8 mt-8 @endif">
-
+                @if($group && $isGroupAdmin)
+                    <x-group.user-select
+                        name="user"
+                        wire:model="recordForUserId"
+                        :group="$group"
+                        :selected-user="$user"
+                    />
+                @endif
                 <div class="col-span-1">
                     <x-form.input.date
                         :errors="$errors"
@@ -111,7 +118,7 @@
                         label="Date"
                         :placeholder="$date"
                         :options="['defaultDate' => $date]"
-                        wire:model="date"
+{{--                        wire:model="date"--}}
                     />
                 </div>
 
@@ -180,7 +187,7 @@
                             type="button"
                             class="text-sm text-green-700 hover:text-green-800"
                             @click="show = 'haveBoard'"
-                        >I have my board.
+                        >I have the board.
                         </button>
                     @endif
                 </div>
