@@ -32,12 +32,15 @@
                                         <span class="font-medium">Avg. Score:</span>
                                         {{ number_format($membership->group->score_mean, 2) }}
                                     </li>
+                                    @if($membership->group->leaderboard->firstWhere('user_id', $user->id))
                                     <li>
                                         <span class="font-medium">My Place:</span>
                                         {{ $membership->group->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $membership->group->leaderboard->pluck('place')->max() }}
                                     </li>
+                                    @endif
                                 @endif
-                            </ul>                        </div>
+                            </ul>
+                        </div>
 
 
                     </div>
