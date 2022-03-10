@@ -22,9 +22,9 @@ class Score extends Model
 
     protected $guarded = [];
 
-    public function getBoardAttribute()
+    public function getBoardAttribute($value)
     {
-        return Str::replace('⬛', '⬜', $this->board);
+        return Str::replace('⬛', '⬜', $value);
     }
 
     public function getEndOfWordleDayAttribute()
