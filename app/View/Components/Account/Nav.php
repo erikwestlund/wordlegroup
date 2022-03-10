@@ -64,7 +64,7 @@ class Nav extends Component
             ],
             'settings'     => [
                 'route' => route('account.settings'),
-                'title' => 'Settings',
+                'title' => 'My Settings',
             ],
         ];
     }

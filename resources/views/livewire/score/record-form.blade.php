@@ -1,5 +1,5 @@
 <div
-    class="grid grid-cols-1 @if($quick) gap-y-4 @else gap-y-8 @endif divide-y divide-gray-200"
+    class="grid grid-cols-1 @if($quick) gap-y-5 @else gap-y-8 @endif divide-y divide-gray-200"
     @if($quick)
     x-data="{show: 'haveBoard'}"
     @endif
@@ -43,7 +43,7 @@
                 </h2>
             @endunless
 
-            <div class="grid grid-cols-1 @if($quick) gap-y-4 @else gap-y-8 @endif">
+            <div class="grid grid-cols-1 @if($quick) gap-y-5 @else gap-y-8 @endif">
                 @if($group && $isGroupAdmin)
                     <x-group.user-select
                         name="user"
@@ -102,7 +102,7 @@
                 </h2>
             @endunless
 
-            <div class="grid grid-cols-a @if($quick) gap-y-4 @else gap-y-8 mt-8 @endif">
+            <div class="grid grid-cols-a @if($quick) gap-y-5 @else gap-y-8 mt-8 @endif">
                 @if($group && $isGroupAdmin)
                     <x-group.user-select
                         name="user"
@@ -137,37 +137,21 @@
                         Click the checkbox below if you missed.
                     </div>
 
-                    <div class="mt-4 relative flex items-start">
-                        <div class="flex items-center h-5">
-                            <input
-                                id="bricked"
-                                aria-describedby="bricked-out-x-out-of-6"
-                                name="bricked"
-                                type="checkbox"
-                                wire:model="bricked"
-                                class="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded"
-                            >
-                        </div>
-                        <div class="ml-3 text-sm">
-                            <label for="bricked" class="font-semibold text-gray-700">X/6</label>
-                            <p id="comments-description" class="text-gray-500">Oops, I bricked out.</p>
-                        </div>
+                    <div class="mt-4">
+                        <x-form.input.checkbox
+                            name="bricked"
+                            label="X/6"
+                            wire:model="bricked"
+                            tip="Oops, I bricked out."
+                        />
                     </div>
 
-                    <div class="mt-4 relative flex items-start">
-                        <div class="flex items-center h-5">
-                            <input
-                                id="hardMode"
-                                aria-describedby="hard-mode"
-                                name="hardMode"
-                                type="checkbox"
-                                wire:model="hardMode"
-                                class="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded"
-                            >
-                        </div>
-                        <div class="ml-3 text-sm">
-                            <label for="hardMode" class="font-semibold text-gray-700">Hard Mode</label>
-                        </div>
+                    <div class="mt-4">
+                        <x-form.input.checkbox
+                            name="hardMode"
+                            label="Hard Mode"
+                            wire:model="hardMode"
+                        />
                     </div>
 
                 </div>

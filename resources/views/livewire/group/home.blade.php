@@ -2,10 +2,13 @@
     :heading="$group->name"
     :title="$group->name . ' Wordle Group'"
 >
-    @if($group->admin_user_id === $user->id)
+    @if($group->isAdmin($user))
     <x-slot name="captionSlot">
         <div class="flex justify-center mt-4">
             <x-group.admin-badge />
+            <a href="{{ route('group.settings', $group) }}" class="ml-4 text-gray-500 hover:text-gray-600 text-sm inline-flex items-center">
+                Group Settings
+            </a>
         </div>
     </x-slot>
     @endif

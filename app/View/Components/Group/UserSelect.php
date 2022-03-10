@@ -14,11 +14,23 @@ class UserSelect extends Component
 
     public $name;
 
+    public $options;
+
+    public $errors;
+
     public function __construct($name, Group $group, User $selectedUser = null)
     {
         $this->name = $name;
         $this->group = $group;
         $this->selectedUser = $selectedUser;
+
+        $this->options = $group->memberships
+            ->map(function ($membership) {
+                return [
+                    'value' => $membership->id,
+                    'label' => $membership->user->name,
+                ];
+            });
     }
 
     public function render()

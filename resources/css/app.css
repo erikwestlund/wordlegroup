@@ -8,6 +8,12 @@
     @apply hover:underline text-green-700
 }
 
+.gray-link {
+    @apply hover:underline text-gray-500
+}
+
+
+
 [x-cloak] { display: none !important; }
 
 @keyframes spin {
