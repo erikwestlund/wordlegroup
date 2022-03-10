@@ -10,6 +10,7 @@ use App\Concerns\WordleBoard;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Score extends Model
 {
@@ -20,6 +21,11 @@ class Score extends Model
     ];
 
     protected $guarded = [];
+
+    public function getBoardAttribute()
+    {
+        return Str::replace('⬛', '⬜', $this->board);
+    }
 
     public function getEndOfWordleDayAttribute()
     {
@@ -76,6 +82,11 @@ class Score extends Model
         app(SyncsDailyScoreToGroupMemberships::class)->sync($this);
     }
 
+    public function updateMemberGroupStats()
+    {
+        $this->user->memberships->each->updateGroupStats();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -100,10 +111,5 @@ class Score extends Model
     public function recordedByAdmin(GroupMembership $membership)
     {
         return $this->recording_user_id === $membership->group->admin->id;
-    }
-
-    public function updateMemberGroupStats()
-    {
-        $this->user->memberships->each->updateGroupStats();
     }
 }
