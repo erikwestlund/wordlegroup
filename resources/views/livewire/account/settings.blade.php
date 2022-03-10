@@ -20,8 +20,6 @@
                     placeholder="email@address.com"
                 />
 
-
-
                 <div class="col-span-1">
                     <x-form.input.button type="submit" loading-action="update" class="w-20">Save</x-form.input.button>
                 </div>
