@@ -9,11 +9,6 @@ class Settings extends Component
 {
     public $user;
 
-    protected $rules = [
-        'user.name'  => ['required'],
-        'user.email' => ['required'],
-    ];
-
     protected function getRules()
     {
         return [

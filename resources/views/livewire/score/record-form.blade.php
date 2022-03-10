@@ -49,7 +49,7 @@
                         name="user"
                         wire:model="recordForUserId"
                         :group="$group"
-                        :selected-user="$user"
+                        :selected-user-id="$user->id"
                     />
                 @endif
                 <div class="col-span-1">
@@ -108,7 +108,7 @@
                         name="user"
                         wire:model="recordForUserId"
                         :group="$group"
-                        :selected-user="$user"
+                        :selected-user-id="$user->id"
                     />
                 @endif
                 <div class="col-span-1">

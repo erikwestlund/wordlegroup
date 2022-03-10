@@ -2,6 +2,6 @@
     :attributes="$attributes"
     name="groupMemberSelect"
     label="Group Member"
-    :selected-value="$selectedUser->id"
+    :selected-value="$selectedUserId"
     :options="$options"
 />

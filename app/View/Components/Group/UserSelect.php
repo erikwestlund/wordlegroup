@@ -10,7 +10,7 @@ class UserSelect extends Component
 {
     public $group;
 
-    public $selectedUser;
+    public $selectedUserId;
 
     public $name;
 
@@ -18,16 +18,16 @@ class UserSelect extends Component
 
     public $errors;
 
-    public function __construct($name, Group $group, User $selectedUser = null)
+    public function __construct($name, Group $group, $selectedUserId = null)
     {
         $this->name = $name;
         $this->group = $group;
-        $this->selectedUser = $selectedUser;
+        $this->selectedUserId = $selectedUserId;
 
         $this->options = $group->memberships
             ->map(function ($membership) {
                 return [
-                    'value' => $membership->id,
+                    'value' => $membership->user->id,
                     'label' => $membership->user->name,
                 ];
             });

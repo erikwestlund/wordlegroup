@@ -13,8 +13,19 @@
                     placeholder="Name"
                 />
 
+{{--                <x-group.user-select--}}
+{{--                    name="user"--}}
+{{--                    :group="$group"--}}
+{{--                    :selected-user-id="$adminUserId"--}}
+{{--                    wire:model="adminUserId"--}}
+{{--                />--}}
+
                 <div class="col-span-1">
-                    <x-form.input.button type="submit" loading-action="update" class="w-20">Save</x-form.input.button>
+                    <x-form.input.button
+                        type="submit"
+                        loading-action="update"
+                        class="w-20"
+                    >Save</x-form.input.button>
                 </div>
             </div>
         </form>
