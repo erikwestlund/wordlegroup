@@ -32,9 +32,13 @@
             type="button"
             class="{{ $buttonClass }} inline-flex items-center"
         >
+            @if($buttonSlot)
+                {{ $buttonSlot }}
+            @else
             <span>{{ $label }}</span>
             <x-icon-regular.chevron-down x-show="! open" class="ml-2 h-3 w-3 text-gray-500" />
             <x-icon-regular.chevron-up x-show="open" x-cloak class="ml-2 h-3 w-3 text-gray-500" />
+            @endif
         </button>
 
         <!-- Panel -->
@@ -44,7 +48,7 @@
             x-on:click.outside="close($refs.button)"
             :id="$id('{{ $name }}')"
             style="display: none;"
-            class="z-50 absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none {{$width}}"
+            class="z-50 @if($dropdownCustom) {{ $dropdownCustom }} @elseif($alignDropdown === 'left') left-0 @elseif($alignDropdown === 'left') right-0 @else left-1/2 transform -translate-x-1/2 @endif absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none {{$width}}"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="{{ $name }}"

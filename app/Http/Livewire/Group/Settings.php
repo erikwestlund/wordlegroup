@@ -28,13 +28,14 @@ class Settings extends Component
         return [
             'group.name'          => ['required'],
             'group.admin_user_id' => ['required'],
-            'confirmTransfer' => new TransferGroupAdministratorConfirmed($this->group->admin_user_id, $this->initialAdminUserId)
+            'confirmTransfer'     => new TransferGroupAdministratorConfirmed($this->group->admin_user_id,
+                $this->initialAdminUserId),
         ];
     }
 
     public function mount(Group $group)
     {
-        if(! $group->isAdmin(Auth::user())) {
+        if (!$group->isAdmin(Auth::user())) {
             abort(403);
         }
 
@@ -50,8 +51,10 @@ class Settings extends Component
 
         $this->group->save();
 
-        if($this->initialAdminUserId !== $this->group->admin_user_id) {
-            session()->flash('message', 'Settings saved. Group administratorship has been successfully transferred to ' . $this->group->fresh()->admin->name . '.');
+        if ($this->initialAdminUserId !== $this->group->admin_user_id) {
+            session()->flash('message',
+                'Settings saved. ' . $this->group->fresh()->admin->name . ' is now the administrator of ' . $this->group->name . '.');
+
             return redirect()->to(route('group.home', $this->group));
         }
 

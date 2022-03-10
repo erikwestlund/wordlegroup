@@ -1,52 +1,49 @@
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>@stack('title')</title>
+<title>@stack('title')</title>
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta property="og:title" content="Wordle Group - Keep Score In Wordle With Friends">
-    <meta property="og:site_name" content="Wordle Group">
-    <meta property="og:url" content="https://wordlegroup.com">
-    <meta property="og:description" content="A free and easy way to keep score in Wordle with your friends.">
-    <meta property="og:type" content="website">
+<meta property="og:title" content="Wordle Group - Keep Score In Wordle With Friends">
+<meta property="og:site_name" content="Wordle Group">
+<meta property="og:url" content="https://wordlegroup.com">
+<meta property="og:description" content="A free and easy way to keep score in Wordle with your friends.">
+<meta property="og:type" content="website">
 
-    @stack('meta')
+@stack('meta')
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="shortcut icon" href="/favicons/favicon.ico">
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
-    @stack('styles')
+<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+<link rel="manifest" href="/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/favicons/favicon.ico">
+<link href="{{ mix('css/app.css') }}" rel="stylesheet" />
+@stack('styles')
 
-    <script src="{{ mix('js/app.js') }}"></script>
-    @stack('scripts')
+<script src="{{ mix('js/app.js') }}"></script>
+@stack('scripts')
 
-    @livewireStyles
+@livewireStyles
 </head>
 <body>
 
 <x-layout.navbar />
 
 <main>
-    {{ $slot }}
+{{ $slot }}
 </main>
-
-
 
 @livewireScripts
 <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
 <script src="//unpkg.com/alpinejs" defer></script>
-
 
 </body>
 </html>

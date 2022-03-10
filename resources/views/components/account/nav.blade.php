@@ -42,7 +42,7 @@
                         <ul>
                             @foreach($user->memberships as $membership)
                                 <li
-                                    class="block px-4 py-2 border-b border-gray-200 last:border-0 text-gray-500 hover:bg-gray-50"
+                                    class="block px-4 py-2 border-b border-gray-200 last:border-0 text-gray-500 hover:bg-gray-50 last:rounded-b-md"
                                 >
                                     <x-group.dropdown-list-item :group-membership="$membership" />
                                 </li>
