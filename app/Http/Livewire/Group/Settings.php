@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Group;
 
 use App\Models\Group;
+use App\Models\User;
+use App\Rules\TransferGroupAdministratorConfirmed;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -17,35 +19,41 @@ class Settings extends Component
 
     public $group;
 
-    public $adminUserId;
+    public $initialAdminUserId;
+
+    public $confirmTransfer;
 
     protected function getRules()
     {
         return [
             'group.name'          => ['required'],
             'group.admin_user_id' => ['required'],
+            'confirmTransfer' => new TransferGroupAdministratorConfirmed($this->group->admin_user_id, $this->initialAdminUserId)
         ];
     }
 
     public function mount(Group $group)
     {
+        if(! $group->isAdmin(Auth::user())) {
+            abort(403);
+        }
+
         $this->group = $group;
         $this->heading = $group->name . ' Group Settings';
 
-        $this->adminUserId = $this->group->admin_user_id;
-    }
-
-    public function updatedAdminUserId($value)
-    {
-        $this->group->admin_user_id = $value;
+        $this->initialAdminUserId = $this->group->admin_user_id;
     }
 
     public function update()
     {
         $this->validate();
 
-//        $this->group->admin_user_id = $this->adminUserId;
         $this->group->save();
+
+        if($this->initialAdminUserId !== $this->group->admin_user_id) {
+            session()->flash('message', 'Settings saved. Group administratorship has been successfully transferred to ' . $this->group->fresh()->admin->name . '.');
+            return redirect()->to(route('group.home', $this->group));
+        }
 
         session()->flash('message', 'Settings saved.');
 

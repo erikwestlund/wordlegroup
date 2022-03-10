@@ -8,19 +8,22 @@ use Illuminate\View\Component;
 
 class UserSelect extends Component
 {
+    public $errors;
+
     public $group;
 
-    public $selectedUserId;
+    public $label;
 
     public $name;
 
     public $options;
 
-    public $errors;
+    public $selectedUserId;
 
-    public function __construct($name, Group $group, $selectedUserId = null)
+    public function __construct($name, Group $group, $label = 'Group Member', $selectedUserId = null)
     {
-        $this->name = $name;
+        $this->name = $name . uniqid();
+        $this->label = $label;
         $this->group = $group;
         $this->selectedUserId = $selectedUserId;
 

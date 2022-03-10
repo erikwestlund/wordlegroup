@@ -1,7 +1,7 @@
 <x-form.input.select
     :attributes="$attributes"
     name="groupMemberSelect"
-    label="Group Member"
+    :label="$label"
     :selected-value="$selectedUserId"
     :options="$options"
 />
