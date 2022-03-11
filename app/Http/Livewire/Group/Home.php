@@ -11,6 +11,8 @@ class Home extends Component
 {
     public $group;
 
+    public $isAdmin;
+
     public $memberOfGroup;
 
     public $user;
@@ -26,12 +28,13 @@ class Home extends Component
         $this->group = $group;
         $this->user = Auth::check() ? Auth::user() : null;
         $this->memberOfGroup = $this->user ? $this->getIsMemberOfGroup() : false;
+        $this->isAdmin = $this->memberOfGroup && $group->isAdmin($this->user);
 
         if (!$group->public && !$this->memberOfGroup) {
             abort(403);
         }
 
-        if ($this->memberOfGroup && $group->isAdmin($this->user)) {
+        if ($this->isAdmin) {
             $this->group->load('pendingInvitations');
         }
     }

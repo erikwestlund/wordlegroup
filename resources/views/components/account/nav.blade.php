@@ -21,18 +21,20 @@
                         value="{{ $pageName }}" {{ $activePage === $pageName ? ' selected' : '' }}>{{ $page['title'] }}</option>
                 @endif
             @endforeach
+            @if(Auth::check())
             <optgroup label="Group Pages">
                 @foreach($user->memberships as $membership)
                     <option
                         value="group.{{ $membership->group_id }}" {{ $activePage === "group.{$membership->group_id}" ? ' selected' : '' }}>{{ $membership->group->name }}</option>
                 @endforeach
             </optgroup>
+            @endif
         </select>
     </div>
     <div class="hidden sm:block">
         <nav class="flex space-x-4" aria-label="Tabs">
             @foreach($pages as $pageName => $page)
-                @if($pageName === 'userGroups')
+                @if(Auth::check() && $pageName === 'userGroups')
                     <x-layout.dropdown
                         label="My Groups"
                         name="userGroups"

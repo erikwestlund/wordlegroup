@@ -2,7 +2,7 @@
     :heading="$group->name"
     :title="$group->name . ' Wordle Group'"
 >
-    @if($group->isAdmin($user))
+    @if($isAdmin)
         <x-slot name="captionSlot">
             <div class="flex justify-center mt-4">
                 <x-group.admin-badge/>
@@ -20,7 +20,7 @@
 
         <div class="grid grid-cols-1 gap-y-12 divide-gray-200 divide-y">
 
-            @if($group->isAdmin($user) && $group->pendingInvitations->isNotEmpty())
+            @if($isAdmin && $group->pendingInvitations->isNotEmpty())
                 <div>
                     <x-layout.sub-heading class="text-center">Pending Group Invitations</x-layout.sub-heading>
                     <div class="mt-8">
@@ -29,7 +29,7 @@
                 </div>
             @endif
 
-            <div @if($group->isAdmin($user) && $group->pendingInvitations->isNotEmpty()) class="pt-8" @endif>
+            <div @if($isAdmin && $group->pendingInvitations->isNotEmpty()) class="pt-8" @endif>
                 <x-layout.sub-heading class="text-center">Leaderboard</x-layout.sub-heading>
                 <div class="mt-8">
                     @if($group->scores->isNotEmpty())

@@ -17,7 +17,7 @@ class Nav extends Component
 
     public function __construct($activePage)
     {
-        $this->user = Auth::user()->load('memberships.group');
+        $this->user = Auth::check() ? Auth::user()->load('memberships.group') : null;
         $this->routeMap = $this->getRouteMap();
         $this->noneSelected = !in_array($activePage, array_keys($this->routeMap));
         $this->activePage = $this->noneSelected ? 'navigation' : $activePage;
@@ -36,12 +36,14 @@ class Nav extends Component
                 } else {
                     return [$pageName => $page['route']];
                 }
-            })->toArray();
+            })
+            ->reject(fn($page) => $page === null)
+            ->toArray();
     }
 
     public function getPages()
     {
-        return [
+        $routes = [
             'placeholder'  => [
                 'title'       => 'Navigation',
                 'placeholder' => true,
@@ -67,6 +69,12 @@ class Nav extends Component
                 'title' => 'My Settings',
             ],
         ];
+
+        if(! Auth::check()) {
+            unset($routes['userGroups']);
+        }
+
+        return $routes;
     }
 
     public function render()
