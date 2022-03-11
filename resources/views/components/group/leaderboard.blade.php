@@ -34,7 +34,7 @@
                             @elseif($position['place'] === 3)
                             text-sm sm:text-sm font-bold
                             @else
-                            text-sm sm:text-sm text-gray-900
+                            text-sm sm:text-sm text-gray-900 font-medium
                             @endif
                         " title="{{ $position['name'] }}">{{ $position['name'] }}</td>
                         <td class="px-2 py-1 sm:py-2 whitespace-nowrap text-right @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-100 @endif
@@ -45,7 +45,7 @@
                             @elseif($position['place'] === 3)
                             text-sm sm:text-sm font-bold
                             @else
-                            text-sm sm:text-sm text-gray-900
+                            text-sm sm:text-sm text-gray-900 font-medium
                             @endif
                         ">{!! $position['stats']['mean'] ?: "&#x2014;" !!}</td>
                         <td class="px-2 py-1 sm:py-2 whitespace-nowrap  text-right @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-100 @endif
@@ -56,7 +56,7 @@
                             @elseif($position['place'] === 3)
                             text-sm sm:text-sm font-bold
                             @else
-                            text-sm sm:text-sm text-gray-900
+                            text-sm sm:text-sm text-gray-900 font-medium
                             @endif
                         ">{{ $position['stats']['count'] }}</td>
                     </tr>
