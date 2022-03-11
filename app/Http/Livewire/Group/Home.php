@@ -31,7 +31,7 @@ class Home extends Component
             abort(403);
         }
 
-        if ($group->isAdmin($this->user)) {
+        if ($this->memberOfGroup && $group->isAdmin($this->user)) {
             $this->group->load('pendingInvitations');
         }
     }
