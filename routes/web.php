@@ -21,14 +21,11 @@ Route::get('/group/create', \App\Http\Livewire\Group\Create::class)->name('group
 Route::get('/group/{group}/verify-email', \App\Http\Livewire\Group\VerifyEmailNotification::class)
     ->name('group.verify-email-notification');
 Route::get('/group/{groupId}/verify', \App\Http\Livewire\Group\Verify::class)->name('group.verify');
-
 Route::get('/group/invitation/{invitationId}', \App\Http\Livewire\Group\Invitation::class)->name('group.invitation');
 
 Route::post('/score/email', \App\Http\Controllers\MailScoreMessageController::class);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/logout', \App\Http\Controllers\LogoutController::class)->name('logout');
-});
+Route::get('/group/{group}', \App\Http\Livewire\Group\Home::class)->name('group.home');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/account', \App\Http\Livewire\Account\Home::class)->name('account.home');
@@ -38,8 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/group/{group}/settings', \App\Http\Livewire\Group\Settings::class)->name('group.settings');
     Route::get('/group/{group}/not-verified', \App\Http\Livewire\Group\NotVerifiedNotification::class)->name('group.not-verified');
 
-    Route::get('/group/{group}', \App\Http\Livewire\Group\Home::class)->name('group.home');
-
+    Route::get('/logout', \App\Http\Controllers\LogoutController::class)->name('logout');
 });
 
 Route::middleware(['guest'])->group(function () {
