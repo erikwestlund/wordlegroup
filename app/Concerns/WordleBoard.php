@@ -111,7 +111,9 @@ class WordleBoard
             return null;
         }
 
-        $board = trim($matches[1][0]);
+        $board = $matches[1][0];
+
+        $board = trim(preg_replace("/[^⬜🟨🟩⬛\n\s\r]/su", "", $board));
 
         if ($this->boardHasCorrectLineBreaks($board, $score)) {
             return $board;
