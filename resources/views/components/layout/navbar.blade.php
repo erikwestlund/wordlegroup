@@ -78,12 +78,12 @@
 
                                 <ul class="py-1">
                                     <li class="border-gray-100 border-b last:border-b-0">
-                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.home') }}">My Stats</a>
-                                    </li>
-                                    <li class="border-gray-100 border-b last:border-b-0">
                                         <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.record-score') }}">Record Score</a>
                                     </li>
-                                    <li class="border-gray-100 border-b last:border-b-0">
+                                    <li>
+                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.home') }}">My Stats</a>
+                                    </li>
+                                    <li>
                                         <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.groups') }}">My Groups</a>
                                     </li>
                                     <li class="border-gray-100 border-b last:border-b-0">
