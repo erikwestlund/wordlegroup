@@ -12,8 +12,8 @@
                     <div class="flex items-center px-2 py-4 sm:px-2">
                         <div class="min-w-0 flex-1 flex justify-start">
                             <div
-                                class="flex-shrink-0 flex items-center font-semibold text-2xl justify-center rounded-full w-12 h-12 bg-yellow-500 text-white"
-                                :class="{ 'bg-green-700': hover, 'bg-yellow-500':  !hover}"
+                                class="flex-shrink-0 flex items-center font-semibold text-2xl justify-center rounded-full w-12 h-12 bg-wordle-yellow text-white"
+                                :class="{ 'bg-green-700': hover, 'bg-wordle-yellow':  !hover}"
                             >
                                 {{ substr($membership->group->name, 0, 1)  }}
                             </div>

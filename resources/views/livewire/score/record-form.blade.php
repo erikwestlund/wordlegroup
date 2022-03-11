@@ -6,7 +6,7 @@
 >
 
     @push('meta')
-        <meta name="turbo-cache-control" content="no-cache">
+{{--        <meta name="turbo-cache-control" content="no-cache">--}}
     @endpush
 
     @unless($user->dismissed_email_notification)
@@ -34,7 +34,7 @@
     >
         <form wire:submit.prevent="recordScoreFromBoard" class="mt-8 mb-0">
             @unless($quick)
-                <h2 class="text-green-700 text-lg font-semibold">
+                <h2 class="text-green-700 text-lg font-semibold mb-6">
                     @if($recordingForSelf)
                         I Have My Board
                     @else

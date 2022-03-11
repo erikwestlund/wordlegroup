@@ -5,14 +5,22 @@
             <div class="flex">
                 <a
                     href="{{ Auth::check() ? route('account.home') : route('home') }}"
-                    class="flex flex-shrink-0 items-center"
+                    class="flex flex-shrink-0 items-center text-white"
+                    x-data="{hover: false}"
+                    @mouseover="hover = true"
+                    @mouseout="hover = false"
                 >
                     <span
-                        class="flex justify-center items-center h-6 w-6 sm:w-10 sm:h-10 font-serif text-lg sm:text-2xl font-extrabold text-green-800 bg-green-50 rounded-md"
+                        class="flex justify-center items-center h-6 w-6 sm:w-10 sm:h-10 font-serif text-lg sm:text-2xl font-extrabold rounded-md"
+                        :class="hover ? 'bg-wordle-yellow text-white' : 'bg-green-50 text-green-800 '"
+                        x-transition:fade
                     >W</span>
-                    <span class="px-2 sm:px-3 text-white font-semibold font-serif text-lg sm:text-xl">
-                            Wordle Group
-                        </span>
+                    <span
+                        class="px-2 sm:px-3 font-semibold font-serif text-lg sm:text-xl"
+                        :class="{ 'green-nav-link-underline' : hover }"
+                    >
+                        Wordle Group
+                    </span>
                 </a>
                 {{--                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">--}}
                 {{--                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->--}}
@@ -30,7 +38,7 @@
                     @if(Auth::check())
 {{--                        <a--}}
 {{--                            role="button"--}}
-{{--                            class="inline-flex relative items-center px-4 py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white shadow-sm hover:bg-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"--}}
+{{--                            class="inline-flex relative items-center px-4 py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white shadow-sm hover:bg-wordle-yellow hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-wordle-yellow"--}}
 {{--                            href="{{ route('group.create') }}"--}}
 {{--                        >--}}
 {{--                            <!-- Heroicon name: solid/plus-sm -->--}}
@@ -39,13 +47,13 @@
 {{--                        </a>--}}
                     @else
                         <a
-                            class="flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent rounded-md hover:text-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
+                            class="flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent rounded-md hover:text-wordle-yellow hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-wordle-yellow"
                             href="{{ route('login') }}"
                         >
                             Log In
                         </a>
                         <a
-                            class="ml-2 flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white hover:bg-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
+                            class="ml-2 flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white hover:bg-wordle-yellow hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-wordle-yellow"
                             href="{{ route('group.create') }}"
                         >
                             <x-icon-solid.plus class="w-4 h-4 mr-2 -ml-1"/>
@@ -60,7 +68,7 @@
                     <div class="relative ml-3">
                         <div class="flex items-center">
                             <a
-                                class="mr-2 flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent rounded-md hover:text-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
+                                class="mr-2 flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium green-nav-link bg-transparent rounded-md hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-wordle-yellow"
                                 href="{{ route('account.home') }}"
                             >
                                 My Stats
@@ -69,7 +77,7 @@
                                 name="user-dropdown"
                                 width="w-56"
                                 dropdown-custom="right-0 sm:left-1/2 sm:transform sm:-translate-x-1/2"
-                                button-class="w-7 h-7 rounded-full text-green-800 bg-green-50 hover:bg-yellow-500 text-green-700 flex items-center justify-center font-semibold text-xl"
+                                button-class="w-7 h-7 rounded-full text-green-800 bg-green-50 hover:bg-wordle-yellow text-green-700 flex items-center justify-center font-semibold text-xl"
                             >
                                 <x-slot name="buttonSlot">
                                     <span class="sr-only">Open user menu</span>

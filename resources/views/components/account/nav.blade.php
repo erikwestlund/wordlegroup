@@ -55,7 +55,7 @@
 
                     <a
                         href="{{ $page['route'] }}"
-                        class="@if($activePage === $pageName) bg-gray-100 text-gray-700 @else text-gray-500 hover:text-gray-700 @endif px-3 py-2 font-medium text-sm rounded-md"
+                        class="@if($activePage === $pageName) text-white bg-wordle-yellow font-semibold @else text-gray-500 hover:text-gray-700 font-medium @endif px-3 py-2  text-sm rounded-md"
                         @if($activePage === $pageName) aria-current="page" @endif
                     > {{ $page['title'] }} </a>
                 @endif

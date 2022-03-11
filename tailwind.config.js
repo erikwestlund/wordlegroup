@@ -16,8 +16,11 @@ module.exports = {
         extend: {
             colors: {
                 current: 'currentColor',
-                'wordle-yellow': '#F8C60C',
+                'wordle-yellow': '#C8B458',
                 'wordle-green': '#03B203',
+                'gold' : '#FFD700',
+                'silver' : '#C0C0C0',
+                'bronze': '#CD7F32',
             },
             minHeight: {
                 '10': '2.5rem',

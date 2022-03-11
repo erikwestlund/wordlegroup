@@ -3,7 +3,7 @@
         @foreach($scores as $score)
             <li class="py-4">
                 <div class="flex space-x-3">
-                    <div class="w-8 h-8 rounded-full bg-yellow-500 text-white inline-flex justify-center items-center">
+                    <div class="w-8 h-8 rounded-full bg-wordle-yellow text-white inline-flex justify-center items-center">
                         {{ substr($score->user->name, 0, 1)  }}
                     </div>
                     <div class="flex-1 space-y-1">

@@ -10,8 +10,8 @@
                     @mouseout="hover = false"
                 >
                     <div
-                        class="flex-shrink-0 flex items-center bg-yellow-500 justify-center w-16 text-white text-2xl font-bold rounded-l-md"
-                        :class="{ 'bg-green-700': hover, 'bg-yellow-500':  !hover}"
+                        class="flex-shrink-0 flex items-center bg-wordle-yellow justify-center w-16 text-white text-2xl font-bold rounded-l-md"
+                        :class="{ 'bg-green-700': hover, 'bg-wordle-yellow':  !hover}"
                     >
                         {{ substr($membership->group->name, 0, 1)  }}
                     </div>
