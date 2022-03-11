@@ -6,7 +6,7 @@
                 <table class="min-w-full divide-y divide-gray-200 border-b">
                     <thead>
                     <tr>
-                        <th scope="col" class="w-16 pl-1 pr-3 py-1 sm:px-4 sm:py-2 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Pl.</span><span class="hidden sm:inline">Place</span></th>
+                        <th scope="col" class="w-16 pl-1 pr-3 py-1 sm:px-4 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Place</span><span class="hidden sm:inline">Place</span></th>
                         <th scope="col" class="px-1 py-1 sm:px-4 sm:py-2 w-full text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
                         <th scope="col" class="whitespace-nowrap text-right px-2 py-1 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Avg.</span><span class="hidden sm:inline">Avg. Score</span></th>
                         <th scope="col" class="whitespace-nowrap text-right px-2 py-1 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Num.</span><span class="hidden sm:inline">Games</span></th>
