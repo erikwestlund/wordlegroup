@@ -23,7 +23,7 @@
                             @elseif($position['place'] === 3)
                                 <span class="h-8 w-8 inline-flex items-center justify-center text-lg bg-bronze text-black font-bold rounded-full">{{ $position['place'] }}</span>
                             @else
-                                <span class="font-semibold">{{ $position['place'] }}</span>
+                                <span class="text-sm font-medium">{{ $position['place'] }}</span>
                             @endif
                         </td>
                         <td class="px-1 py-2 sm:px-4 sm:py-2 whitespace-nowrap truncate @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-100 @endif
@@ -32,9 +32,9 @@
                             @elseif($position['place'] === 2)
                             text-sm sm:text-lg font-bold sm:font-bold
                             @elseif($position['place'] === 3)
-                            text-sm sm:text-sm font-bold
+                            text-sm font-bold
                             @else
-                            text-sm sm:text-sm text-gray-900 font-medium
+                            text-sm text-gray-900 font-medium
                             @endif
                         " title="{{ $position['name'] }}">{{ $position['name'] }}</td>
                         <td class="px-2 py-2 sm:py-2 whitespace-nowrap text-right @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-100 @endif
@@ -43,9 +43,9 @@
                             @elseif($position['place'] === 2)
                             text-sm sm:text-lg font-bold sm:font-bold
                             @elseif($position['place'] === 3)
-                            text-sm sm:text-sm font-bold
+                            text-sm font-bold
                             @else
-                            text-sm sm:text-sm text-gray-900 font-medium
+                            text-sm text-gray-900 font-medium
                             @endif
                         ">{!! $position['stats']['mean'] ?: "&#x2014;" !!}</td>
                         <td class="px-2 py-2 sm:py-2 whitespace-nowrap  text-right @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-100 @endif
@@ -54,9 +54,9 @@
                             @elseif($position['place'] === 2)
                             text-sm sm:text-lg font-bold sm:font-bold
                             @elseif($position['place'] === 3)
-                            text-sm sm:text-sm font-bold
+                            text-sm font-bold
                             @else
-                            text-sm sm:text-sm text-gray-900 font-medium
+                            text-sm text-gray-900 font-medium
                             @endif
                         ">{{ $position['stats']['count'] }}</td>
                     </tr>
