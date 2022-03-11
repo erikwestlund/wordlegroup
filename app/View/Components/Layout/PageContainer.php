@@ -12,6 +12,8 @@ class PageContainer extends Component
 
     public $captionSlot;
 
+    public $headingClass;
+
     public $errorMessage;
 
     public $heading;
@@ -30,6 +32,7 @@ class PageContainer extends Component
         $heading = null,
         $caption = null,
         $captionClass = null,
+        $headingClass = null,
         $wide = false,
         $headingTextColor = null,
         $errorMessage = null
@@ -38,6 +41,7 @@ class PageContainer extends Component
         $this->caption = $caption;
         $this->captionClass = $captionClass;
         $this->topPadding = $topPadding;
+        $this->headingClass = $headingClass;
         $this->title = $title;
         $this->wide = $wide;
         $this->headingTextColor = $headingTextColor;

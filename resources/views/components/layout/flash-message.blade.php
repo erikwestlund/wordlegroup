@@ -7,7 +7,7 @@
             class="mx-2 px-1 py-1 text-semibold rounded {{ $buttonIconBg }}"
             type="button" @click="show=false"
         >
-            <x-icon-regular.check :class="$buttonIconFill . ' ' . $buttonIconHoverFill"/>
+            <x-icon-regular.xmark :class="'h-4 w-4 ' . $buttonIconFill . ' ' . $buttonIconHoverFill"/>
         </button>
     </div>
 </div>

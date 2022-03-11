@@ -28,6 +28,7 @@ class Settings extends Component
         return [
             'group.name'          => ['required'],
             'group.admin_user_id' => ['required'],
+            'group.public'        => [],
             'confirmTransfer'     => new TransferGroupAdministratorConfirmed($this->group->admin_user_id,
                 $this->initialAdminUserId),
         ];

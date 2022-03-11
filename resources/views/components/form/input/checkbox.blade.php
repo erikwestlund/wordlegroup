@@ -7,7 +7,7 @@
                 aria-describedby="{{ $name }}-checkbox"
                 name="{{ $name }}"
                 type="checkbox"
-                class="focus:ring-green-600 h-4 w-4 text-green-700  @if($errors->has($name)) border-red-600 @else border-gray-300 @endif rounded"
+                class="focus:ring-green-700 h-4 w-4 text-green-700  @if($errors->has($name)) border-red-600 @else border-gray-300 @endif rounded"
             >
         </div>
         <div class="ml-3 text-sm">

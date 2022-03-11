@@ -32,17 +32,20 @@ class RecordForm extends Component
 
     public $recordingForSelf;
 
+    public $hideEmail;
+
     public $score;
 
     public $user;
 
-    public function mount(User $user, Group $group = null, $quick = false)
+    public function mount(User $user, Group $group = null, $quick = false, $hideEmail = false)
     {
         $this->user = $user;
         $this->recordForUserId = $user->id;
         $this->recordingForSelf = $this->user->id === Auth::user()->id;
         $this->date = app(WordleBoard::class)->activeBoardStartTime->format('Y-m-d');
         $this->quick = $quick;
+        $this->hideEmail = $hideEmail;
 
         $this->group = $group;
         $this->isGroupAdmin = $group ? $this->getIsGroupAdmin($group, $user) : false;

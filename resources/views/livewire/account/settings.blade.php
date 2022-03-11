@@ -11,6 +11,7 @@
                     wire:model="user.name"
                     placeholder="Name"
                 />
+
                 <x-form.input.text
                     :errors="$errors"
                     type="email"
@@ -18,6 +19,27 @@
                     label="Email Address"
                     wire:model="user.email"
                     placeholder="email@address.com"
+                />
+
+                <x-form.input.checkbox
+                    name="publicProfile"
+                    wire:model="user.public_profile"
+                    label="Make my profile public."
+                    tip="Allow others to see your scores."
+                />
+
+                <x-form.input.checkbox
+                    name="allowDigestEmails"
+                    wire:model="user.allow_digest_emails"
+                    label="Receive weekly digest emails."
+                    tip="We will send you an email once a week with a report on your scores and how you're doing in your groups."
+                />
+
+                <x-form.input.checkbox
+                    name="allowReminderEmails"
+                    wire:model="user.allow_reminder_emails"
+                    label="Allow reminder emails."
+                    tip="Let others in your group remind you to record your score. You'll never get more than one reminder email a day."
                 />
 
                 <div class="col-span-1">

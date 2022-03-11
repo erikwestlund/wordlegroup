@@ -21,6 +21,10 @@ class CreateForm extends Component
 
     public $userName;
 
+    public $public;
+
+    public $userPublicProfile;
+
     public $autofocus;
 
     public function mount($autofocus = false)
@@ -54,13 +58,15 @@ class CreateForm extends Component
         $user = Auth::check()
             ? Auth::user()
             : User::firstOrCreate([
-                'email' => $this->email,
-                'name'  => $this->userName,
+                'email'          => $this->email,
+                'name'           => $this->userName,
+                'public_profile' => $this->userPublicProfile,
             ]);
 
         $group = Group::create([
             'admin_user_id' => $user->id,
             'name'          => $this->groupName,
+            'public'        => $this->public,
             'verified_at'   => Auth::check() ? now() : null,
             'token'         => Auth::check() ? null : app(Tokens::class)->generate(),
         ]);

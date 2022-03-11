@@ -15,18 +15,24 @@ class Home extends Component
 
     public $user;
 
+    public $guest;
+
+    public $pendingInvitations;
+
     protected $listeners = ['scoreRecorded'];
 
     public function mount(Group $group)
     {
-        $this->group = $this->group;
+        $this->group = $group;
         $this->user = Auth::check() ? Auth::user() : null;
-        $this->memberOfGroup = $this->getIsMemberOfGroup();
+        $this->memberOfGroup = $this->user ? $this->getIsMemberOfGroup() : false;
 
-        if (!$this->memberOfGroup) {
-            session('errorMessage', 'You are not a member of this group.');
+        if (!$group->public && !$this->memberOfGroup) {
+            abort(403);
+        }
 
-            return redirect()->to(route('account.home'));
+        if ($group->isAdmin($this->user)) {
+            $this->group->load('pendingInvitations');
         }
     }
 

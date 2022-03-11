@@ -12,16 +12,16 @@ class Group extends Model
 {
     use HasFactory, Prunable, SoftDeletes;
 
+    protected $casts = [
+        'leaderboard' => 'collection',
+    ];
+
     protected $dates = ['verified_at'];
 
     protected $guarded = [];
 
     protected $hidden = [
         'token',
-    ];
-
-    protected $casts = [
-        'leaderboard' => 'collection'
     ];
 
     public function admin()
@@ -39,46 +39,20 @@ class Group extends Model
         return route('group.verify', $this) . '?token=' . $this->token;
     }
 
-    public function memberships()
+    public function isAdmin(User $user)
     {
-        return $this->hasMany(GroupMembership::class, 'group_id');
+        return $this->admin_user_id === $user->id;
+    }
+
+    public function pendingInvitations()
+    {
+        return $this->hasMany(GroupMembershipInvitation::class, 'group_id');
     }
 
     public function prunable()
     {
         return static::where('created_at', '<=', now()->subMinutes(config('settings.unverified_group_expires_minutes')))
                      ->whereNull('verified_at');
-    }
-
-    public function scores()
-    {
-        return $this->belongsToMany(Score::class, 'group_membership_score');
-    }
-
-    public function verified()
-    {
-        return (bool)$this->verified_at;
-    }
-
-    public function verify()
-    {
-        $this->update(['verified_at' => now(), 'token' => null]);
-    }
-
-
-    public function getMeanScore()
-    {
-        return $this->scores->isNotEmpty() ? (float)round($this->scores()->average('score'), 2) : null;
-    }
-
-    public function getMedianScore()
-    {
-        return $this->scores->isNotEmpty() ? (float)round($this->scores->median('score'), 1) : null;
-    }
-
-    public function getModeScore()
-    {
-        return $this->scores->isNotEmpty() ? (int) collect($this->scores->mode('score'))->min() : null;
     }
 
     public function updateStats()
@@ -92,6 +66,41 @@ class Group extends Model
             'score_distribution' => $this->getScoreDistribution(),
             'leaderboard'        => $this->getLeaderBoard(),
         ]);
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(GroupMembership::class, 'group_id');
+    }
+
+    public function scores()
+    {
+        return $this->belongsToMany(Score::class, 'group_membership_score');
+    }
+
+    public function getMeanScore()
+    {
+        return $this->scores->isNotEmpty() ? (float)round($this->scores()->average('score'), 2) : null;
+    }
+
+    public function getMedianScore()
+    {
+        return $this->scores->isNotEmpty() ? (float)round($this->scores->median('score'), 1) : null;
+    }
+
+    public function getModeScore()
+    {
+        return $this->scores->isNotEmpty() ? (int)collect($this->scores->mode('score'))->min() : null;
+    }
+
+    public function getScoreDistribution()
+    {
+        return collect([1, 2, 3, 4, 5, 6, 7])
+            ->mapWithKeys(function ($number) {
+                return [
+                    $number === 7 ? 'X' : $number => $this->scores->where('score', $number)->count(),
+                ];
+            });
     }
 
     public function getLeaderBoard()
@@ -139,18 +148,13 @@ class Group extends Model
             ->values();
     }
 
-    public function getScoreDistribution()
+    public function verified()
     {
-        return collect([1, 2, 3, 4, 5, 6, 7])
-            ->mapWithKeys(function ($number) {
-                return [
-                    $number === 7 ? 'X' : $number => $this->scores->where('score', $number)->count(),
-                ];
-            });
+        return (bool)$this->verified_at;
     }
 
-    public function isAdmin(User $user)
+    public function verify()
     {
-        return $this->admin_user_id === $user->id;
+        $this->update(['verified_at' => now(), 'token' => null]);
     }
 }

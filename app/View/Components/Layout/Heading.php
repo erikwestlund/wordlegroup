@@ -10,10 +10,13 @@ class Heading extends Component
 
     public $wide;
 
-    public function __construct($textColor = null, $wide = false)
+    public $headingClass;
+
+    public function __construct($textColor = null, $wide = false, $headingClass = null)
     {
         $this->textColor = $textColor;
         $this->wide = $wide;
+        $this->headingClass = $headingClass;
     }
 
     public function render()

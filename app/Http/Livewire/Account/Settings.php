@@ -14,6 +14,9 @@ class Settings extends Component
         return [
             'user.name'  => ['required'],
             'user.email' => ['required', 'unique:users,email,' . $this->user->id],
+            'user.public_profile' => [],
+            'user.allow_digest_emails' => [],
+            'user.allow_reminder_emails' => [],
         ];
     }
 

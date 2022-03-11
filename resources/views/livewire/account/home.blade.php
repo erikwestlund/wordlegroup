@@ -4,8 +4,17 @@
 
         <div class="grid grid-cols-1 gap-y-12 divide-gray-200 divide-y">
 
-            @if($user->daily_scores_recorded > 0)
+            @if($user->pendingGroupInvitations->isNotEmpty())
                 <div>
+                    <x-layout.sub-heading class="text-center">Pending Group Invitations</x-layout.sub-heading>
+                    <div class="mt-8">
+                        <livewire:account.pending-group-invitations :user="$user"/>
+                    </div>
+                </div>
+            @endif
+
+            @if($user->daily_scores_recorded > 0)
+                <div @if($user->pendingGroupInvitations->isNotEmpty()) class="pt-8" @endif>
                     <x-layout.sub-heading class="text-center">My Stats</x-layout.sub-heading>
                     <div class="mt-8">
                         <x-account.stats :user="$user"/>
@@ -24,7 +33,7 @@
                     </div>
                 </div>
             @endunless
-                
+
             <div class="pt-8">
                 <x-layout.sub-heading class="text-center">My Groups</x-layout.sub-heading>
                 <div class="mt-8">
@@ -48,20 +57,16 @@
                         </p>
                         <p class="mt-4">
                             Don't have your board? <a
-                                class="text-green-700 hover:underline" href="{{ route('account.record-score') }}"
+                                class="link" href="{{ route('account.record-score') }}"
                             >Click here to enter your score manually.</a>
                         </p>
                     </div>
                 @endif
                 <div class="mt-4">
-                    <livewire:score.record-form :quick="true" :user="$user"/>
+                    <livewire:score.record-form :quick="true" :user="$user" :hide-email="true"/>
                     @if($user->dismissed_email_notification)
                         <div class="mt-8 text-center text-xs text-gray-500">
-                            <p>
-                                You can email your scores to <a class="link" href="mailto:scores@wordlegroup.com">scores@wordlegroup.com</a>.
-                                <a href="/email/WordleGroup.vcf" role="button" class="link">Add Wordle Group to your
-                                    contacts</a>.
-                            </p>
+                            <x-account.email-scores-message/>
                         </div>
                     @endif
                 </div>

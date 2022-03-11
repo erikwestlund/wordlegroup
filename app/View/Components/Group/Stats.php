@@ -12,7 +12,7 @@ class Stats extends Component
 
     public function __construct(Group $group)
     {
-        $this->group = $group->load('scores');
+        $this->group = $group;
     }
 
     public function render()

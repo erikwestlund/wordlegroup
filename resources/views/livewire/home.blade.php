@@ -4,7 +4,7 @@
             <div>
                 <div>
                     <span
-                        class="rounded bg-white border border-green-600  px-2.5 py-1 text-xs font-semibold text-green-600 tracking-wide uppercase"
+                        class="rounded bg-white border border-transparent bg-wordle-yellow  px-2.5 py-1 text-xs font-semibold text-white tracking-wide uppercase"
                     >What's new?</span>
                     <span class="inline-flex items-center text-sm font-medium text-gray-600 ml-4">
                     <span>We just launched!</span>

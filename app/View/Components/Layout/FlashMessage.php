@@ -35,6 +35,13 @@ class FlashMessage extends Component
             $this->buttonIconFill = 'fill-red-700';
             $this->buttonIconHoverFill = 'fill-red-900';
             $this->buttonIconBg = 'hover:bg-red-200';
+        } if ($type === 'info') {
+            $this->bgColor = 'bg-blue-100';
+            $this->textColor = 'text-blue-800';
+            $this->borderColor = 'border-blue-700';
+            $this->buttonIconFill = 'fill-blue-700';
+            $this->buttonIconHoverFill = 'fill-blue-900';
+            $this->buttonIconBg = 'hover:bg-blue-200';
         } else {
             $this->bgColor = 'bg-green-100';
             $this->textColor = 'text-green-800';

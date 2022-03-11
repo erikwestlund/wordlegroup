@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use App\Concerns\Tokens;
-use App\Mail\SendGroupMembershipInvitation;
+use App\Mail\GroupInvitationReminder;
+use App\Mail\GroupMembershipInvitation as GroupMembershipInvitationMail;
 use App\Mail\UserVerification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,8 @@ class GroupMembershipInvitation extends Model
 
     protected $hidden = ['token'];
 
+    protected $dates = ['reminded_at'];
+
     public function invitingUser()
     {
         return $this->belongsTo(User::class, 'inviting_user_id');
@@ -29,6 +32,10 @@ class GroupMembershipInvitation extends Model
         return $this->belongsTo(Group::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
 
     public function generateNewAuthToken()
     {
@@ -53,7 +60,13 @@ class GroupMembershipInvitation extends Model
     public function sendInvitationEmail()
     {
         Mail::to($this->email)
-            ->send(new SendGroupMembershipInvitation($this));
+            ->send(new GroupMembershipInvitationMail($this));
+    }
+
+    public function sendReminderEmail()
+    {
+        Mail::to($this->email)
+            ->send(new GroupInvitationReminder($this));
     }
 
     public function getInvitationUrlAttribute()

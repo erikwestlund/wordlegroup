@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Group;
 
 use App\Models\Group;
 use App\Models\GroupMembershipInvitation;
+use App\Rules\UserNotAlreadyMemberBeforeBeingInvited;
 use Livewire\Component;
 
 class InviteMember extends Component
@@ -14,10 +15,18 @@ class InviteMember extends Component
 
     public $name;
 
-    protected $rules = [
-        'name' => 'required',
-        'email' => ['required', 'email', 'unique:group_membership_invitations'],
-    ];
+    protected function getRules()
+    {
+        return [
+            'name' => 'required',
+            'email' => [
+                'required',
+                'email',
+                'unique:group_membership_invitations',
+                new UserNotAlreadyMemberBeforeBeingInvited($this->group),
+            ],
+        ];
+    }
 
     protected $messages = [
         'email.unique' => 'This user has already been invited. If they do not respond, you can invite them again in 24 hours.',
@@ -34,7 +43,8 @@ class InviteMember extends Component
 
         GroupMembershipInvitation::createInvitation($this->group, $this->email, $this->name);
 
-        session()->flash('message', $this->name . ' (' . $this->email . ') has been invited to join ' . $this->group->name . '.');
+        session()->flash('message',
+            $this->name . ' (' . $this->email . ') has been invited to join ' . $this->group->name . '.');
 
         return redirect()->to(route('group.home', $this->group));
     }

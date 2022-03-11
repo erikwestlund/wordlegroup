@@ -38,7 +38,11 @@
 <x-layout.navbar />
 
 <main>
+@if(isset($slot))
 {{ $slot }}
+@else
+@yield('content')
+@endif
 </main>
 
 @livewireScripts
@@ -53,6 +57,25 @@
     gtag('js', new Date());
 
     gtag('config', 'G-9XVFBH780C');
+</script>
+
+<script>
+    function iOS() {
+        return [
+                'iPad Simulator',
+                'iPhone Simulator',
+                'iPod Simulator',
+                'iPad',
+                'iPhone',
+                'iPod'
+            ].includes(navigator.platform)
+            // iPad on iOS 13 detection
+            || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+    }
+
+    function isMobile() {
+        return /Mobi/i.test(navigator.userAgent)
+    }
 </script>
 
 </body>

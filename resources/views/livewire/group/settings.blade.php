@@ -21,6 +21,13 @@
                     wire:model="group.admin_user_id"
                 />
 
+                <x-form.input.checkbox
+                    name="publicGroup"
+                    wire:model="group.public"
+                    label="Make this group public."
+                    tip="This will allow non-group members to see the group page. Users who wish to stay private can still hide their names."
+                />
+
                 <div>
                     @if($initialAdminUserId !== $group->admin_user_id)
                         <x-form.input.checkbox

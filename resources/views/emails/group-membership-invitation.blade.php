@@ -13,7 +13,7 @@ If you are having trouble clicking the above button, copy the below link into yo
 
 {{ $invitation->invitationUrl }}
 
-If you do not want to join this Wordle Group, just ignore this email and we'll delete the invitation within 24 hours.
+If you do not want to join this Wordle Group, just ignore this email and we'll automatically delete the invitation soon.
 
 Good Luck!
 @endcomponent

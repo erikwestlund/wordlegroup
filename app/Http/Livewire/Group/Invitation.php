@@ -13,11 +13,19 @@ use Livewire\Component;
 
 class Invitation extends Component
 {
+    public $allowDigestEmails;
+
+    public $allowReminderEmails;
+
+    public $email;
+
     public $invitation;
 
     public $name;
 
-    public $email;
+    public $publicProfile;
+
+    public $invitedUserExists;
 
     protected $rules = [
         'name' => ['required'],
@@ -28,7 +36,29 @@ class Invitation extends Component
         $invitation = GroupMembershipInvitation::find($invitationId);
 
         if (!$invitation) {
+            session()->flash('message', 'This invitation is no longer valid.');
+
             return redirect()->to(route('home'));
+        }
+
+        if($invitation->user) {
+            $this->invitedUserExists = true;
+
+            // If this user has been invited, but user is not logged in, redirect to login.
+            if(! Auth::check()) {
+                return redirect(route('login'));
+            }
+
+            // If this user is logged in, and it's not their invitation, abort 403
+            if(Auth::check() && Auth::user()->email !== $invitation->email) {
+                abort(403);
+            }
+
+            if(Auth::check()) {
+                session()->flash('infoMessage', 'You have pending group invitations.');
+
+                return redirect(route('account.home'));
+            }
         }
 
         $this->invitation = $invitation;
@@ -59,11 +89,14 @@ class Invitation extends Component
         $user = User::firstOrCreate([
             'email' => $this->email,
         ], [
-            'email_verified_at' => now(),
-            'name'              => $this->name,
+            'email_verified_at'     => now(),
+            'name'                  => $this->name,
+            'public_profile'        => $this->publicProfile,
+            'allow_digest_emails'   => $this->allowDigestEmails ?? false,
+            'allow_reminder_emails' => $this->allowReminderEmails ?? false,
         ]);
 
-        $groupMembership = GroupMembership::create([
+        $groupMembership = GroupMembership::firstOrCreate([
             'user_id'  => $user->id,
             'group_id' => $this->invitation->group_id,
         ]);

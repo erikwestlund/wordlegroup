@@ -10,11 +10,14 @@ class ActivityFeed extends Component
 {
     use WithPagination;
 
+    public $anonymizePrivateUsers;
+
     public $group;
 
-    public function mount(Group $group)
+    public function mount(Group $group, $anonymizePrivateUsers = false)
     {
         $this->group = $group;
+        $this->anonymizePrivateUsers = $anonymizePrivateUsers;
     }
 
     public function render()
@@ -25,7 +28,7 @@ class ActivityFeed extends Component
                 ->with('user')
                 ->latest('created_at')
                 ->latest('date')
-                ->paginate(6)
+                ->paginate(6),
         ]);
     }
 }

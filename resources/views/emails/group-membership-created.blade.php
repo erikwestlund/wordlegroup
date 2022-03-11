@@ -10,7 +10,5 @@ To record scores, visit:
 
 You can also email your scores to [scores@wordlegroup.com](mailto:scores@wordlegroup.com).
 
-[Add wordle group to your contacts.](https://wordlegroup.com/email/WordleGroup.vcf).
-
 Good Luck!<br>
 @endcomponent

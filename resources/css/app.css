@@ -5,7 +5,9 @@
 /*@import 'flatpickr/dist/flatpickr.min.css';*/
 
 .link {
-    @apply hover:underline text-green-700
+    @apply hover:underline text-green-700 font-medium;
+    text-decoration-color: theme('colors.wordle-yellow');
+    text-decoration-thickness: 2px;
 }
 
 .gray-link {

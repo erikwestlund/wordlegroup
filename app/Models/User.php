@@ -24,6 +24,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'public_profile',
+        'allow_digest_emails',
+        'allow_reminder_emails',
         'email_verified_at',
         'auth_token',
         'auth_token_generated_at',
@@ -45,6 +48,11 @@ class User extends Authenticatable
         'login_code',
         'login_code_generated_at',
     ];
+
+    public function pendingGroupInvitations()
+    {
+        return $this->hasMany(GroupMembershipInvitation::class, 'email', 'email');
+    }
 
     public function dailyScoresForBoard($boardNumber)
     {
@@ -201,6 +209,7 @@ class User extends Authenticatable
     public function validateLoginCode($providedCode)
     {
         ray($this->validLoginCode($providedCode));
+
         return $this->validLoginCode($providedCode) && $this->loginCodeActive();
     }
 
@@ -231,5 +240,10 @@ class User extends Authenticatable
     public function verifyEmail()
     {
         $this->update(['email_verified_at' => now()]);
+    }
+
+    public function getPrivateProfileAttribute()
+    {
+        return ! $this->public_profile;
     }
 }

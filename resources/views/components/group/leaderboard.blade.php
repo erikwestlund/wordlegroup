@@ -13,7 +13,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($group->leaderboard as $position)
+                    @foreach($leaderboard as $position)
                     <tr class="bg-white">
                         <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-100 @endif">
                             @if($position['place'] === 1)
@@ -36,7 +36,7 @@
                             @else
                             text-sm text-gray-900 font-medium
                             @endif
-                        " title="{{ $position['name'] }}">{{ $position['name'] }}</td>
+                        " title="{{ $position['name'] }}">@if($anonymizePrivateUsers && $position['user']->private_profile) Anonymous User @else {{ $position['name'] }} @endif</td>
                         <td class="px-2 py-2 sm:py-2 whitespace-nowrap text-right @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-100 @endif
                             @if($position['place'] === 1)
                             text-base sm:text-xl font-bold
@@ -59,11 +59,8 @@
                             text-sm text-gray-900 font-medium
                             @endif
                         ">{{ $position['stats']['count'] }}</td>
-                    </tr>
+                        </tr>
                         @endforeach
-
-
-
                     </tbody>
                 </table>
             </div>

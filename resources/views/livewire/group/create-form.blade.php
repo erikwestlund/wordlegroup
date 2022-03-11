@@ -1,5 +1,5 @@
 <form wire:submit.prevent="store" class="my-0">
-    <div class="py-8 grid grid-cols-1 gap-y-8">
+    <div class="py-8 grid grid-cols-1 gap-y-7">
         <x-form.input.text
             wire:model.lazy="groupName"
             :autofocus="$autofocus"
@@ -21,6 +21,20 @@
                 wire:model="userName" name="groupName" :errors="$errors" label="Your Name" placeholder="Your Name"
             />
         @endunless
+        @unless(Auth::check())
+        <x-form.input.checkbox
+            name="userPublicProfile"
+            wire:model="userPublicProfile"
+            label="Make my profile public."
+            tip="We will create you a user account along with your group. Click here to allow others to see your scores."
+        />
+        @endunless
+        <x-form.input.checkbox
+            name="public"
+            wire:model="public"
+            label="Make this group public."
+            tip="This will allow non-group members to see the group page. Users who wish to stay private can still hide their names."
+        />
     </div>
     <x-form.input.button loading-action="store" class="w-24">Create</x-form.input.button>
 </form>
