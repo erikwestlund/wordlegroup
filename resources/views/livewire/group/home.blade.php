@@ -20,18 +20,19 @@
 
         <div class="grid grid-cols-1 gap-y-12 divide-gray-200 divide-y">
 
-            @if($isAdmin && $group->pendingInvitations->isNotEmpty())
-                <div>
-                    <x-layout.sub-heading class="text-center">Pending Group Invitations</x-layout.sub-heading>
-                    <div class="mt-8">
-                        <livewire:group.pending-invitations :group="$group"/>
+            <div>
+                @if($isAdmin && $group->pendingInvitations->isNotEmpty())
+                    <div class="mb-8">
+                        <x-layout.sub-heading class="text-center">Pending Group Invitations</x-layout.sub-heading>
+                        <div class="mt-4">
+                            <livewire:group.pending-invitations :group="$group"/>
+                        </div>
                     </div>
-                </div>
-            @endif
+                @endif
 
-            <div @if($isAdmin && $group->pendingInvitations->isNotEmpty()) class="pt-8" @endif>
                 <x-layout.sub-heading class="text-center">Leaderboard</x-layout.sub-heading>
                 <div class="mt-8">
+
                     @if($group->scores->isNotEmpty())
                         <x-group.leaderboard
                             :group="$group"
@@ -111,6 +112,14 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Group Members</x-layout.sub-heading>
+                    <div class="mt-8 w-full flex justify-center">
+                        <livewire:group.member-list :group="$group"/>
+                    </div>
+                </div>
+
             @endif
 
 

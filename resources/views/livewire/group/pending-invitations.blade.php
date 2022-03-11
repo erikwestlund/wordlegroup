@@ -1,5 +1,5 @@
 <div>
-    <div class="mt-8 flex flex-col">
+    <div class="flex flex-col">
         <div class="overflow-x-auto">
             <div class="inline-block min-w-full py-2 align-middle">
                 <div class="overflow-hidden border-b">

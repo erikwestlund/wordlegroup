@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Concerns\Tokens;
+use App\Mail\NudgeUser;
 use App\Mail\UserVerification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Prunable;
@@ -18,7 +19,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Prunable, SoftDeletes;
 
-    protected $dates = ['email_verified_at', 'auth_token_generated_at', 'login_code_generated_at'];
+    protected $dates = ['last_reminded_at', 'email_verified_at', 'auth_token_generated_at', 'login_code_generated_at'];
 
     protected $fillable = [
         'name',
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'public_profile',
         'allow_digest_emails',
         'allow_reminder_emails',
+        'last_reminded_at',
         'email_verified_at',
         'auth_token',
         'auth_token_generated_at',
@@ -138,6 +140,17 @@ class User extends Authenticatable
         return $query->where('auth_token_generated_at', '>', now()->subDay());
     }
 
+    public function nudgeUser(User $nudgedBy)
+    {
+        $this->update([
+            'last_reminded_at' => now(),
+        ]);
+
+        Mail::to($this->email)
+            ->send(new NudgeUser($this, $nudgedBy));
+    }
+
+
     public function sendEmailVerificationNotification()
     {
         $this->generateNewAuthToken();
@@ -244,6 +257,15 @@ class User extends Authenticatable
 
     public function getPrivateProfileAttribute()
     {
-        return ! $this->public_profile;
+        return !$this->public_profile;
+    }
+
+    public function canBeNudged()
+    {
+        return $this->allow_reminder_emails &&
+            (
+                !$this->last_reminded_at ||
+                now()->subHours(config('settings.hours_between_reminder_emails')) > $this->last_reminded_at
+            );
     }
 }
