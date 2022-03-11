@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <nav class="bg-green-700">
     <div class="px-4 mx-auto max-w-2xl sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-14 sm:h-16">
             <div class="flex">
                 <a
                     href="{{ Auth::check() ? route('account.home') : route('home') }}"
@@ -39,13 +39,13 @@
 {{--                        </a>--}}
                     @else
                         <a
-                            class="flex relative items-center px-5 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent rounded-md border-2hover:bg-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
+                            class="flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent rounded-md hover:text-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
                             href="{{ route('login') }}"
                         >
                             Log In
                         </a>
                         <a
-                            class="flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white hover:bg-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
+                            class="ml-2 flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white hover:bg-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
                             href="{{ route('group.create') }}"
                         >
                             <x-icon-solid.plus class="w-4 h-4 mr-2 -ml-1"/>
@@ -58,30 +58,36 @@
                 <div class="ml-4 md:flex-shrink-0 flex items-center">
 
                     <div class="relative ml-3">
-                        <div>
+                        <div class="flex items-center">
+                            <a
+                                class="mr-2 flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent rounded-md hover:text-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
+                                href="{{ route('account.home') }}"
+                            >
+                                My Stats
+                            </a>
                             <x-layout.dropdown
                                 name="user-dropdown"
                                 width="w-56"
                                 dropdown-custom="right-0 sm:left-1/2 sm:transform sm:-translate-x-1/2"
-                                button-class="w-8 h-8 rounded-full text-green-800 bg-green-50 hover:bg-yellow-500 text-green-700 flex items-center justify-center font-semibold text-xl"
+                                button-class="w-7 h-7 rounded-full text-green-800 bg-green-50 hover:bg-yellow-500 text-green-700 flex items-center justify-center font-semibold text-xl"
                             >
                                 <x-slot name="buttonSlot">
                                     <span class="sr-only">Open user menu</span>
-                                    <x-icon-solid.circle-user class="h-7 w-7 fill-current"/>
+                                    <x-icon-solid.circle-user class="h-6 w-6 fill-current"/>
                                 </x-slot>
 
                                 <ul class="py-1">
                                     <li class="border-gray-100 border-b last:border-gray-100 border-b-0">
-                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.home') }}">Account Summary</a>
+                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.record-score') }}">Record Score</a>
+                                    </li>
+                                    <li class="border-gray-100 border-b last:border-gray-100 border-b-0">
+                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.home') }}">My Stats</a>
                                     </li>
                                     <li class="border-gray-100 border-b last:border-gray-100 border-b-0">
                                         <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.groups') }}">My Groups</a>
                                     </li>
                                     <li class="border-gray-100 border-b last:border-gray-100 border-b-0">
-                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.record-score') }}">Record Score</a>
-                                    </li>
-                                    <li class="border-gray-100 border-b last:border-gray-100 border-b-0">
-                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.settings') }}">Settings</a>
+                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.settings') }}">My Settings</a>
                                     </li>
                                     <li class="">
                                         <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('logout') }}">Logout</a>

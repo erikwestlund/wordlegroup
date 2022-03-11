@@ -49,7 +49,7 @@ class Nav extends Component
             ],
             'home'         => [
                 'route' => route('account.home'),
-                'title' => 'Summary',
+                'title' => 'My Stats',
             ],
             'groups'       => [
                 'route' => route('account.groups'),

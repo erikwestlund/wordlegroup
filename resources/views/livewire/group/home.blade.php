@@ -29,6 +29,14 @@
                     @endif
                 </div>
             </div>
+            @if($group->scores_recorded > 0)
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Group Stats</x-layout.sub-heading>
+                    <div class="mt-8">
+                        <x-group.stats :group="$group"/>
+                    </div>
+                </div>
+            @endif
             @if($memberOfGroup)
                 @unless($user->dismissed_email_notification)
                     <div class="pt-8">
