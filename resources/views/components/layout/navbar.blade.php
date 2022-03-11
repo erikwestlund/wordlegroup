@@ -48,7 +48,6 @@
                             class="flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white hover:bg-yellow-500 hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-yellow-500"
                             href="{{ route('group.create') }}"
                         >
-                            <!-- Heroicon name: solid/plus-sm -->
                             <x-icon-solid.plus class="w-4 h-4 mr-2 -ml-1"/>
                             <span class="hidden sm:inline">New Group</span>
                             <span class="sm:hidden inline">Group</span>
@@ -100,33 +99,3 @@
 
 
 </nav>
-
-{{--<div {{ $attributes }}>--}}
-{{--    <div class="flex justify-center px-4 py-3 w-full text-center text-white bg-green-700 border-b sm:px-6 sm:py-3">--}}
-{{--        <div class="flex justify-between w-full max-w-6xl">--}}
-
-{{--            <div class="font-serif text-xl font-bold sm:text-2xl">--}}
-{{--                <a href="{{ route('home') }}">--}}
-{{--                    Wordle Group--}}
-{{--                </a>--}}
-{{--            </div>--}}
-{{--            <div class="flex items-center">--}}
-{{--                @if($user)--}}
-{{--                    <a class="inline-flex items-center px-2 py-1 mr-4 font-serif text-sm font-semibold text-green-900 bg-white rounded-md border border-transparent sm:text-base last:mr-0 sm:px-3 hover:bg-gray-100 sm:py-1" href="{{ route('account.home') }}">--}}
-{{--                        <x-icon-regular.house class="mr-2 fill-green-800" />--}}
-{{--                        {{ $user->name }}--}}
-{{--                    </a>--}}
-{{--                @else--}}
-{{--                    <a class="inline-flex items-center px-2 py-1 mr-4 font-serif text-sm text-white rounded-md border border-white sm:text-base last:mr-0 sm:px-3 hover:bg-green-800 sm:py-1" href="{{ route('login') }}">--}}
-{{--                        Log In--}}
-{{--                    </a>--}}
-{{--                    <a class="inline-flex items-center px-2 py-1 mr-4 font-serif text-sm font-semibold text-green-900 bg-white rounded-md border border-transparent sm:text-base last:mr-0 sm:px-3 hover:bg-gray-100 sm:py-1" href="{{ route('group.create') }}">--}}
-{{--                        <x-icon-regular.plus class="mr-2 fill-green-700" />--}}
-{{--                        Group--}}
-{{--                    </a>--}}
-{{--                @endif--}}
-
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</div>--}}
