@@ -41,7 +41,21 @@ class Group extends Model
 
     public function isAdmin(User $user)
     {
+        if (!$user) {
+            return false;
+        }
+
         return $this->admin_user_id === $user->id;
+    }
+
+    public function isMemberOf(User $user)
+    {
+        if (!$user) {
+            return false;
+
+        }
+
+        return $user->memberships->pluck('group_id')->contains($this->id);
     }
 
     public function pendingInvitations()

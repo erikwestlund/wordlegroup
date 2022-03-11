@@ -1,4 +1,31 @@
 <div>
+    @if($isGroupMember)
+        <div class="flex items-center justify-center mb-8">
+            <div class="mr-4 w-16"></div>
+            <div class="w-56">
+                <x-group.user-select
+                    :default-empty="true"
+                    wire:model="filterByUserId"
+                    name="activityUsers"
+                    label="Filter By User"
+                    :group="$group"
+                />
+            </div>
+
+            @if($filterByUserId)
+                <button
+                    class="ml-4 text-sm w-16 px-4 py-2 text-gray-500 text-sm hover:text-gray-900 rounded focus:ring-2 focus:ring-offset-2 focus:ring-green-800"
+                    type="button"
+                    wire:click="clearUserFilter"
+                >
+                    Clear
+                </button>
+            @else
+                <div class="mr-4 w-16"></div>
+
+            @endif
+        </div>
+    @endif
     <ul role="list" class="divide-y divide-gray-200">
         @foreach($scores as $score)
             <li class="py-4">

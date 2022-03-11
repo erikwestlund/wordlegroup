@@ -27,7 +27,7 @@ class Home extends Component
     {
         $this->group = $group;
         $this->user = Auth::check() ? Auth::user() : null;
-        $this->memberOfGroup = $this->user ? $this->getIsMemberOfGroup() : false;
+        $this->memberOfGroup = $this->user ? $this->group->isMemberOf($this->user) : false;
         $this->isAdmin = $this->memberOfGroup && $group->isAdmin($this->user);
 
         if (!$group->public && !$this->memberOfGroup) {
@@ -37,11 +37,6 @@ class Home extends Component
         if ($this->isAdmin) {
             $this->group->load('pendingInvitations');
         }
-    }
-
-    public function getIsMemberOfGroup()
-    {
-        return $this->user->memberships->pluck('group_id')->contains($this->group->id);
     }
 
     public function scoreRecorded()

@@ -18,12 +18,17 @@ class UserSelect extends Component
 
     public $options;
 
+    public $defaultEmpty;
+
     public $selectedUserId;
 
-    public function __construct($name, Group $group, $label = 'Group Member', $selectedUserId = null)
+    public $emptyPhrase;
+
+    public function __construct($name, Group $group, $label = 'Group Member', $selectedUserId = null, $defaultEmpty = false, $emptyPhrase = 'Select A User')
     {
         $this->name = $name . uniqid();
         $this->label = $label;
+        $this->defaultEmpty = $defaultEmpty;
         $this->group = $group;
         $this->selectedUserId = $selectedUserId;
 
@@ -34,6 +39,10 @@ class UserSelect extends Component
                     'label' => $membership->user->name,
                 ];
             });
+
+            if($defaultEmpty) {
+                $this->options->prepend(['value' => '', 'label' => $emptyPhrase]);
+            }
     }
 
     public function render()

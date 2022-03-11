@@ -16,7 +16,7 @@ class Leaderboard extends Component
     public function __construct(Group $group, $anonymizePrivateUsers = false)
     {
         $this->group = $group;
-        $this->group->load('memberships');
+        $this->group->load('memberships.user');
         $this->anonymizePrivateUsers = $anonymizePrivateUsers;
         $this->leaderboard = $this->getLeaderboard($this->group);
     }
