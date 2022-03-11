@@ -36,15 +36,6 @@
             <div class="flex items-center">
                 <div class="flex items-center flex-shrink-0">
                     @if(Auth::check())
-{{--                        <a--}}
-{{--                            role="button"--}}
-{{--                            class="inline-flex relative items-center px-4 py-2 text-sm font-medium text-white bg-transparent  rounded-md border-2 border-white shadow-sm hover:bg-wordle-yellow hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-wordle-yellow"--}}
-{{--                            href="{{ route('group.create') }}"--}}
-{{--                        >--}}
-{{--                            <!-- Heroicon name: solid/plus-sm -->--}}
-{{--                            <x-icon-solid.plus class="w-4 h-4 mr-2 -ml-1"/>--}}
-{{--                            <span>New Group</span>--}}
-{{--                        </a>--}}
                     @else
                         <a
                             class="flex relative items-center px-4 py-1.5 sm:py-2 text-sm font-medium text-white bg-transparent rounded-md hover:text-wordle-yellow hover:border-transparent hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-wordle-yellow"
@@ -96,6 +87,9 @@
                                     </li>
                                     <li class="border-gray-100 border-b last:border-b-0">
                                         <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('account.settings') }}">My Settings</a>
+                                    </li>
+                                    <li class="border-gray-100 border-b last:border-b-0">
+                                        <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="https://www.nytimes.com/games/wordle/index.html">Play Wordle</a>
                                     </li>
                                     <li class="">
                                         <a class="text-sm px-3 py-2 block text-gray-600 hover:bg-gray-50" href="{{ route('logout') }}">Logout</a>
