@@ -1,5 +1,5 @@
-<form wire:submit.prevent="store">
-    <div class="mt-4 py-8 grid grid-cols-1 gap-y-8">
+<form wire:submit.prevent="store" class="my-0">
+    <div class="py-8 grid grid-cols-1 gap-y-8">
         <x-form.input.text
             wire:model.lazy="groupName"
             :autofocus="$autofocus"

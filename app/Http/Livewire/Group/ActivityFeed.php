@@ -22,6 +22,7 @@ class ActivityFeed extends Component
         return view('livewire.group.activity-feed', [
             'scores' => $this->group
                 ->scores()
+                ->with('user')
                 ->latest('created_at')
                 ->latest('date')
                 ->paginate(6)
