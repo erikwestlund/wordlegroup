@@ -26,14 +26,14 @@
             name="userPublicProfile"
             wire:model="userPublicProfile"
             label="Make my profile public."
-            tip="We will create you a user account along with your group. Click here to allow others to see your scores."
+            tip="We will create you a user account along with your group. Click here to allow others Allow others who are not members of your groups to see your scores."
         />
         @endunless
         <x-form.input.checkbox
             name="public"
             wire:model="public"
             label="Make this group public."
-            tip="This will allow non-group members to see the group page. Users who wish to stay private can still hide their names."
+            tip="This will allow non-group members to see the group page. Users who opt to keep their profiles private can still hide their names."
         />
     </div>
     <x-form.input.button loading-action="store" class="w-24">Create</x-form.input.button>
