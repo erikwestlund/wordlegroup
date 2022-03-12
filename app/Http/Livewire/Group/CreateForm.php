@@ -66,7 +66,7 @@ class CreateForm extends Component
         $group = Group::create([
             'admin_user_id' => $user->id,
             'name'          => $this->groupName,
-            'public'        => $this->public,
+            'public'        => $this->public ?? null,
             'verified_at'   => Auth::check() ? now() : null,
             'token'         => Auth::check() ? null : app(Tokens::class)->generate(),
         ]);
