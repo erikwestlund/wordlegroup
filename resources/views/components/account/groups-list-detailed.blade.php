@@ -18,8 +18,13 @@
                                 {{ substr($membership->group->name, 0, 1)  }}
                             </div>
                             <div class="flex-grow">
-                                <div class="px-4">
+                                <div class="px-4 flex items-center">
                                     <p class="text-lg font-bold  text-green-700 truncate">{{ $membership->group->name }}</p>
+                                    @if($membership->group->isAdmin($user))
+                                        <div class="px-4">
+                                            <x-group.admin-badge text-size="text-xs" />
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
@@ -51,12 +56,15 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
                         </div>
                         <div>
                             <x-icon-regular.chevron-right class="h-4 w-4 fill-gray-400"/>
                         </div>
                     </div>
+
                 </a>
             </li>
         @endforeach

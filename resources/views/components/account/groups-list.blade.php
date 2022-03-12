@@ -21,7 +21,7 @@
                       <div class="flex-1 px-4 py-2 truncate">
                           @if($membership->group->isAdmin($user))
                               <div class="float-right">
-                                  <x-group.admin-badge class="mt-2" text-size="text-xs" />
+                                  <x-group.admin-badge text-size="text-xs"/>
                               </div>
                           @endif
                             <span
