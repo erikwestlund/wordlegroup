@@ -25,7 +25,7 @@
                     name="publicProfile"
                     wire:model="user.public_profile"
                     label="Make my profile public."
-                    tip="Allow others to see your scores."
+                    tip="Allow others outside your groups to see your scores."
                 />
 
                 <x-form.input.checkbox
