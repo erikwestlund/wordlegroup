@@ -51,9 +51,13 @@ class User extends Authenticatable
         'login_code_generated_at',
     ];
 
-    public function pendingGroupInvitations()
+    public function canBeNudged()
     {
-        return $this->hasMany(GroupMembershipInvitation::class, 'email', 'email');
+        return $this->allow_reminder_emails &&
+            (
+                !$this->last_reminded_at ||
+                now()->subHours(config('settings.hours_between_reminder_emails')) > $this->last_reminded_at
+            );
     }
 
     public function dailyScoresForBoard($boardNumber)
@@ -104,6 +108,11 @@ class User extends Authenticatable
         return route('login') . '?id=' . $this->id . '&token=' . $this->auth_token;
     }
 
+    public function getPrivateProfileAttribute()
+    {
+        return !$this->public_profile;
+    }
+
     public function getVerifyUrlAttribute()
     {
         return route('account.verify', $this) . '?token=' . $this->auth_token;
@@ -112,6 +121,71 @@ class User extends Authenticatable
     public function memberships()
     {
         return $this->hasMany(GroupMembership::class);
+    }
+
+    public function nudgeUser(User $nudgedBy)
+    {
+        $this->update([
+            'last_reminded_at' => now(),
+        ]);
+
+        Mail::to($this->email)
+            ->send(new NudgeUser($this, $nudgedBy));
+    }
+
+    public function pendingGroupInvitations()
+    {
+        return $this->hasMany(GroupMembershipInvitation::class, 'email', 'email');
+    }
+
+    public function profileCannotBeSeenBy(User $viewingUser = null)
+    {
+        return ! $this->profileCanBeSeenBy($viewingUser);
+    }
+
+    public function profileCanBeSeenBy(User $viewingUser = null)
+    {
+        // If it's public
+        if ($this->public_profile) {
+            return true;
+        }
+
+        // If anonymous and not public, no.
+        if (!$viewingUser) {
+            return false;
+        }
+
+        // If the viewing user is the user.
+        if ($this->id === $viewingUser->id) {
+            return true;
+        }
+
+        // If the viewing user is in a group with the user.
+        if ($this->sharesGroupMembershipWithAnotherUser($viewingUser)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function sharesGroupMembershipWithAnotherUser(User $otherUser)
+    {
+        return $this->getSharedGroupsWithAnotherUser($otherUser)->isNotEmpty();
+    }
+
+    public function getSharedGroupsWithAnotherUser(User $otherUser)
+    {
+        $myGroups = self::getGroupsOfUser($this);
+        $otherUsersGroups = self::getGroupsOfUser($otherUser);
+
+        return $myGroups->intersect($otherUsersGroups);
+    }
+
+    public static function getGroupsOfUser(User $user)
+    {
+        $user->load('memberships');
+
+        return $user->memberships->pluck('group_id');
     }
 
     public function prunable(): Builder
@@ -139,17 +213,6 @@ class User extends Authenticatable
     {
         return $query->where('auth_token_generated_at', '>', now()->subDay());
     }
-
-    public function nudgeUser(User $nudgedBy)
-    {
-        $this->update([
-            'last_reminded_at' => now(),
-        ]);
-
-        Mail::to($this->email)
-            ->send(new NudgeUser($this, $nudgedBy));
-    }
-
 
     public function sendEmailVerificationNotification()
     {
@@ -253,19 +316,5 @@ class User extends Authenticatable
     public function verifyEmail()
     {
         $this->update(['email_verified_at' => now()]);
-    }
-
-    public function getPrivateProfileAttribute()
-    {
-        return !$this->public_profile;
-    }
-
-    public function canBeNudged()
-    {
-        return $this->allow_reminder_emails &&
-            (
-                !$this->last_reminded_at ||
-                now()->subHours(config('settings.hours_between_reminder_emails')) > $this->last_reminded_at
-            );
     }
 }

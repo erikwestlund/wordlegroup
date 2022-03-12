@@ -37,8 +37,6 @@ class RecordsMailScore
 
             $board = app(WordleBoard::class)->parse($emailText);
 
-            dd($board);
-
             // Record the board.
             Score::create([
                 'user_id'           => $user->id,
