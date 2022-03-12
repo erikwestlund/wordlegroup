@@ -91,7 +91,7 @@ class Invitation extends Component
         ], [
             'email_verified_at'     => now(),
             'name'                  => $this->name,
-            'public_profile'        => $this->publicProfile,
+            'public_profile'        => $this->publicProfile ?? false,
             'allow_digest_emails'   => $this->allowDigestEmails ?? false,
             'allow_reminder_emails' => $this->allowReminderEmails ?? false,
         ]);
