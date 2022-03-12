@@ -5,9 +5,9 @@
                 <div>
                     <span
                         class="rounded bg-white border border-transparent bg-wordle-yellow  px-2.5 py-1 text-xs font-semibold text-white tracking-wide uppercase"
-                    >What's new?</span>
+                    >Already signed up?</span>
                     <span class="inline-flex items-center text-sm font-medium text-gray-600 ml-4">
-                    <span>We just launched!</span>
+                    <a class="text-gray-600 hover:underline" href="{{ route('login') }}">Click here to log in.</a>
                     </span>
                 </div>
                 <div class="mt-6 sm:max-w-xl">
