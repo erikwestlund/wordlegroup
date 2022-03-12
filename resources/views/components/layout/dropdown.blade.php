@@ -36,8 +36,8 @@
                 {{ $buttonSlot }}
             @else
             <span>{{ $label }}</span>
-            <x-icon-regular.chevron-down x-show="! open" class="ml-2 h-3 w-3 text-gray-500" />
-            <x-icon-regular.chevron-up x-show="open" x-cloak class="ml-2 h-3 w-3 text-gray-500" />
+            <x-icon-regular.chevron-down x-show="! open" :class="'ml-2 h-3 w-3 ' . $chevronTextColor" />
+            <x-icon-regular.chevron-up x-show="open" x-cloak :class="'ml-2 h-3 w-3 ' . $chevronTextColor" />
             @endif
         </button>
 
