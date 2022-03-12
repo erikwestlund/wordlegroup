@@ -7,7 +7,7 @@ You can also your scores to record them.  Just click "Share" on your Wordle Scre
 
 Alternatively, click the below button to visit the record scores page.
 
-@component('mail::button', ['url' => route('account.account.record-score')])
+@component('mail::button', ['url' => route('account.record-score')])
 Record My Scores
 @endcomponent
 
