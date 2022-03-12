@@ -60,13 +60,13 @@ class CreateForm extends Component
             : User::firstOrCreate([
                 'email'          => $this->email,
                 'name'           => $this->userName,
-                'public_profile' => $this->userPublicProfile,
+                'public_profile' => $this->userPublicProfile ?? false,
             ]);
 
         $group = Group::create([
             'admin_user_id' => $user->id,
             'name'          => $this->groupName,
-            'public'        => $this->public ?? null,
+            'public'        => $this->public ?? false,
             'verified_at'   => Auth::check() ? now() : null,
             'token'         => Auth::check() ? null : app(Tokens::class)->generate(),
         ]);
