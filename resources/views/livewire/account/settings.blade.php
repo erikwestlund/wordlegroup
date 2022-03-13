@@ -25,7 +25,7 @@
                     name="publicProfile"
                     wire:model="user.public_profile"
                     label="Make my profile public."
-                    tip="Allow others who are not members of your groups to see your scores."
+                    tip="Select this if you want to be able to share your stats with anyone who is not a member of your Wordle Groups."
                 />
 
                 <x-form.input.checkbox

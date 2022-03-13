@@ -25,7 +25,7 @@
                     name="publicGroup"
                     wire:model="group.public"
                     label="Make this group public."
-                    tip="This will allow non-group members to see the group page. Users who wish to stay private can still hide their names."
+                    tip="This will allow non-group members to see the group page. Users whose profiles are set to private will have their names anonymized."
                 />
 
                 <div>

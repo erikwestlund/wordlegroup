@@ -9,7 +9,7 @@
                 <div class="flex justify-center items-center">
                     <button
                         @click="copyToClipboard('{{ route('group.home', $group) }}')"
-                        class="w-10 h-10 inline-flex items-center justify-center bg-wordle-yellow hover:bg-green-700 rounded-full text-white hover:text-green-50"
+                        class="w-10 h-10 inline-flex items-center justify-center bg-green-700 hover:bg-wordle-yellow rounded-full text-white hover:text-green-50"
                     >
                         <x-icon-solid.link class="h-5 w-5"/>
                     </button>
@@ -29,7 +29,7 @@
                 <div class="flex justify-center items-center">
                     <button
                         @click="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('group.home', $group)) }}', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
-                        class="w-10 h-10 inline-flex items-center justify-center bg-wordle-yellow hover:bg-green-700 rounded-full text-white hover:text-green-50"
+                        class="w-10 h-10 inline-flex items-center justify-center bg-green-700 hover:bg-wordle-yellow rounded-full text-white hover:text-green-50"
                     >
                         <x-icon-brands.facebook-f class="h-5 w-5"/>
                     </button>
@@ -49,7 +49,7 @@
                 <div class="flex justify-center items-center">
                     <button
                         @click="window.open('https://twitter.com/share?url={{ urlencode(route('group.home', $group)) }}&via=wordlegroup&text={{ urlencode('View the leaderboard and stats for my Wordle Group, ' . $group->name) }}.', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
-                        class="w-10 h-10 inline-flex items-center justify-center bg-wordle-yellow hover:bg-green-700 rounded-full text-white hover:text-green-50"
+                        class="w-10 h-10 inline-flex items-center justify-center bg-green-700 hover:bg-wordle-yellow rounded-full text-white hover:text-green-50"
                     >
                         <x-icon-brands.twitter class="h-5 w-5"/>
                     </button>

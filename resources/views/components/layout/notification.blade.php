@@ -37,7 +37,7 @@
             }"
                 x-show="show"
                 x-transition.duration.500ms
-                class="relative max-w-sm w-full bg-white pl-6 pr-4 py-4 border border-gray-200 rounded-md shadow-lg pointer-events-auto"
+                class="relative max-w-sm w-full bg-white mb-4 last:mb-0 pl-6 pr-4 py-4 border border-gray-200 rounded-md shadow-lg pointer-events-auto"
             >
                 <div class="flex items-center">
                     <!-- Icons -->
