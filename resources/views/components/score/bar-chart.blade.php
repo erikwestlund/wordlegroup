@@ -7,7 +7,7 @@
     @endonce
 
     <div
-        class="h-72 sm:h-auto"
+        class="h-72 sm:h-80"
         x-data="{
                 labels: ['1', '2', '3', '4', '5', '6', 'Missed'],
                 values: @json($values),

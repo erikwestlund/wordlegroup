@@ -21,6 +21,12 @@
                     </div>
                 </div>
             @endif
+            @if($user->public_profile)
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Share</x-layout.sub-heading>
+                    <x-account.share-links :user="$user" class="mt-6" />
+                </div>
+            @endif
             @unless($user->dismissed_email_notification)
                 <div @if($user->daily_scores_recorded > 0) class="pt-8" @endif>
                     <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>
