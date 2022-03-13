@@ -48,7 +48,7 @@ class Group extends Model
         return $this->admin_user_id === $user->id;
     }
 
-    public function isMemberOf(User $user)
+    public function isMemberOf(User $user = null)
     {
         if (!$user) {
             return false;

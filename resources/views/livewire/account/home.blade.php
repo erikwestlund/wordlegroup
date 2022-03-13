@@ -76,7 +76,7 @@
 
                 <x-layout.sub-heading class="text-center">My Scores</x-layout.sub-heading>
                 <div class="mt-8">
-                    <livewire:account.score-feed :user="$user"/>
+                    <livewire:account.score-feed :user="$user" :show-when-recorded-by-other-user="true"/>
                 </div>
             </div>
 

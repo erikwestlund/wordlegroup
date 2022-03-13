@@ -12,9 +12,12 @@ class ScoreFeed extends Component
 
     public $user;
 
-    public function mount(User $user)
+    public $showWhenRecordedByOtherUser;
+
+    public function mount(User $user, $showWhenRecordedByOtherUser = false)
     {
         $this->user = $user;
+        $this->showWhenRecordedByOtherUser = $showWhenRecordedByOtherUser;
     }
 
     public function render()

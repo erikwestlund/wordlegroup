@@ -21,7 +21,12 @@
         </div>
     </div>
     <div class="mt-6">
-        <div class="text-gray-500 text-sm text-center">Based on <span class="font-semibold">{{ $user->daily_scores_recorded }}</span>
+        <div class="text-gray-500 text-sm text-center"><span class="font-semibold">{{ $user->daily_scores_recorded }}</span>
+            recorded
             {{ Str::plural('score', $user->daily_scores_recorded ) }}.</div>
     </div>
+    <div class="mt-8">
+        <x-score.bar-chart :scores="$user->dailyScores" />
+    </div>
+
 </div>

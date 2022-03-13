@@ -21,7 +21,10 @@
         </div>
     </div>
     <div class="mt-6">
-        <div class="text-gray-500 text-sm text-center">Based on <span class="font-semibold">{{ $group->scores_recorded }}</span>
-            {{ Str::plural('score', $group->scores_recorded ) }}.</div>
+        <div class="text-gray-500 text-sm text-center"><span class="font-semibold">{{ $group->scores_recorded }}</span>
+            {{ Str::plural('score', $group->scores_recorded ) }} recorded.</div>
+    </div>
+    <div class="mt-8">
+        <x-score.bar-chart :scores="$group->scores" />
     </div>
 </div>

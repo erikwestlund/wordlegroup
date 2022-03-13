@@ -1,9 +1,9 @@
 <div class="flex justify-center" >
     <ul role="list" class="grid grid-cols-1 gap-5 sm:gap-6 w-full max-w-sm sm:max-w-md">
-        @foreach($user->memberships as $membership)
+        @foreach($groups as $group)
             <li class="col-span-1 flex shadow-sm rounded-md justify-center ">
                 <a
-                    href="{{ route('group.home', $membership->group) }}"
+                    href="{{ route('group.home', $group) }}"
                     class="flex flex-grow overflow-hidden"
                     x-data="{hover: false}"
                     @mouseover="hover = true"
@@ -13,34 +13,37 @@
                         class="flex-shrink-0 flex items-center bg-wordle-yellow justify-center w-16 text-white text-2xl font-bold rounded-l-md"
                         :class="{ 'bg-green-700': hover, 'bg-wordle-yellow':  !hover}"
                     >
-                        {{ Str::substr($membership->group->name, 0, 1)  }}
+                        {{ Str::substr($group->name, 0, 1)  }}
                     </div>
                     <div
                         class="flex-grow flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate"
                     >
                       <div class="flex-1 px-4 py-2 truncate">
-                          @if($membership->group->isAdmin($user))
+                          @if($userIsAuthenticatedUser && $group->isAdmin($user))
                               <div class="float-right">
                                   <x-group.admin-badge text-size="text-xs"/>
                               </div>
                           @endif
                             <span
                                 class="text-gray-900 font-bold"
-                            >{{ $membership->group->name }}</span>
+                            >{{ $group->name }}</span>
                             <ul class="mt-0.5 text-sm">
-                                @if($membership->group->leaderboard && isset($membership->group->leaderboard->first()['name']))
+                                @if($group->leaderboard && isset($group->leaderboard->first()['name']))
+                                    @if($group['leader'])
                                     <li>
                                         <span class="font-semibold">Leader:</span>
-                                        {{ $membership->group->leaderboard->first()['name']  }}, {{ number_format($membership->group->leaderboard->first()['stats']['mean'], 2) }}
+
+                                        {{ $group['leader']['public_name'] }}, {{ number_format($group->leaderboard->first()['stats']['mean'], 2) }}
                                     </li>
+                                    @endif
                                     <li>
                                         <span class="font-semibold">Avg. Score:</span>
-                                        {{ number_format($membership->group->score_mean, 2) }}
+                                        {{ number_format($group->score_mean, 2) }}
                                     </li>
-                                    @if($membership->group->leaderboard->firstWhere('user_id', $user->id))
+                                    @if($group->leaderboard->firstWhere('user_id', $user->id))
                                     <li>
-                                        <span class="font-semibold">My Place:</span>
-                                        {{ $membership->group->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $membership->group->leaderboard->pluck('place')->max() }}
+                                        <span class="font-semibold">Place:</span>
+                                        {{ $group->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $group->leaderboard->pluck('place')->max() }}
                                     </li>
                                     @endif
                                 @endif

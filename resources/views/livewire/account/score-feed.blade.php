@@ -6,7 +6,7 @@
                 <div class="space-x-3 w-56  border rounded-lg">
                     <x-score.display :score="$score"/>
                 </div>
-                @if(! $score->recordedByUser())
+                @if($showWhenRecordedByOtherUser && ! $score->recordedByUser())
                     <div class="text-xs text-gray-400 mt-2">Recorded by {{ $score->recordingUser->name }}</div>
                 @endif
             </li>

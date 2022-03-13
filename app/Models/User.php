@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\GetsUsersInSharedGroupsWithAuthenticatedUser;
 use App\Concerns\Tokens;
 use App\Mail\NudgeUser;
 use App\Mail\UserVerification;
@@ -170,7 +171,9 @@ class User extends Authenticatable
 
     public function sharesGroupMembershipWithAnotherUser(User $otherUser)
     {
-        return $this->getSharedGroupsWithAnotherUser($otherUser)->isNotEmpty();
+        // Get all users that the authorized user shares a group with, and see if the other user's
+        // ID is in that group.
+        return app(GetsUsersInSharedGroupsWithAuthenticatedUser::class)->users->pluck('id')->contains($otherUser->id);
     }
 
     public function getSharedGroupsWithAnotherUser(User $otherUser)

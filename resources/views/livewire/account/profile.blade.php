@@ -15,6 +15,15 @@
             <div class="mt-8">
                 <livewire:account.score-feed :user="$user"/>
             </div>
+        </div>
+
+        <div class="pt-8">
+
+            <x-layout.sub-heading class="text-center">Groups</x-layout.sub-heading>
+            <div class="mt-8">
+                <x-account.groups-list :user="$user" :anonymize-private-groups="true"/>
+            </div>
+        </div>
     </div>
 
 </x-layout.page-container>
