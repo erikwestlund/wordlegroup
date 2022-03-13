@@ -20,8 +20,7 @@
                 @if($groupMembership->group->leaderboard->firstWhere('user_id', $user->id))
                     <li class="mt-0.5 first:mt-0">
                         <span class="font-medium">My Place:</span>
-                        {{ $groupMembership->group->leaderboard->firstWhere('user_id', $user->id)['place'] }}
-                        /{{ $groupMembership->group->leaderboard->pluck('place')->max() }}
+                        {{ $groupMembership->group->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $groupMembership->group->leaderboard->pluck('place')->max() }}
                     </li>
                 @endif
             @endif
