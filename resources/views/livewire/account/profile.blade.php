@@ -1,4 +1,9 @@
 <x-layout.page-container :title="$user->name . '\'s Wordle Group Profile'" :heading="$user->name">
+    <x-layout.social-meta
+        title="Wordle Stats For {{ $user->name }}"
+        url="{{ route('account.profile.home', $user) }}"
+        description="Wordle Group is a way to keep score with a group of friends and track your Wordle performance over time."
+    />
 
     <div class="grid grid-cols-1 gap-y-8 divide-y divide-gray-200">
 

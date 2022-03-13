@@ -2,6 +2,13 @@
     :heading="$group->name"
     :title="$group->name . ' Wordle Group'"
 >
+
+    <x-layout.social-meta
+        title="{{ $group->name }} - Wordle Group Leaderboard & Stats"
+        url="{{ route('group.home', $group) }}"
+        description="Wordle Group is a way to keep score with a group of friends and track your Wordle performance over time."
+    />
+
     @if($isAdmin)
         <x-slot name="captionSlot">
             <div class="flex justify-center mt-4">
@@ -55,6 +62,12 @@
                 @endif
             </div>
             @if($memberOfGroup)
+                @if($group->public)
+                <div class="pt-8">
+                    <x-layout.sub-heading class="text-center">Share</x-layout.sub-heading>
+                    <x-group.share-links :group="$group" class="mt-6" />
+                </div>
+                @endif
                 @unless($user->dismissed_email_notification)
                     <div class="pt-8">
                         <x-layout.sub-heading class="text-center">Email Your Scores</x-layout.sub-heading>

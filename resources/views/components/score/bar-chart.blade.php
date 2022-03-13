@@ -40,7 +40,6 @@
                                 size: 14,
                                 weight: 500,
                             },
-{{--                            color: '#C8B458',--}}
                         },
                          title: {
                             display: false,
@@ -95,13 +94,10 @@
             }
         })
 
-        console.log(ChartDataLabels);
-
 
         this.$watch('values', () => {
             chart.data.labels = this.labels
             chart.data.datasets[0].data = this.values
-
 
             chart.update()
         })

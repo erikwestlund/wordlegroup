@@ -5,17 +5,17 @@
             <dl class="rounded-lg bg-white grid grid-cols-3">
                 <div class="flex flex-col border-gray-100 px-6 py-4 text-center border-0 border-r">
                     <dt class="order-2 mt-2 text-base leading-6 font-medium text-gray-500">Median</dt>
-                    <dd class="order-1 text-xl font-bold text-green-600">{{ $user->daily_score_median }}</dd>
+                    <dd class="order-1 text-xl font-bold text-green-700">{{ $user->daily_score_median }}</dd>
                 </div>
                 <div
                     class="flex flex-col border-gray-100 px-6 py-4 text-center border-0 border-l border-r"
                 >
                     <dt class="order-2 mt-2 text-base leading-6 font-medium text-gray-500">Mean</dt>
-                    <dd class="order-1 text-xl font-bold text-green-600">{{ $user->daily_score_mean }}</dd>
+                    <dd class="order-1 text-xl font-bold text-green-700">{{ $user->daily_score_mean }}</dd>
                 </div>
                 <div class="flex flex-col border-gray-100 px-6 py-4 text-center border-0 border-l">
                     <dt class="order-2 mt-2 text-base leading-6 font-medium text-gray-500">Mode</dt>
-                    <dd class="order-1 text-xl font-bold text-green-600">{{ $user->daily_score_mode }}</dd>
+                    <dd class="order-1 text-xl font-bold text-green-700">{{ $user->daily_score_mode }}</dd>
                 </div>
             </dl>
         </div>

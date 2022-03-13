@@ -3,6 +3,7 @@
     heading="Log In To Wordle Group"
     title="Log In To Wordle Group"
 >
+    <x-layout.social-meta/>
     <form
         @if($codeSent)
         wire:submit.prevent="attemptLoginWithCode"
