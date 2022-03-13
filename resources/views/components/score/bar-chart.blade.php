@@ -2,6 +2,7 @@
     @once
         @push('scripts')
             <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
         @endpush
     @endonce
 
@@ -10,6 +11,9 @@
     labels: ['1', '2', '3', '4', '5', '6', 'Missed'],
     values: @json($values),
     init() {
+        Chart.register(ChartDataLabels);
+
+
         let chart = new Chart(this.$refs.canvas.getContext('2d'), {
             type: 'bar',
             data: {
@@ -33,8 +37,9 @@
                         ticks: {
                             font: {
                                 size: 14,
-                                weight: 500
-                            }
+                                weight: 500,
+                            },
+{{--                            color: '#C8B458',--}}
                         },
                          title: {
                             display: false,
@@ -50,8 +55,9 @@
                             stepSize: {{ $stepSize }},
                             font: {
                                 size: 14,
-                                weight: 500
-                            }
+                                weight: 500,
+                            },
+{{--                            color: '#C8B458',--}}
                         },
                          title: {
                             display: true,
@@ -60,11 +66,23 @@
                     }
                  },
                 plugins: {
+                    datalabels: {
+                        color: 'black',
+                        anchor: 'end',
+                        align: 'right',
+                        labels: {
+                            title: {
+                                font: {
+                                    weight: 400,
+                                }
+                            },
+                        }
+                    },
                     legend: {
                         display: false,
                     },
                     tooltip: {
-                        enabled: true,
+                        enabled: false,
                         displayColors: false,
                         callbacks: {
                             label(point) {
@@ -76,9 +94,13 @@
             }
         })
 
+        console.log(ChartDataLabels);
+
+
         this.$watch('values', () => {
             chart.data.labels = this.labels
             chart.data.datasets[0].data = this.values
+
 
             chart.update()
         })
