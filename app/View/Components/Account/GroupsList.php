@@ -73,7 +73,7 @@ class GroupsList extends Component
         }
 
         // Show only groups where the group is public or where the viewing user is in the group.
-        $viewingUsersGroupIds = $viewingUser ? $viewingUser->groups->pluck('id') : collect();
+        $viewingUsersGroupIds = $viewingUser ? $this->getAllUserGroups($viewingUser)->pluck('id') : collect();
 
         return $this->getAllUserGroups($user)
                     ->filter(function ($group) use ($viewingUsersGroupIds) {
