@@ -18,9 +18,28 @@
                     <button
                         @click="copyToClipboard('{{ route('account.profile', $user) }}')"
                         type="button"
-                        class="text-gray-500 text-xs"
+                        class="text-gray-500 hover:text-gray-700 text-xs"
                     >Copy Link
                     </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-y-4 mr-8 last:mr-0">
+                <div class="flex justify-center items-center">
+                    <a
+                        href="mailto:?subject=View my Wordle Stats on Wordle Group&body=View my Wordle Stats on Wordle Group at {{ urlencode(route('account.profile', $user)) }}."
+                        class="w-10 h-10 inline-flex items-center justify-center bg-green-700 hover:bg-wordle-yellow rounded-full text-white hover:text-green-50"
+                    >
+                        <x-icon-solid.envelope class="h-5 w-5"/>
+                    </a>
+                </div>
+                <div class="text-center">
+                    <a
+                        href="mailto:?subject=View my Wordle Stats on Wordle Group&body=View my Wordle Stats on Wordle Group at {{ urlencode(route('account.profile', $user)) }}."
+                        type="button"
+                        class="text-gray-500 hover:text-gray-700 text-xs"
+                    >Email
+                    </a>
                 </div>
             </div>
 
@@ -38,7 +57,7 @@
                     <button
                         @click="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('account.profile', $user)) }}', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
                         type="button"
-                        class="text-gray-500 text-xs"
+                        class="text-gray-500 hover:text-gray-700 text-xs"
                     >Facebook
                     </button>
                 </div>
@@ -58,7 +77,7 @@
                     <button
                         @click="window.open('https://twitter.com/share?url={{ urlencode(route('account.profile', $user)) }}&via=wordlegroup&text={{ urlencode('View my Wordle Stats on Wordle Group') }}.', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
                         type="button"
-                        class="text-gray-500 text-xs"
+                        class="text-gray-500 hover:text-gray-700 text-xs"
                     >Twitter
                     </button>
                 </div>
