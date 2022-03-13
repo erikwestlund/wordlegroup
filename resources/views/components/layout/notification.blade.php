@@ -27,7 +27,7 @@
                 init() {
                     this.$nextTick(() => this.show = true)
 
-                    setTimeout(() => this.transitionOut(), 300000)
+                    setTimeout(() => this.transitionOut(), 3000)
                 },
                 transitionOut() {
                     this.show = false
