@@ -5,7 +5,7 @@
         class="flex justify-center items-center"
     >
         <div class="flex">
-            <div class="grid grid-cols-1 gap-y-4 mr-8 last:mr-0">
+            <div class="grid grid-cols-1 gap-y-4 mr-6 last:mr-0">
                 <div class="flex justify-center items-center">
                     <button
                         @click="copyToClipboard('{{ route('group.home', $group) }}')"
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-y-4 mr-8 last:mr-0">
+            <div class="grid grid-cols-1 gap-y-4 mr-6 last:mr-0">
                 <div class="flex justify-center items-center">
                     <a
                         href="mailto:?subject=Check out my Wordle Group&body=View the leaderboard and stats for my Wordle Group, {{ $group->name }}, at {{ route('group.home', $group) }}"
@@ -44,7 +44,7 @@
             </div>
 
 
-            <div class="grid grid-cols-1 gap-y-4 mr-8 last:mr-0">
+            <div class="grid grid-cols-1 gap-y-4 mr-6 last:mr-0">
                 <div class="flex justify-center items-center">
                     <button
                         @click="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('group.home', $group)) }}', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
@@ -64,7 +64,7 @@
             </div>
 
 
-            <div class="grid grid-cols-1 gap-y-4 mr-8 last:mr-0">
+            <div class="grid grid-cols-1 gap-y-4 mr-6 last:mr-0">
                 <div class="flex justify-center items-center">
                     <button
                         @click="window.open('https://twitter.com/share?url={{ urlencode(route('group.home', $group)) }}&via=wordlegroup&text={{ urlencode('View the leaderboard and stats for my Wordle Group, ' . $group->name) }}.', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
