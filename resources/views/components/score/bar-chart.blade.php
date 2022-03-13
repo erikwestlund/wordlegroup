@@ -28,6 +28,7 @@
                 base: 0,
                 indexAxis: 'y',
                 interaction: { intersect: false },
+                layout: { padding: { right: 20 } },
                 scales: {
                     y: {
                         min: 0,
