@@ -1,7 +1,7 @@
 @component('mail::message')
 # You Have Been Nudged By {{ $nudgedByUser->name }}
 
-{{ $nudgedByUser->name }} has nudged you to record your Wordle scores to [Wordle Group][{{ route('home') }}.
+{{ $nudgedByUser->name }} has nudged you to record your Wordle scores to [Wordle Group]({{ route('home') }}).
 
 You can also your scores to record them.  Just click "Share" on your Wordle Screen, select your email client, and send your board to [scores@wordlegroup.com](mailto:scores@wordlegroup.com). We'll take care of the rest.
 
