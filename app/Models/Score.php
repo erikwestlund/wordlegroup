@@ -112,4 +112,12 @@ class Score extends Model
     {
         return $this->recording_user_id === $membership->group->admin->id;
     }
+
+    public function getBoardShareTextAttribute()
+    {
+        return "Wordle {$this->board_number} " . ($this->score === 7 ? 'X' :$this->score) . "/6" . ($this->hardmode ? '*' : '') . "\n\n" .
+                $this->board;
+
+
+    }
 }

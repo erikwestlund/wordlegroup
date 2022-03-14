@@ -1,7 +1,7 @@
 <div class="flex justify-center" >
     <ul role="list" class="grid grid-cols-1 gap-5 sm:gap-6 w-full max-w-sm sm:max-w-md">
         @foreach($groups as $group)
-            <li class="col-span-1 flex shadow-sm rounded-md justify-center ">
+            <li class="col-span-1 flex shadow-sm rounded-md justify-center">
                 <a
                     href="{{ route('group.home', $group) }}"
                     class="flex flex-grow overflow-hidden"

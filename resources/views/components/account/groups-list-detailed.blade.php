@@ -10,16 +10,16 @@
                     @mouseout="hover = false"
                 >
                     <div class="flex items-center px-2 py-4 sm:px-2">
-                        <div class="min-w-0 flex-1 flex justify-start">
+                        <div class="min-w-0 overflow-hidden flex justify-start">
                             <div
                                 class="flex-shrink-0 flex items-center font-semibold text-2xl justify-center rounded-full w-12 h-12 bg-wordle-yellow text-white"
                                 :class="{ 'bg-green-700': hover, 'bg-wordle-yellow':  !hover}"
                             >
                                 {{ substr($membership->group->name, 0, 1)  }}
                             </div>
-                            <div class="flex-grow">
+                            <div class="flex-grow truncate">
                                 <div class="px-4 flex items-center">
-                                    <p class="text-lg font-bold  text-green-700 truncate">{{ $membership->group->name }}</p>
+                                    <p title="{{ $membership->group->name }}" class="text-lg font-bold text-green-700 whitespace-nowrap truncate">{{ $membership->group->name }}</p>
                                     @if($membership->group->isAdmin($user))
                                         <div class="px-4">
                                             <x-group.admin-badge text-size="text-xs" />

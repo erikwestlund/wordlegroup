@@ -9,6 +9,7 @@
                 @if($showWhenRecordedByOtherUser && ! $score->recordedByUser())
                     <div class="text-xs text-gray-400 mt-2">Recorded by {{ $score->recordingUser->name }}</div>
                 @endif
+                <livewire:score.share :score="$score" />
             </li>
         @endforeach
     </ul>

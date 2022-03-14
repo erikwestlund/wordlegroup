@@ -8,7 +8,9 @@ class ScoreObserver
 {
     public function created(Score $score)
     {
-//        $this->runEvents($score);
+        $score->update([
+            'public' => (bool)$score->user->public_profile,
+        ]);
     }
 
     public function updated(Score $score)
