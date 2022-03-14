@@ -113,13 +113,31 @@ class WordleBoard
 
         $board = $matches[1][0];
 
-        $board = trim(preg_replace("/[^⬜🟨🟩⬛\n\s\r]/su", "", $board));
+        $board = $this->getBoardFromString($board, $score);
 
         if ($this->boardHasCorrectLineBreaks($board, $score)) {
             return $board;
         }
 
         return $this->attemptBoardRepairForMissingLineBreaks($board);
+    }
+
+    public function getBoardFromString($board, $score)
+    {
+        // Get only the wordle characters
+        $board = trim(preg_replace("/[^⬜🟨🟩⬛]/su", "", $board));
+
+        return collect(mb_str_split($board, 5))->take($score)->implode("\r\n");
+    }
+
+    public function chunkSplitUnicode($str, $l = 76, $e = "\r\n") {
+        $tmp = array_chunk(
+            preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), $l);
+        $str = "";
+        foreach ($tmp as $t) {
+            $str .= join("", $t) . $e;
+        }
+        return $str;
     }
 
     public function attemptBoardRepairForMissingLineBreaks($board)
