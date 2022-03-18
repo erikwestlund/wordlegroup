@@ -9,14 +9,21 @@ class Share extends Component
 {
     public $score;
 
+    protected function getListeners()
+    {
+        return ['shareScore'];
+    }
+
     public function mount(Score $score)
     {
         $this->score = $score;
     }
 
-    public function makePublic($scoreId)
+    public function shareScore($scoreId, $type)
     {
-        dd($scoreId);
+        $this->score->shared_at = now();
+        $this->score->save();
+        $this->dispatchBrowserEvent("shared-to-{$type}");
     }
 
     public function render()

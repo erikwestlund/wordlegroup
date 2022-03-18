@@ -6,13 +6,6 @@ use App\Models\Score;
 
 class ScoreObserver
 {
-    public function created(Score $score)
-    {
-        $score->update([
-            'public' => (bool)$score->user->public_profile,
-        ]);
-    }
-
     public function updated(Score $score)
     {
         $this->runEvents($score);

@@ -60,8 +60,5 @@ class SyncsDailyScoreToGroupMemberships
             ->filter(function ($score) use ($membership) {
                 return $score->validForMembership($membership);
             })->first();
-//            })->sortByDesc(function ($score) use ($membership) {
-//                return $score->recording_user_id === $membership->user_id;
-//            })->first();
     }
 }
