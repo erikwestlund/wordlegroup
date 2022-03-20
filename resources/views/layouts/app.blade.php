@@ -42,8 +42,8 @@
 </main>
 
 @livewireScripts
-<script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
 <script src="//unpkg.com/alpinejs" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9XVFBH780C"></script>
@@ -56,6 +56,10 @@
 </script>
 
 <script>
+    document.addEventListener("turbo:load", function() {
+        window.dispatchEvent(new CustomEvent("reset-notifications"));
+    })
+
     function iOS() {
         return [
                 'iPad Simulator',

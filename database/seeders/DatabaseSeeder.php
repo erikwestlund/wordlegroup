@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         User::all()
             ->each(function ($user) use ($startBoard, $seedCount) {
                 $currentGroupMembership = GroupMembership::where('user_id', $user->id)->first();
-                $startOfWordleDay = app(WordleBoard::class)->getDateFromBoardNumber($startBoard);
+                $startOfWordleDay = app(WordleDate::class)->getDateFromBoardNumber($startBoard);
                 $groupMembershipTime = $startOfWordleDay->subHour();
 
                 Group::where('id', '!=', $user->memberships()->first()->group_id)
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
                      ->count($seedCount)
                      ->state(new Sequence(
                          function ($sequence) use ($user, $startBoard, $seedCount) {
-                             $date = app(WordleBoard::class)->getDateFromBoardNumber($sequence->index + $startBoard);
+                             $date = app(WordleDate::class)->getDateFromBoardNumber($sequence->index + $startBoard);
                              $scoreDateTime = $scoreTime = app(WordleDate::class)->get($date)
                                                                                  ->addHours(random_int(0, 23))
                                                                                  ->addMinutes(random_int(0, 59))
@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
             $startBoard = $startBoard ?? random_int(1, $earliestStartBoard);
         }
 
-        $startOfWordleDay = app(WordleBoard::class)->getDateFromBoardNumber($startBoard);
+        $startOfWordleDay = app(WordleDate::class)->getDateFromBoardNumber($startBoard);
         $groupMembershipTime = $startOfWordleDay->subHour();
 
         // Create an admin. First time through, make the email generic for testing ease.

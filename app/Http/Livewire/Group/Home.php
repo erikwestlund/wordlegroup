@@ -19,6 +19,8 @@ class Home extends Component
 
     public $guest;
 
+    public $memberCount;
+
     public $pendingInvitations;
 
     protected $listeners = ['scoreRecorded'];
@@ -26,6 +28,7 @@ class Home extends Component
     public function mount(Group $group)
     {
         $this->group = $group;
+        $this->memberCount = $group->memberships()->count();
         $this->user = Auth::check() ? Auth::user() : null;
         $this->memberOfGroup = $this->user ? $this->group->isMemberOf($this->user) : false;
         $this->isAdmin = $this->memberOfGroup && $group->isAdmin($this->user);

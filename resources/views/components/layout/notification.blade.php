@@ -8,10 +8,14 @@
                 content: e.detail.content,
             })
         },
+        resetNotifications() {
+            this.notifications = []
+        },
         remove(notification) {
             this.notifications = this.notifications.filter(i => i.id !== notification.id)
         },
     }"
+    @reset-notifications.window="resetNotifications()"
     @notify.window="add($event)"
     class="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
     role="status"

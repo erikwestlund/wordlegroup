@@ -55,7 +55,7 @@ class Score extends Model
 
     public function getEndOfWordleDayAttribute()
     {
-        return $this->date->addHours(24)->subMicrosecond();
+        return app(WordleDate::class)->getActiveBoardEndTime()->subMicrosecond();
     }
 
     public function getPublicAttribute()

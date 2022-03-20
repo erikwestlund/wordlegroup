@@ -7,7 +7,7 @@
             name="tabs"
             class="block w-full focus:ring-green-700 focus:border-green-500 border-gray-300 rounded-md"
             x-data="{selected: '{{ $activePage }}', routeMap: {{ json_encode($routeMap, JSON_HEX_APOS) }} }"
-            x-on:change="window.location.href = routeMap[$event.target.value]"
+            x-on:change="Turbo.visit(routeMap[$event.target.value])"
         >
             @foreach($pages as $pageName => $page)
                 @if(isset($page['placeholder']) && $page['placeholder'])

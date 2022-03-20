@@ -10,10 +10,10 @@
     onclick="confirm('{{ $confirmMessage }}') || event.stopImmediatePropagation()"
     @endif
     wire:click.prevent="shareScore({{ $score->id }}, 'link')"
-    x-on:shared-score-{{ $score->id }}-to-link.window="copyToClipboard('{{ route('score.share-page', $score) }}')"
+    x-on:shared-score-{{ $score->id }}-to-link.window="Turbo.clearCache(); copyToClipboard('{{ route('score.share-page', $score) }}')"
     href="{{ route('score.share-page', $score) }}"
 >
     @include('scripts.copy-to-clipboard')
 
-    <x-icon-solid.link :class="'w-' . $iconSize . ' ' . 'h-'. $iconSize" />
+    <x-icon-solid.link :class="'w-' . $iconSize . ' ' . 'h-'. $iconSize"/>
 </button>

@@ -45,9 +45,9 @@ class Invitation extends Component
             $this->invitedUserExists = true;
 
             // If this user has been invited, but user is not logged in, redirect to login.
-            if(! Auth::check()) {
-                return redirect(route('login'));
-            }
+//            if(! Auth::check()) {
+//                return redirect(route('login'));
+//            }
 
             // If this user is logged in, and it's not their invitation, abort 403
             if(Auth::check() && Auth::user()->email !== $invitation->email) {

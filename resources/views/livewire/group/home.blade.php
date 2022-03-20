@@ -27,7 +27,19 @@
 
         <div class="grid grid-cols-1 gap-y-12 divide-gray-200 divide-y">
 
-            <div>
+            @if($memberOfGroup && $memberCount === 1)
+                <div>
+                    <x-layout.sub-heading class="text-center">Invite Someone to
+                        Join {{ $group->name }}</x-layout.sub-heading>
+                    <div class="mt-8 w-full flex justify-center">
+                        <div class="w-72">
+                            <livewire:group.invite-member :group="$group"/>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <div @if($memberOfGroup && $memberCount === 1) class="pt-8" @endif>
                 @if($isAdmin && $group->pendingInvitations->isNotEmpty())
                     <div class="mb-8">
                         <x-layout.sub-heading class="text-center">Pending Group Invitations</x-layout.sub-heading>
@@ -36,6 +48,7 @@
                         </div>
                     </div>
                 @endif
+
 
                 <x-layout.sub-heading class="text-center">Leaderboard</x-layout.sub-heading>
                 <div class="mt-8">
@@ -116,6 +129,7 @@
             @endif
 
             @if($memberOfGroup)
+                @if($memberCount > 1)
                 <div class="pt-8">
                     <x-layout.sub-heading class="text-center">Invite Someone to
                         Join {{ $group->name }}</x-layout.sub-heading>
@@ -125,6 +139,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <div class="pt-8">
                     <x-layout.sub-heading class="text-center">Group Members</x-layout.sub-heading>

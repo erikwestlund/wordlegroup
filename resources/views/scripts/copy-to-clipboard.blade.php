@@ -4,6 +4,7 @@
     function copyToClipboard(text) {
         if (window.clipboardData && window.clipboardData.setData) {
             notify('Copied to clipboard.')
+            console.log('clicked')
             return clipboardData.setData("Text", text);
         }
         else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
@@ -21,6 +22,7 @@
             }
             finally {
                 notify('Copied to clipboard.')
+                console.log('clicked')
                 document.body.removeChild(textarea);
             }
         }
