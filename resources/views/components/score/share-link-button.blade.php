@@ -1,5 +1,6 @@
 <a
-    {{ $attributes->merge(['type' => 'button', 'title' => 'Copy Share Link']) }}
+    role="button"
+    {{ $attributes->merge(['title' => 'Copy Share Link']) }}
     @if($buttonClass)
     class="{{ $buttonClass }}"
     @else
