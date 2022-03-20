@@ -20,7 +20,7 @@ class SharePage extends Component
 
     public function getTitle(Score $score)
     {
-        return "Wordle {$score->board_number} by {$score->user->name}";
+        return "{$score->boardTitle} - by {$score->user->name}";
     }
 
     public function render()
