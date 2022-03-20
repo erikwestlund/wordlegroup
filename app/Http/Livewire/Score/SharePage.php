@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Score;
 
 use App\Models\Score;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SharePage extends Component
@@ -13,6 +14,10 @@ class SharePage extends Component
 
     public function mount(Score $score)
     {
+        if(!($score->user->public_profile || $score->public || Auth::check() && $score->user->id === Auth::id())) {
+            abort(403);
+        }
+
         $score->load('user');
         $this->score = $score;
         $this->title = $this->getTitle($score);

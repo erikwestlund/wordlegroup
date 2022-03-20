@@ -21,7 +21,7 @@ class Share extends Component
 
     public function shareScore($scoreId, $type)
     {
-        if(! $this->score->shared_at) {
+        if(!$this->score->user->public_profile && ! $this->score->shared_at) {
             $this->score->shared_at = now();
             $this->score->save();
         }
