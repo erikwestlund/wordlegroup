@@ -23,10 +23,10 @@ Route::get('/group/{group}/verify-email', \App\Http\Livewire\Group\VerifyEmailNo
 Route::get('/group/{groupId}/verify', \App\Http\Livewire\Group\Verify::class)->name('group.verify');
 Route::get('/group/invitation/{invitationId}', \App\Http\Livewire\Group\Invitation::class)->name('group.invitation');
 
-Route::post('/score/email', \App\Http\Controllers\MailScoreMessageController::class);
+Route::post('/score/email', \App\Http\Controllers\MailScoreMessageController::class)->name('score.email');
+Route::get('/score/{score}', \App\Http\Livewire\Score\SharePage::class)->name('score.share-page');
 
 Route::get('/group/{group}', \App\Http\Livewire\Group\Home::class)->name('group.home');
-Route::get('/score/{score}', \App\Http\Livewire\Score\SharePage::class)->name('score.share-page');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/account', \App\Http\Livewire\Account\Home::class)->name('account.home');
