@@ -113,11 +113,33 @@ class Score extends Model
         return $this->recording_user_id === $membership->group->admin->id;
     }
 
+    public function getPublicAttribute()
+    {
+        return (bool)$this->shared_at;
+    }
+
+    public function getBoardTitleAttribute()
+    {
+        return "Wordle {$this->board_number} " . ($this->score === 7 ? 'X' : $this->score) . "/6" . ($this->hardmode ? '*' : '');
+    }
+
+    public function getBoardShareTextWithUrlAttribute()
+    {
+        $board = $this->boardShareText;
+
+        if ($this->user->public_profile || $this->public) {
+            $board .= "\n\n" .
+                route('score.share-page', $this);
+        }
+
+        return $board;
+    }
+
     public function getBoardShareTextAttribute()
     {
-        return "Wordle {$this->board_number} " . ($this->score === 7 ? 'X' :$this->score) . "/6" . ($this->hardmode ? '*' : '') . "\n\n" .
-                $this->board;
+        $board = $this->boardTitle . "\n\n" .
+            $this->board;
 
-
+        return $board;
     }
 }

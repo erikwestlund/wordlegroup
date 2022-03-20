@@ -10,7 +10,7 @@
     onclick="confirm('{{ $confirmMessage }}') || event.stopImmediatePropagation()"
     @endif
     wire:click="shareScore({{ $score->id }}, 'facebook')"
-    x-on:shared-to-facebook.window="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('account.home')) }}', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
+    x-on:shared-score-{{ $score->id }}-to-facebook.window="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('score.share-page', $score)) }}', '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600')"
 >
     <x-icon-brands.facebook-f class="w-3 h-3" />
 </button>

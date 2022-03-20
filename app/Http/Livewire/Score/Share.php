@@ -21,9 +21,12 @@ class Share extends Component
 
     public function shareScore($scoreId, $type)
     {
-        $this->score->shared_at = now();
-        $this->score->save();
-        $this->dispatchBrowserEvent("shared-to-{$type}");
+        if(! $this->score->shared_at) {
+            $this->score->shared_at = now();
+            $this->score->save();
+        }
+
+        $this->dispatchBrowserEvent("shared-score-{$this->score->id}-to-{$type}");
     }
 
     public function render()

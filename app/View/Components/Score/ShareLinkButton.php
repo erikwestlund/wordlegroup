@@ -2,17 +2,13 @@
 
 namespace App\View\Components\Score;
 
+use App\Concerns\SharesScores;
 use App\Models\Score;
 use Illuminate\View\Component;
 
 class ShareLinkButton extends Component
 {
-    public $score;
-
-    public function __construct(Score $score)
-    {
-        $this->score = $score;
-    }
+    use SharesScores;
 
     public function render()
     {

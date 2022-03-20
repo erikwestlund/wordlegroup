@@ -1,9 +1,24 @@
 <div class="flex justify-between py-2">
-    <div>
-        <x-score.share-facebook-button
-            :score="$score"
-            :confirm="!$score->user->public_profile"
-        />
+    <div class="flex items-center">
+        <div class="mr-1.5 last:mr-0">
+            <x-score.share-link-button
+                :score="$score"
+                :confirm="!$score->user->public_profile && !$score->public"
+            />
+        </div>
+        <div class="mr-1.5 last:mr-0">
+            <x-score.share-facebook-button
+                :score="$score"
+                :confirm="!$score->user->public_profile && !$score->public"
+            />
+        </div>
+        <div class="mr-1.5 last:mr-0">
+            <x-score.share-twitter-button
+                :score="$score"
+                :confirm="!$score->user->public_profile && !$score->public"
+            />
+        </div>
+
     </div>
     <div>
         <x-score.copy-button

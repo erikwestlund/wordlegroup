@@ -26,6 +26,7 @@ Route::get('/group/invitation/{invitationId}', \App\Http\Livewire\Group\Invitati
 Route::post('/score/email', \App\Http\Controllers\MailScoreMessageController::class);
 
 Route::get('/group/{group}', \App\Http\Livewire\Group\Home::class)->name('group.home');
+Route::get('/score/{score}', \App\Http\Livewire\Score\SharePage::class)->name('score.share-page');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/account', \App\Http\Livewire\Account\Home::class)->name('account.home');
