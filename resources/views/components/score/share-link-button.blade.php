@@ -1,5 +1,4 @@
-<a
-    role="button"
+<button
     {{ $attributes->merge(['type' => 'button', 'title' => 'Copy Share Link']) }}
     @if($buttonClass)
     class="{{ $buttonClass }}"
@@ -17,4 +16,4 @@
     @include('scripts.copy-to-clipboard')
 
     <x-icon-solid.link class="w-3.5 h-3.5" />
-</a>
+</button>

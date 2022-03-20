@@ -53,8 +53,3 @@ input::-webkit-date-and-time-value {
     @apply mt-0 text-left w-full;
 }
 
-a[role=button] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
