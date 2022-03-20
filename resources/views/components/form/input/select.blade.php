@@ -1,4 +1,7 @@
-<div wire:ignore>
+<div
+    x-data="{ selectedValue : '{{ $selectedValue }}' }"
+    x-init="$watch('selectedValue', value => console.log(value) )"
+>
     <div
         class="relative border @if($errors->has($name)) border-red-600 @else border-gray-300 @endif rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-green-700 focus-within:border-green-600"
     >
@@ -12,7 +15,9 @@
             {{ $attributes }}
             id="{{ $name }}"
             name="{{ $name }}"
-            class="block w-full border-0 px-1 pt-2.5 pb-1.5 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm"
+            class="block w-full border-0 px-1 pt-2.5 pb-1.5 @if($selectedValue) text-gray-900 @else text-gray-400 @endif placeholder-gray-400 focus:ring-0 sm:text-sm"
+            x-model="selectedValue"
+            :class="{ 'text-gray-400' : selectedValue == '' , 'text-gray-900' : selectedValue != '' }"
         >
             @foreach($options as $option)
                 <option

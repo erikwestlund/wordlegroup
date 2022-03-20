@@ -16,11 +16,14 @@ class Text extends Component
 
     public $placeholder;
 
-    public function __construct($name, $errors = null, $label = '', $placeholder = '')
+    public $tip;
+
+    public function __construct($name, $errors = null, $label = '', $placeholder = '', $tip = '')
     {
         $this->name = $name;
         $this->label = $label;
         $this->placeholder = $placeholder;
+        $this->tip = $tip;
         $this->errors = $errors ?? new ViewErrorBag();;
     }
 

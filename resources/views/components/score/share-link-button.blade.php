@@ -1,5 +1,4 @@
-<a
-    role="button"
+<button
     {{ $attributes->merge(['title' => 'Copy Share Link']) }}
     @if($buttonClass)
     class="block {{ $buttonClass }}"
@@ -11,10 +10,10 @@
     onclick="confirm('{{ $confirmMessage }}') || event.stopImmediatePropagation()"
     @endif
     wire:click.prevent="shareScore({{ $score->id }}, 'link')"
-    x-on:shared-score-{{ $score->id }}-to-link.window="window.location.href = '{{ route('score.share-page', $score)  }}'"
+    x-on:shared-score-{{ $score->id }}-to-link.window="copyToClipboard('{{ route('score.share-page', $score) }}')"
     href="{{ route('score.share-page', $score) }}"
 >
     @include('scripts.copy-to-clipboard')
 
-    <x-icon-solid.link class="w-3.5 h-3.5" />
-</a>
+    <x-icon-solid.link :class="'w-' . $iconSize . ' ' . 'h-'. $iconSize" />
+</button>

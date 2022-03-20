@@ -112,7 +112,7 @@ class Group extends Model
         return collect([1, 2, 3, 4, 5, 6, 7])
             ->mapWithKeys(function ($number) {
                 return [
-                    $number === 7 ? 'X' : $number => $this->scores->where('score', $number)->count(),
+                    ($number === 7 ? 'X' : $number) => $this->scores->where('score', $number)->count(),
                 ];
             });
     }

@@ -7,7 +7,7 @@ To log into Wordle Group, enter the below code:
 
 This code expires in 15 minutes.
 
-You can also just click the below link to log in automatically.
+You can also click the below link to log in automatically.
 
 @component('mail::button', ['url' => $user->loginUrl])
 Log In

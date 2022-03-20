@@ -58,7 +58,7 @@ class WordleBoard
         }
 
         $boardNumber = $this->getBoardNumberFromBoard($board);
-        $date = $this->getDateFromBoardNumber($boardNumber);
+        $date = $this->wordleDate->getDateFromBoardNumber($boardNumber);
         $hardMode = $this->getHardModeFromBoard($board);
         $board = $this->extractBoard($board, $scoreNumber);
 
@@ -98,11 +98,6 @@ class WordleBoard
             : null;
     }
 
-    public function getDateFromBoardNumber($boardNumber)
-    {
-        return app(WordleDate::class)->get($this->firstBoardStartTime->copy()->addDays($boardNumber));
-    }
-
     public function extractBoard($entry, $score)
     {
         preg_match_all('/([⬜🟨🟩⬛].*[⬜🟨🟩⬛])/s', $entry, $matches);
@@ -130,13 +125,15 @@ class WordleBoard
         return collect(mb_str_split($board, 5))->take($score)->implode("\r\n");
     }
 
-    public function chunkSplitUnicode($str, $l = 76, $e = "\r\n") {
+    public function chunkSplitUnicode($str, $l = 76, $e = "\r\n")
+    {
         $tmp = array_chunk(
             preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), $l);
         $str = "";
         foreach ($tmp as $t) {
             $str .= join("", $t) . $e;
         }
+
         return $str;
     }
 

@@ -27,6 +27,9 @@
 {{--            ]) }}--}}
 {{--        >--}}
     </div>
+    @if($tip)
+        <p class="mt-2 text-sm text-gray-500">{{ $tip }}</p>
+    @endif
     @error($name)
     <div class="text-red-600 text-sm mt-1">{!! $message !!}</div>
     @enderror

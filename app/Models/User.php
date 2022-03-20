@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Concerns\GetsUsersInSharedGroupsWithAuthenticatedUser;
 use App\Concerns\Tokens;
+use App\Concerns\WordleDate;
 use App\Mail\NudgeUser;
 use App\Mail\UserVerification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -141,7 +142,17 @@ class User extends Authenticatable
 
     public function profileCannotBeSeenBy(User $viewingUser = null)
     {
-        return ! $this->profileCanBeSeenBy($viewingUser);
+        return !$this->profileCanBeSeenBy($viewingUser);
+    }
+
+    public function scoresToday()
+    {
+        return $this->scores()->today();
+    }
+
+    public function recordedScoreToday()
+    {
+        return $this->scoresToday()->count() > 0;
     }
 
     public function profileCanBeSeenBy(User $viewingUser = null)
@@ -265,7 +276,7 @@ class User extends Authenticatable
         return collect([1, 2, 3, 4, 5, 6, 7])
             ->mapWithKeys(function ($number) {
                 return [
-                    $number === 7 ? 'X' : $number => $this->dailyScores->where('score', $number)->count(),
+                    ($number === 7 ? 'X' : $number) => $this->dailyScores->where('score', $number)->count(),
                 ];
             });
     }

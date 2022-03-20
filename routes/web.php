@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', \App\Http\Livewire\Home::class)->name('home');
 
+Route::get('/privacy-policy', \App\Http\Livewire\PrivacyPolicy::class)->name('privacy-policy');
+Route::get('/contact', \App\Http\Livewire\Contact::class)->name('contact');
+Route::get('/about', \App\Http\Livewire\About::class)->name('about');
+Route::get('/rules-and-frequently-asked-questions', \App\Http\Livewire\RulesAndFrequentlyAskedQuestions::class)->name('rules-and-faq');
+
 Route::get('/group/create', \App\Http\Livewire\Group\Create::class)->name('group.create');
 Route::get('/group/{group}/verify-email', \App\Http\Livewire\Group\VerifyEmailNotification::class)
     ->name('group.verify-email-notification');

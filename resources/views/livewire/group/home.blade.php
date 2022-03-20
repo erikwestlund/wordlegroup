@@ -5,7 +5,7 @@
 
     <x-layout.social-meta
         title="{{ $group->name }} - Wordle Group Leaderboard & Stats"
-        url="{{ route('group.home', $group) }}"
+        :url="route('group.home', $group)"
         description="Wordle Group is a way to keep score with a group of friends and track your Wordle performance over time."
     />
 

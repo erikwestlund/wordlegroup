@@ -4,4 +4,5 @@
     :label="$label"
     :selected-value="$selectedUserId"
     :options="$options"
+    x-on:cleared-activity-feed-filter.window="selectedValue = ''"
 />

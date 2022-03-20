@@ -30,7 +30,7 @@
                         maintainAspectRatio: false,
                         indexAxis: 'y',
                         interaction: { intersect: false },
-                        layout: { padding: { right: 20 } },
+                        layout: { padding: { right: 25 } },
                         scales: {
                             y: {
                                 min: 0,

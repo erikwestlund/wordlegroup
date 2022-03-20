@@ -16,6 +16,7 @@
                 type="email"
                 label="Email Address"
                 placeholder="my@email.com"
+                tip="Make sure you use the email account you will send your scores from."
             />
             <x-form.input.text
                 wire:model="userName" name="groupName" :errors="$errors" label="Your Name" placeholder="Your Name"

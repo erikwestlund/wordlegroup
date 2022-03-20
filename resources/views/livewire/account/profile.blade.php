@@ -1,7 +1,7 @@
 <x-layout.page-container :title="$user->name . '\'s Wordle Group Profile'" :heading="$user->name">
     <x-layout.social-meta
         title="Wordle Stats For {{ $user->name }}"
-        url="{{ route('account.profile', $user) }}"
+        :url="route('account.profile', $user)"
         description="Wordle Group is a way to keep score with a group of friends and track your Wordle performance over time."
     />
 

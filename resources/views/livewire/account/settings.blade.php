@@ -12,14 +12,14 @@
                     placeholder="Name"
                 />
 
-                <x-form.input.text
-                    :errors="$errors"
-                    type="email"
-                    name="user.email"
-                    label="Email Address"
-                    wire:model="user.email"
-                    placeholder="email@address.com"
-                />
+{{--                <x-form.input.text--}}
+{{--                    :errors="$errors"--}}
+{{--                    type="email"--}}
+{{--                    name="user.email"--}}
+{{--                    label="Email Address"--}}
+{{--                    wire:model="user.email"--}}
+{{--                    placeholder="email@address.com"--}}
+{{--                />--}}
 
                 <x-form.input.checkbox
                     name="publicProfile"

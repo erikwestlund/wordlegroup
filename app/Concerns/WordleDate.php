@@ -57,6 +57,16 @@ class WordleDate
             : $todayWordleDate;
     }
 
+    public function todayIsAfterBoardNumberDay($boardNumber)
+    {
+        return now() > $this->getDateFromBoardNumber($boardNumber)->endOfDay();
+    }
+
+    public function getDateFromBoardNumber($boardNumber)
+    {
+        return $this->get($this->firstBoardStartTime->copy()->addDays($boardNumber));
+    }
+
     public function getActiveBoardEndTime(): Carbon
     {
         return $this->activeBoardStartTime->copy()->addDay()->subMicrosecond();
