@@ -2,7 +2,7 @@
     <x-layout.social-meta
         title="Wordle Group - Keep Score With Friends"
         :url="route('home')"
-        description="A free and easy to keep score with friends when playing Wordle. Create a group, invite friends, and see who climbs the leaderboard each day."
+        description="A free and easy way to keep score with friends when playing Wordle. Create a group, invite friends, and see who climbs the leaderboard each day."
     />
     <div class="w-full mt-2">
         <div>
