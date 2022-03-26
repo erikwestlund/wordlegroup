@@ -45,16 +45,14 @@
 <script src="//unpkg.com/alpinejs" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
 
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-22785728-11">
-</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9XVFBH780C"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'UA-22785728-11');
+    gtag('config', 'G-9XVFBH780C');
 </script>
 
 <script>
