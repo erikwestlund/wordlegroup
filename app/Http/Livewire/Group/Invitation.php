@@ -99,7 +99,7 @@ class Invitation extends Component
         $this->invitation->delete();
 
         Auth::loginUsingId($user->id, true);
-        
+
         event(new GroupMembershipCreated($groupMembership));
 
         session()->flash('message', 'You have successfully joined ' . $this->invitation->group->name . '.');
