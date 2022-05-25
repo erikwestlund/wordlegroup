@@ -37,18 +37,34 @@
                                     {{ $membership->user->name }}
                                 </div>
 
+                                @if($group->isAdmin(Auth::user()))
+                                <div class="flex items-center py-1">
+                                @endif
                                 @if(Auth::user()->id !== $membership->user->id && $membership->user->canBeNudged())
-                                    <div>
+
                                         <button
                                             type="button"
                                             title="Send user a reminder to record their scores."
-                                            class="text-sm text-green-700 hover:text-green-800 py-1 font-medium focus:ring-2 rounded focus:ring-offset-2 focus:ring-green-500"
+                                            class="text-sm mr-2 last:mr-0 text-green-700 hover:text-green-800 font-medium focus:ring-2 rounded focus:ring-offset-2 focus:ring-green-500"
                                             onclick="confirm('This will email {{ $membership->user->name }} a reminder to record their scores. Are you sure you want to continue?') || event.stopImmediatePropagation()"
                                             wire:click="nudge({{ $membership->user->id }})"
                                         >
                                             Nudge
                                         </button>
-                                    </div>
+                                @endif
+                                @if(Auth::user()->id !== $membership->user->id)
+                                        <button
+                                            type="button"
+                                            title="Send user a reminder to record their scores."
+                                            class="text-sm mr-2 last:mr-0 text-red-700 hover:text-red-800 font-medium focus:ring-2 rounded focus:ring-offset-2 focus:ring-red-500"
+                                            onclick="confirm('This will remove {{ $membership->user->name }} from this group. Are you sure you want to continue?') || event.stopImmediatePropagation()"
+                                            wire:click="remove({{ $membership->user->id }})"
+                                        >
+                                            Remove
+                                        </button>
+                                @endif
+                                @if($group->isAdmin(Auth::user()))
+                                </div>
                                 @endif
                             </td>
                             <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500 text-right">{{ $membership->user->daily_scores_recorded }}</td>

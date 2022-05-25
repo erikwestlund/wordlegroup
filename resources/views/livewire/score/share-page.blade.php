@@ -83,7 +83,7 @@
         </span>
         is from
         <span class="font-medium">
-            {{ $score->date->format('l, F m, Y') }}.
+            {{ $score->date->format('l, F d, Y') }}.
         </span>
     </div>
 
