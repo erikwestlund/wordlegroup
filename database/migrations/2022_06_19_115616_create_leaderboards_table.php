@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('leaderboards', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('group_id')->constrained()->on('groups');
+            $table->string('for');
+            $table->string('when')->nullable();
+            $table->unsignedInteger('scores_recorded')->default(0);
+            $table->unsignedFloat('score_mean')->nullable();
+            $table->unsignedFloat('score_median')->nullable();
+            $table->tinyInteger('score_mode')->nullable();
+            $table->jsonb('score_distribution')->nullable();
+            $table->jsonb('leaderboard')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('leaderboards');
+    }
+};
