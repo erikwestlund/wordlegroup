@@ -2,51 +2,125 @@
 
 namespace App\Concerns;
 
+use App\Models\Group;
+use App\Models\Leaderboard;
+
 class UpdatesLeaderboards
 {
     public $leaderboards;
 
+    public $date;
+
     public function __construct()
     {
         $this->leaderboards = config('settings.leaderboards');
+        $this->date = app(WordleDate::class);
     }
 
-    public function update()
+    public function update(Group $group)
     {
         if (in_array('forever', $this->leaderboards)) {
-            $this->updateForever();
+            $this->updateForever($group);
         }
 
-        if (in_array('annually', $this->leaderboards)) {
-            $this->updateAnnually();
+        if (in_array('year', $this->leaderboards)) {
+            $this->updateYear($group);
         }
 
-        if (in_array('monthly', $this->leaderboards)) {
-            $this->updateMonthly();
+        if (in_array('month', $this->leaderboards)) {
+            $this->updateMonth($group);
         }
 
-        if (in_array('weekly', $this->leaderboards)) {
-            $this->updateWeekly();
+        if (in_array('week', $this->leaderboards)) {
+            $this->updateWeek($group);
         }
     }
 
-    public function updateForever()
+    public function updateForever(Group $group)
     {
+        $startDate = $this->date->getFirstBoardStartTime();
+        $endDate = $this->date->getActiveBoardEndTime();
 
+        $this->saveLeaderboard($group, 'forever', $startDate, $endDate);
     }
 
-    public function updateAnnually()
+    public function updateYear(Group $group)
     {
+        $startDate = max($this->date->get(now()->startOfYear()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get(now()->endOfYear()), $this->date->getActiveBoardStartTime());
 
+        $this->saveLeaderboard($group, 'year', $startDate, $endDate);
     }
 
-    public function updateMonthly()
+    public function updateMonth(Group $group)
     {
+        $startDate = max($this->date->get(now()->startOfMonth()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get(now()->endOfMonth()), $this->date->getActiveBoardStartTime());
 
+        $this->saveLeaderboard($group, 'month', $startDate, $endDate);
     }
 
-    public function updateWeekly()
+    public function updateWeek(Group $group)
     {
+        $startDate = max($this->date->get(now()->startOfWeek()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get(now()->endOfWeek()), $this->date->getActiveBoardStartTime());
 
+        $this->saveLeaderboard($group, 'week', $startDate, $endDate);
+    }
+
+    public function saveLeaderboard(Group $group, $for, $startDate, $endDate)
+    {
+        $summaryStats = $group->getSummaryStats($startDate, $endDate);
+
+        // If no scores recorded, do not save leaderboard and exit;
+        if($summaryStats['scores_recorded'] === 0) {
+            return;
+        }
+
+        $leaderboard = $group->getLeaderBoard($startDate, $endDate);
+
+        $year = $this->getYear($for, $startDate);
+        $month = $this->getMonth($for, $startDate);
+        $week = $this->getWeek($for, $startDate);
+
+        Leaderboard::updateOrCreate(
+            ['group_id' => $group->id, 'for' => $for, 'year' => $year, 'month' => $month, 'week' => $week],
+            [
+                'member_count'       => $summaryStats['member_count'],
+                'scores_recorded'    => $summaryStats['scores_recorded'],
+                'score_mean'         => $summaryStats['score_mean'],
+                'score_median'       => $summaryStats['score_median'],
+                'score_mode'         => $summaryStats['score_mode'],
+                'score_distribution' => $summaryStats['score_distribution'],
+                'leaderboard'        => $leaderboard // foreverboard
+            ]
+        );
+    }
+
+    public function getYear($for, $date)
+    {
+        if($for === 'forever') {
+            return null;
+        }
+
+        return $date ? date('Y', $date->timestamp) : null;
+    }
+
+    public function getMonth($for, $date)
+    {
+        if(in_array($for, ['forever', 'year'])) {
+            return null;
+        }
+
+        return $date ? date('m', $date->timestamp) : null;
+    }
+
+    public function getWeek($for, $date)
+    {
+        if(in_array($for, ['forever', 'year', 'month'])) {
+            return null;
+        }
+
+        return $date ? date('W', $date->timestamp) : null;
     }
 }

@@ -186,14 +186,15 @@ class Score extends Model
         $this->user->memberships->each->updateGroupStats();
     }
 
-    public function updateLeaderboards()
-    {
-        app(UpdatesLeaderboards::class)->update();
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeBetweenBoards($query, $startBoard, $endBoard)
+    {
+        return $query->where('board_number', '>=', $startBoard)
+            ->where('board_number', '<=', $endBoard);
     }
 
     public function validForMembership(GroupMembership $membership)

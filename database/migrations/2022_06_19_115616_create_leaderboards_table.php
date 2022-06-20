@@ -20,6 +20,7 @@ return new class extends Migration
             $table->year('year')->nullable()->index();
             $table->tinyInteger('month')->nullable()->index();
             $table->tinyInteger('week')->nullable()->index();
+            $table->unsignedInteger('member_count')->default(0);
             $table->unsignedInteger('scores_recorded')->default(0);
             $table->unsignedFloat('score_mean')->nullable();
             $table->unsignedFloat('score_median')->nullable();

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Concerns\UpdatesLeaderboards;
+use App\Concerns\WordleBoard;
+use App\Concerns\WordleDate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
@@ -71,15 +74,42 @@ class Group extends Model
 
     public function updateStats()
     {
+        $stats = $this->getSummaryStats();
+
         $this->update([
-            'member_count'       => $this->memberships()->count(),
-            'scores_recorded'    => $this->scores()->count(),
-            'score_mean'         => $this->getMeanScore(),
-            'score_median'       => $this->getMedianScore(),
-            'score_mode'         => $this->getModeScore(),
-            'score_distribution' => $this->getScoreDistribution(),
-            'leaderboard'        => $this->getLeaderBoard(),
+            'member_count'       => $stats['member_count'],
+            'scores_recorded'    => $stats['scores_recorded'],
+            'score_mean'         => $stats['score_mean'],
+            'score_median'       => $stats['score_median'],
+            'score_mode'         => $stats['score_mode'],
+            'score_distribution' => $stats['score_distribution'],
+            'leaderboard'        => $this->getLeaderBoard() // forever board
         ]);
+
+        $this->updateLeaderboards();
+    }
+
+    public function getSummaryStats($startDate = null, $endDate = null)
+    {
+        [$startBoard, $endBoard] = app(WordleBoard::class)->getStartAndEndBoardsFromDates($startDate, $endDate);
+
+        $scores = $this->scores
+            ->where('board_number', '>=', $startBoard)
+            ->where('board_number', '<=', $endBoard);
+
+        return [
+            'member_count'       => $this->memberships()->count(),
+            'scores_recorded'    => $scores->count(),
+            'score_mean'         => $this->getMeanScore($scores),
+            'score_median'       => $this->getMedianScore($scores),
+            'score_mode'         => $this->getModeScore($scores),
+            'score_distribution' => $this->getScoreDistribution($scores),
+        ];
+    }
+
+    public function updateLeaderboards()
+    {
+        app(UpdatesLeaderboards::class)->update($this);
     }
 
     public function memberships()
@@ -92,47 +122,62 @@ class Group extends Model
         return $this->belongsToMany(Score::class, 'group_membership_score');
     }
 
-    public function getMeanScore()
+    public function getMeanScore($scores = null)
     {
-        return $this->scores->isNotEmpty() ? (float)round($this->scores()->average('score'), 2) : null;
+        $scores = $scores ?? $this->scores;
+
+        return $scores->isNotEmpty() ? (float)round($scores->average('score'), 2) : null;
     }
 
-    public function getMedianScore()
+    public function getMedianScore($scores = null)
     {
-        return $this->scores->isNotEmpty() ? (float)round($this->scores->median('score'), 1) : null;
+        $scores = $scores ?? $this->scores;
+
+        return $scores->isNotEmpty() ? (float)round($scores->median('score'), 1) : null;
     }
 
-    public function getModeScore()
+    public function getModeScore($scores = null)
     {
-        return $this->scores->isNotEmpty() ? (int)collect($this->scores->mode('score'))->min() : null;
+        $scores = $scores ?? $this->scores;
+
+        return $scores->isNotEmpty() ? (int)collect($scores->mode('score'))->min() : null;
     }
 
-    public function getScoreDistribution()
+    public function getScoreDistribution($scores = null)
     {
+        $scores = $scores ?? $this->scores;
+
         return collect([1, 2, 3, 4, 5, 6, 7])
-            ->mapWithKeys(function ($number) {
+            ->mapWithKeys(function ($number) use ($scores) {
                 return [
-                    ($number === 7 ? 'X' : $number) => $this->scores->where('score', $number)->count(),
+                    ($number === 7 ? 'X' : $number) => $scores->where('score', $number)->count(),
                 ];
             });
     }
 
-    public function getLeaderBoard()
+    /*
+     * Gets leaderboard for all scores between start date and end date.
+     */
+    public function getLeaderBoard($startDate = null, $endDate = null)
     {
+        [$startBoard, $endBoard] = app(WordleBoard::class)->getStartAndEndBoardsFromDates($startDate, $endDate);
+
         $userScores = $this->memberships
-            ->map(function ($membership) {
+            ->map(function ($membership) use ($startBoard, $endBoard) {
                 $userScores = $this->scores
                     ->where('user_id', $membership->user_id)
+                    ->where('board_number', '>=', $startBoard)
+                    ->where('board_number', '<=', $endBoard)
                     ->pluck('score');
 
                 return [
                     'user_id' => $membership->user_id,
                     'name'    => $membership->user->name,
                     'stats'   => [
-                        'median' => round($userScores->average(), 1),
-                        'mean'   => round($userScores->average(), 2),
-                        'mode'   => collect($userScores->mode())->min(),
-                        'count'  => $userScores->count(),
+                        'median' => $userScores->isNotEmpty() ? round($userScores->average(), 1) : null,
+                        'mean'   => $userScores->isNotEmpty() ? round($userScores->average(), 2) : null,
+                        'mode'   => $userScores->isNotEmpty() ? collect($userScores->mode())->min() : null,
+                        'count'  => $userScores->isNotEmpty() ? $userScores->count() : null,
                     ],
                 ];
             })
@@ -150,7 +195,7 @@ class Group extends Model
                                        ];
                                    });
 
-        return $userScores
+        $leaderboard = $userScores
             ->map(function ($userScore) use ($placeNumbers) {
                 $place = $placeNumbers->firstWhere('score', $userScore['stats']['mean'])['place'];
 
@@ -160,6 +205,8 @@ class Group extends Model
             })
             ->sortBy('place')
             ->values();
+
+        return $leaderboard;
     }
 
     public function verified()

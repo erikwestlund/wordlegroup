@@ -28,7 +28,7 @@ class WordleDate
 
     public function __construct()
     {
-        $this->firstBoardStartTime = $this->getFirstBoardStateTime();
+        $this->firstBoardStartTime = $this->getFirstBoardStartTime();
         $this->firstBoardEndTime = $this->getFirstBoardEndTime();
 
         $this->activeBoardStartTime = $this->getActiveBoardStartTime();
@@ -37,7 +37,7 @@ class WordleDate
         $this->activeBoardNumber = $this->getActiveBoardNumber();
     }
 
-    public function getFirstBoardStateTime()
+    public function getFirstBoardStartTime()
     {
         return Carbon::parse(self::START_DATETIME);
     }
@@ -85,4 +85,5 @@ class WordleDate
                      ->setSecond(0)
                      ->setMicrosecond(0);
     }
+
 }

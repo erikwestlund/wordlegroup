@@ -174,4 +174,39 @@ class WordleBoard
     {
         return $date > $this->firstBoardStartTime && $date <= $this->activeBoardEndTime;
     }
+
+
+    public function getBoardsBetween(Carbon $startDate, Carbon $endDate)
+    {
+        $firstBoardDate = app(WordleDate::class)->get($startDate);
+
+        // If end is after today, take today's active board.
+        $lastBoardDate = min(app(WordleDate::class)->getActiveBoardEndTime(), app(WordleDate::class)->get($endDate));
+
+        $firstBoard = $this->getBoardNumberFromDate($firstBoardDate);
+        $lastBoard = $this->getBoardNumberFromDate($lastBoardDate);
+
+        return collect(range($firstBoard, $lastBoard, 1))
+            ->filter(function($boardNumber) {
+               return $this->validateBoardNumber($boardNumber);
+            });
+    }
+
+    public function getStartAndEndBoardsFromDates($startDate = null, $endDate = null)
+    {
+        // Start date = board date or first board start time.
+        if(!$startDate) {
+            $startDate = app(WordleDate::class)->getFirstBoardStartTime();
+        }
+
+        $startDate = app(WordleDate::class)->get($startDate);
+
+        // End date = board date or active board end time.
+        $endDate = min(app(WordleDate::class)->get($endDate), app(WordleDate::class)->getActiveBoardStartTime());
+
+        $startBoard = app(WordleBoard::class)->getBoardNumberFromDate($startDate);
+        $endBoard = app(WordleBoard::class)->getBoardNumberFromDate($endDate);
+
+        return [$startBoard, $endBoard];
+    }
 }
