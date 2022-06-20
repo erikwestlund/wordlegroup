@@ -28,7 +28,7 @@ return new class extends Migration
             $table->jsonb('score_distribution')->nullable();
             $table->jsonb('leaderboard')->nullable();
             $table->timestamps();
-            $table->unique(['group_id', 'for']);
+            $table->unique(['group_id', 'for', 'year', 'month', 'week']);
         });
     }
 

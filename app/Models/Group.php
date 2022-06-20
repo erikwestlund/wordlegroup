@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Concerns\UpdatesLeaderboards;
 use App\Concerns\WordleBoard;
 use App\Concerns\WordleDate;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
@@ -74,7 +75,7 @@ class Group extends Model
 
     public function updateStats()
     {
-        $stats = $this->getSummaryStats();
+        $stats = $this->getSummaryStats(); // forever
 
         $this->update([
             'member_count'       => $stats['member_count'],
@@ -86,7 +87,7 @@ class Group extends Model
             'leaderboard'        => $this->getLeaderBoard() // forever board
         ]);
 
-        $this->updateLeaderboards();
+        $this->updateLeaderboards(now());
     }
 
     public function getSummaryStats($startDate = null, $endDate = null)
@@ -107,9 +108,13 @@ class Group extends Model
         ];
     }
 
-    public function updateLeaderboards()
+    public function updateLeaderboards(Carbon $when = null)
     {
-        app(UpdatesLeaderboards::class)->update($this);
+        if (!$when) {
+            $when = now();
+        }
+
+        app(UpdatesLeaderboards::class)->update($this, $when);
     }
 
     public function memberships()

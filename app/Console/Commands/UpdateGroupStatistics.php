@@ -23,6 +23,6 @@ class UpdateGroupStatistics extends Command
                  $group->updateStats();
              });
 
-        return 1;
+        return 0;
     }
 }

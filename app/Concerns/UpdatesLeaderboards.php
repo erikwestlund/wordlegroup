@@ -4,6 +4,7 @@ namespace App\Concerns;
 
 use App\Models\Group;
 use App\Models\Leaderboard;
+use Carbon\Carbon;
 
 class UpdatesLeaderboards
 {
@@ -17,22 +18,26 @@ class UpdatesLeaderboards
         $this->date = app(WordleDate::class);
     }
 
-    public function update(Group $group)
+    public function update(Group $group, Carbon $when = null)
     {
+        if (!$when) {
+            $when = now();
+        }
+
         if (in_array('forever', $this->leaderboards)) {
             $this->updateForever($group);
         }
 
         if (in_array('year', $this->leaderboards)) {
-            $this->updateYear($group);
+            $this->updateYear($group, $when);
         }
 
         if (in_array('month', $this->leaderboards)) {
-            $this->updateMonth($group);
+            $this->updateMonth($group, $when);
         }
 
         if (in_array('week', $this->leaderboards)) {
-            $this->updateWeek($group);
+            $this->updateWeek($group, $when);
         }
     }
 
@@ -44,26 +49,26 @@ class UpdatesLeaderboards
         $this->saveLeaderboard($group, 'forever', $startDate, $endDate);
     }
 
-    public function updateYear(Group $group)
+    public function updateYear(Group $group, Carbon $when)
     {
-        $startDate = max($this->date->get(now()->startOfYear()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get(now()->endOfYear()), $this->date->getActiveBoardStartTime());
+        $startDate = max($this->date->get($when->startOfYear()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get($when->endOfYear()), $this->date->getActiveBoardStartTime());
 
         $this->saveLeaderboard($group, 'year', $startDate, $endDate);
     }
 
-    public function updateMonth(Group $group)
+    public function updateMonth(Group $group, Carbon $when)
     {
-        $startDate = max($this->date->get(now()->startOfMonth()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get(now()->endOfMonth()), $this->date->getActiveBoardStartTime());
+        $startDate = max($this->date->get($when->startOfMonth()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get($when->endOfMonth()), $this->date->getActiveBoardStartTime());
 
         $this->saveLeaderboard($group, 'month', $startDate, $endDate);
     }
 
-    public function updateWeek(Group $group)
+    public function updateWeek(Group $group, Carbon $when)
     {
-        $startDate = max($this->date->get(now()->startOfWeek()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get(now()->endOfWeek()), $this->date->getActiveBoardStartTime());
+        $startDate = max($this->date->get($when->startOfWeek()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get($when->endOfWeek()), $this->date->getActiveBoardStartTime());
 
         $this->saveLeaderboard($group, 'week', $startDate, $endDate);
     }
@@ -73,7 +78,7 @@ class UpdatesLeaderboards
         $summaryStats = $group->getSummaryStats($startDate, $endDate);
 
         // If no scores recorded, do not save leaderboard and exit;
-        if($summaryStats['scores_recorded'] === 0) {
+        if ($summaryStats['scores_recorded'] === 0) {
             return;
         }
 
@@ -99,7 +104,7 @@ class UpdatesLeaderboards
 
     public function getYear($for, $date)
     {
-        if($for === 'forever') {
+        if ($for === 'forever') {
             return null;
         }
 
@@ -108,7 +113,7 @@ class UpdatesLeaderboards
 
     public function getMonth($for, $date)
     {
-        if(in_array($for, ['forever', 'year'])) {
+        if (in_array($for, ['forever', 'year'])) {
             return null;
         }
 
@@ -117,7 +122,7 @@ class UpdatesLeaderboards
 
     public function getWeek($for, $date)
     {
-        if(in_array($for, ['forever', 'year', 'month'])) {
+        if (in_array($for, ['forever', 'year', 'month'])) {
             return null;
         }
 
