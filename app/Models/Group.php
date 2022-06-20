@@ -177,7 +177,7 @@ class Group extends Model
                         'median' => $userScores->isNotEmpty() ? round($userScores->average(), 1) : null,
                         'mean'   => $userScores->isNotEmpty() ? round($userScores->average(), 2) : null,
                         'mode'   => $userScores->isNotEmpty() ? collect($userScores->mode())->min() : null,
-                        'count'  => $userScores->isNotEmpty() ? $userScores->count() : null,
+                        'count'  => $userScores->count(),
                     ],
                 ];
             })
