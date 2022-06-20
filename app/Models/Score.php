@@ -6,6 +6,7 @@ use App\Casts\WordleDailyStartTime;
 use App\Concerns\SyncsDailyScoreToGroupMemberships;
 use App\Concerns\SyncsDailyScoreToUser;
 use App\Concerns\UpdatesGroupStats;
+use App\Concerns\UpdatesLeaderboards;
 use App\Concerns\WordleBoard;
 use App\Concerns\WordleDate;
 use Carbon\Carbon;
@@ -183,6 +184,11 @@ class Score extends Model
     public function updateMemberGroupStats()
     {
         $this->user->memberships->each->updateGroupStats();
+    }
+
+    public function updateLeaderboards()
+    {
+        app(UpdatesLeaderboards::class)->update();
     }
 
     public function user()

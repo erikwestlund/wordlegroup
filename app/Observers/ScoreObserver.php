@@ -20,6 +20,7 @@ class ScoreObserver
     {
         $score->syncToDailyScores();
         $score->syncToGroupMemberships();
+        $score->updateLeaderboards();
         $score->user->updateStats();
         $score->user->memberships->each(fn($membership) => $membership->group->updateStats());
     }

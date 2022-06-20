@@ -6,27 +6,47 @@ class UpdatesLeaderboards
 {
     public $leaderboards;
 
-    public $updaters = [
-        'forever'  => [
-            'method'     => 'updateForever',
-            'whenFormat' => null,
-        ],
-        'annually' => [
-            'method'     => 'updateAnnually',
-            'whenFormat' => 'Y',
-        ],
-        'monthly'  => [
-            'method'     => 'updateMonthly',
-            'whenFormat' => '',
-        ],
-        'weekly'   => [
-            'method'     => 'updateWeekly',
-            'whenFormat' => '',
-        ],
-    ];
-
     public function __construct()
     {
         $this->leaderboards = config('settings.leaderboards');
+    }
+
+    public function update()
+    {
+        if (in_array('forever', $this->leaderboards)) {
+            $this->updateForever();
+        }
+
+        if (in_array('annually', $this->leaderboards)) {
+            $this->updateAnnually();
+        }
+
+        if (in_array('monthly', $this->leaderboards)) {
+            $this->updateMonthly();
+        }
+
+        if (in_array('weekly', $this->leaderboards)) {
+            $this->updateWeekly();
+        }
+    }
+
+    public function updateForever()
+    {
+
+    }
+
+    public function updateAnnually()
+    {
+
+    }
+
+    public function updateMonthly()
+    {
+
+    }
+
+    public function updateWeekly()
+    {
+
     }
 }

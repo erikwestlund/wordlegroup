@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('leaderboards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('group_id')->constrained()->on('groups');
-            $table->string('for');
-            $table->string('when')->nullable();
+            $table->string('for')->index();
+            $table->year('year')->nullable()->index();
+            $table->tinyInteger('month')->nullable()->index();
+            $table->tinyInteger('week')->nullable()->index();
             $table->unsignedInteger('scores_recorded')->default(0);
             $table->unsignedFloat('score_mean')->nullable();
             $table->unsignedFloat('score_median')->nullable();
@@ -25,6 +27,7 @@ return new class extends Migration
             $table->jsonb('score_distribution')->nullable();
             $table->jsonb('leaderboard')->nullable();
             $table->timestamps();
+            $table->unique(['group_id', 'for']);
         });
     }
 
