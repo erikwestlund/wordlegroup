@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Group;
 
+use App\Concerns\GetsLeaderboards;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -11,17 +12,19 @@ class Home extends Component
 {
     public $group;
 
+    public $guest;
+
     public $isAdmin;
 
-    public $memberOfGroup;
-
-    public $user;
-
-    public $guest;
+    public $leaderboards;
 
     public $memberCount;
 
+    public $memberOfGroup;
+
     public $pendingInvitations;
+
+    public $user;
 
     protected $listeners = ['scoreRecorded'];
 
@@ -40,6 +43,8 @@ class Home extends Component
         if ($this->isAdmin) {
             $this->group->load('pendingInvitations');
         }
+
+        $this->leaderboards = app(GetsLeaderboards::class)->getActiveLeaderboards();
     }
 
     public function scoreRecorded()
