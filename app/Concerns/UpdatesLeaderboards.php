@@ -29,15 +29,15 @@ class UpdatesLeaderboards
         }
 
         if (in_array('year', $this->leaderboards)) {
-            $this->updateYear($group, $when);
+            $this->updateYear($group, $when->copy());
         }
 
         if (in_array('month', $this->leaderboards)) {
-            $this->updateMonth($group, $when);
+            $this->updateMonth($group, $when->copy());
         }
 
         if (in_array('week', $this->leaderboards)) {
-            $this->updateWeek($group, $when);
+            $this->updateWeek($group, $when->copy());
         }
     }
 
@@ -51,24 +51,24 @@ class UpdatesLeaderboards
 
     public function updateYear(Group $group, Carbon $when)
     {
-        $startDate = max($this->date->get($when->startOfYear()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get($when->endOfYear()), $this->date->getActiveBoardStartTime());
+        $startDate = max($this->date->get($when->copy()->startOfYear()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get($when->copy()->endOfYear()), $this->date->getActiveBoardStartTime());
 
         $this->saveLeaderboard($group, 'year', $startDate, $endDate);
     }
 
     public function updateMonth(Group $group, Carbon $when)
     {
-        $startDate = max($this->date->get($when->startOfMonth()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get($when->endOfMonth()), $this->date->getActiveBoardStartTime());
+        $startDate = max($this->date->get($when->copy()->startOfMonth()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get($when->copy()->endOfMonth()), $this->date->getActiveBoardStartTime());
 
         $this->saveLeaderboard($group, 'month', $startDate, $endDate);
     }
 
     public function updateWeek(Group $group, Carbon $when)
     {
-        $startDate = max($this->date->get($when->startOfWeek()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get($when->endOfWeek()), $this->date->getActiveBoardStartTime());
+        $startDate = max($this->date->get($when->copy()->startOfWeek()), $this->date->getFirstBoardStartTime());
+        $endDate = min($this->date->get($when->copy()->endOfWeek()), $this->date->getActiveBoardStartTime());
 
         $this->saveLeaderboard($group, 'week', $startDate, $endDate);
     }
