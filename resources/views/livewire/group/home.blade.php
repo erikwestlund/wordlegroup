@@ -56,6 +56,7 @@
                     @if($group->scores->isNotEmpty())
                         <x-group.leaderboard-tabs
                             :group="$group"
+                            :member-of-group="$memberOfGroup"
                             :anonymize-private-users="$group->public && !$memberOfGroup"
                         />
                     @else

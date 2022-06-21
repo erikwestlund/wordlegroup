@@ -14,10 +14,13 @@ class LeaderboardTabs extends Component
 
     public $leaderboards;
 
-    public function __construct(Group $group, $anonymizePrivateUsers = false)
+    public $memberOfGroup;
+
+    public function __construct(Group $group, $memberOfGroup, $anonymizePrivateUsers = false)
     {
         $this->group = $group;
         $this->group->load('memberships.user');
+        $this->memberOfGroup = $memberOfGroup;
         $this->anonymizePrivateUsers = $anonymizePrivateUsers;
         $this->leaderboards = app(GetsLeaderboards::class)->getActive($group);
     }
