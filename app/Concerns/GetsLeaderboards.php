@@ -21,7 +21,7 @@ class GetsLeaderboards
     public function getActive(Group $group)
     {
         $when = app(WordleDate::class)->get(now());
-        return $this->getLeaderboards($group, $when);
+        return $this->get($group, $when);
     }
 
     public function get(Group $group, Carbon $when = null)

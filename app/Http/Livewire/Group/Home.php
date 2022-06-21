@@ -44,7 +44,9 @@ class Home extends Component
             $this->group->load('pendingInvitations');
         }
 
-        $this->leaderboards = app(GetsLeaderboards::class)->getActiveLeaderboards();
+        $this->leaderboards = app(GetsLeaderboards::class)->getActive($this->group);
+
+        ray($this->leaderboards);
     }
 
     public function scoreRecorded()
