@@ -1115,9 +1115,6 @@ select {
 .-mb-px {
   margin-bottom: -1px;
 }
-.mt-5 {
-  margin-top: 1.25rem;
-}
 .-ml-1 {
   margin-left: -0.25rem;
 }
@@ -1656,17 +1653,14 @@ select {
 .p-6 {
   padding: 1.5rem;
 }
-.p-8 {
-  padding: 2rem;
+.p-5 {
+  padding: 1.25rem;
 }
 .p-2 {
   padding: 0.5rem;
 }
 .p-4 {
   padding: 1rem;
-}
-.p-5 {
-  padding: 1.25rem;
 }
 .py-4 {
   padding-top: 1rem;
@@ -1747,6 +1741,10 @@ select {
 .px-1\.5 {
   padding-left: 0.375rem;
   padding-right: 0.375rem;
+}
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 .pt-8 {
   padding-top: 2rem;
@@ -1870,9 +1868,6 @@ select {
 }
 .font-extrabold {
   font-weight: 800;
-}
-.font-normal {
-  font-weight: 400;
 }
 .uppercase {
   text-transform: uppercase;
@@ -2497,6 +2492,11 @@ input::-webkit-date-and-time-value {
   .sm\:px-3 {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+
+  .sm\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .sm\:pt-0 {
