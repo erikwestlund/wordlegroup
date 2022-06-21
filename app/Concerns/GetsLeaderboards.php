@@ -21,6 +21,7 @@ class GetsLeaderboards
     public function getActive(Group $group)
     {
         $when = app(WordleDate::class)->get(now());
+
         return $this->get($group, $when);
     }
 
@@ -48,7 +49,22 @@ class GetsLeaderboards
             $leaderboards['week'] = $this->getWeek($group, $when->copy());
         }
 
-        return collect($leaderboards);
+        return collect($leaderboards)
+            ->map(function ($leaderboard) use ($group) {
+
+                if ($leaderboard) {
+                    $leaderboard->leaderboard = $leaderboard->leaderboard
+                        ->map(function ($position) use ($group) {
+                            $position['user'] = $group->memberships->firstWhere('user_id', $position['user_id'])->user;
+
+                            return $position;
+                        });
+
+//                    $position['user'] = $group->memberships->firstWhere('user_id', $position['user_id'])->user;
+                }
+
+                return $leaderboard;
+            });
     }
 
     public function getForever(Group $group)

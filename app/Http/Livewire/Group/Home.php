@@ -16,8 +16,6 @@ class Home extends Component
 
     public $isAdmin;
 
-    public $leaderboards;
-
     public $memberCount;
 
     public $memberOfGroup;
@@ -43,10 +41,6 @@ class Home extends Component
         if ($this->isAdmin) {
             $this->group->load('pendingInvitations');
         }
-
-        $this->leaderboards = app(GetsLeaderboards::class)->getActive($this->group);
-
-        ray($this->leaderboards);
     }
 
     public function scoreRecorded()

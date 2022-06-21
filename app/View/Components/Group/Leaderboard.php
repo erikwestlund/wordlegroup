@@ -13,12 +13,12 @@ class Leaderboard extends Component
 
     public $leaderboard;
 
-    public function __construct(Group $group, $anonymizePrivateUsers = false)
+    public function __construct(Group $group, $leaderboard, $anonymizePrivateUsers = false)
     {
         $this->group = $group;
         $this->group->load('memberships.user');
         $this->anonymizePrivateUsers = $anonymizePrivateUsers;
-        $this->leaderboard = $this->getLeaderboard($this->group);
+        $this->leaderboard = $leaderboard;
     }
 
     public function getLeaderboard(Group $group)

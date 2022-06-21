@@ -11,6 +11,10 @@ class Leaderboard extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'leaderboard' => 'collection',
+    ];
+
     public function scopeGroup($query, $groupId)
     {
         return $query->where('group_id', $groupId);

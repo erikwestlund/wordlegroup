@@ -54,7 +54,7 @@
                 <div class="mt-8">
 
                     @if($group->scores->isNotEmpty())
-                        <x-group.leaderboard
+                        <x-group.leaderboard-tabs
                             :group="$group"
                             :anonymize-private-users="$group->public && !$memberOfGroup"
                         />

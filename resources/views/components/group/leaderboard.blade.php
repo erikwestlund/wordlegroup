@@ -13,11 +13,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($leaderboard as $position)
+                    @foreach($leaderboard->leaderboard as $position)
                     <tr class="bg-white">
                         <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif">
                             @if($position['place'] === 1)
-                                <span class="h-12 w-12 inline-flex items-center justify-center text-lg bg-gold text-black font-extrabold rounded-full">{{ $position['place'] }}</span>
+                                <span class="h-10 md:h-12 w-10 md:w-12 inline-flex items-center justify-center text-lg bg-gold text-black font-extrabold rounded-full">{{ $position['place'] }}</span>
                             @elseif($position['place'] === 2)
                                 <span class="h-10 w-10 inline-flex items-center justify-center text-lg bg-silver text-black font-bold rounded-full">{{ $position['place'] }}</span>
                             @elseif($position['place'] === 3)
