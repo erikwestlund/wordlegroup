@@ -126,6 +126,6 @@ class UpdatesLeaderboards
             return null;
         }
 
-        return $date ? date('W', $date->timestamp) : null;
+        return $date ? $date->week : null;
     }
 }

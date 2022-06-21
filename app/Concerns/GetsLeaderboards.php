@@ -60,7 +60,6 @@ class GetsLeaderboards
                             return $position;
                         });
 
-//                    $position['user'] = $group->memberships->firstWhere('user_id', $position['user_id'])->user;
                 }
 
                 return $leaderboard;
