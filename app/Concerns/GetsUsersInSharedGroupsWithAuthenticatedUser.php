@@ -30,7 +30,7 @@ class GetsUsersInSharedGroupsWithAuthenticatedUser
             return;
         }
 
-        $this->users = (new GetsUserGroupsWithMembershipsLoaded($user))
+        $this->users = (new GetsUserGroupsWithRelationshipsLoaded($user))
             ->groups
             ->pluck('memberships')
             ->flatten()

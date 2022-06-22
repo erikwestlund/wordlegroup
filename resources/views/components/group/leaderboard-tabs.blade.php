@@ -31,7 +31,7 @@
             @keydown.end.prevent.stop="$focus.last()"
             @keydown.page-down.prevent.stop="$focus.last()"
             role="tablist"
-            class="-mb-px flex items-stretch"
+            class="-mb-px flex items-stretch justify-center"
             x-cloak
         >
             <!-- Tab -->
@@ -92,11 +92,11 @@
                 class="p-5"
                 x-cloak
             >
-                @if($leaderboards['forever'])
+                @if($leaderboards->firstWhere('for', 'forever'))
                     <x-group.leaderboard
                         :group="$group"
                         :anonymize-private-users="$group->public && !$memberOfGroup"
-                        :leaderboard="$leaderboards['forever']"
+                        :leaderboard="$leaderboards->firstWhere('for', 'forever')"
                     />
                 @else
                     <span class="text-sm md:text-base">
@@ -111,11 +111,11 @@
                 role="tabpanel"
                 class="p-5"
             >
-                @if($leaderboards['month'])
+                @if($leaderboards->firstWhere('for', 'month'))
                     <x-group.leaderboard
                         :group="$group"
                         :anonymize-private-users="$group->public && !$memberOfGroup"
-                        :leaderboard="$leaderboards['month']"
+                        :leaderboard="$leaderboards->firstWhere('for', 'month')"
                     />
 
                 @else
@@ -130,11 +130,11 @@
                 class="p-5"
                 x-cloak
             >
-                @if($leaderboards['week'])
+                @if($leaderboards->firstWhere('for', 'week'))
                     <x-group.leaderboard
                         :group="$group"
                         :anonymize-private-users="$group->public && !$memberOfGroup"
-                        :leaderboard="$leaderboards['week']"
+                        :leaderboard="$leaderboards->firstWhere('for', 'week')"
                     />
 
                 @else

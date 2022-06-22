@@ -15,7 +15,7 @@
                     <tbody>
                     @foreach($leaderboard->leaderboard as $position)
                     <tr class="bg-white">
-                        <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap flex items-start @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif">
+                        <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap flex  justify-center items-start @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif">
                             @if($position['place'] === 1)
                                 <span class="h-6 md:h-10 w-6 md:w-10 inline-flex items-center justify-center text-sm md:text-xl bg-gold text-black font-extrabold rounded-full">{{ $position['place'] }}</span>
                             @elseif($position['place'] === 2)

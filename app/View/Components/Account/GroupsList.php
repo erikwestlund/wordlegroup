@@ -2,11 +2,13 @@
 
 namespace App\View\Components\Account;
 
-use App\Concerns\GetsUserGroupsWithMembershipsLoaded;
+use App\Concerns\GetsLeaderboards;
+use App\Concerns\GetsUserGroupsWithRelationshipsLoaded;
 use App\Concerns\GetsUsersInSharedGroupsWithAuthenticatedUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
+use function Symfony\Component\Translation\t;
 
 class GroupsList extends Component
 {
@@ -20,6 +22,8 @@ class GroupsList extends Component
 
     public $userIsAuthenticatedUser;
 
+    public $leaderboards;
+
     public function __construct(User $user, $anonymizePrivateGroups = false)
     {
         $this->user = $user;
@@ -31,7 +35,7 @@ class GroupsList extends Component
 
     public function getAllUserGroups(User $user)
     {
-        return (new GetsUserGroupsWithMembershipsLoaded($user))
+        return (new GetsUserGroupsWithRelationshipsLoaded($user))
             ->groups;
     }
 
@@ -39,22 +43,27 @@ class GroupsList extends Component
     {
         return $this->getRawGroups($user, $viewingUser, $anonymizePrivateGroups)
                     ->map(function ($group) use ($viewingUser) {
-                        // Bind the leader user to each member of the leaderboard.
-                        $group->leaderboard = $group->leaderboard
-                            ->map(function ($position) use ($group, $viewingUser) {
-                                $position['user'] = $group->memberships->firstWhere('user_id',
-                                    $position['user_id'])->user;
 
-                                $position['can_be_seen_by_viewing_user'] = $position['user']->profileCanBeSeenBy($viewingUser);
-                                $position['user']['public_name'] = $position['can_be_seen_by_viewing_user'] ? $position['user']->name : 'Anonymous User';
+                        $group->leaderboards = app(GetsLeaderboards::class)->mapsUsersToLeaderboards($group, $group->activeLeaderboards, $viewingUser);
 
-                                return $position;
-                            });
-
-                        // Get the leader.
-                        $group->leader = $group->leaderboard->isNotEmpty()
-                            ? $group->leaderboard->first()['user']
-                            : null;
+//
+//                        // Bind the leader user to each member of the leaderboard.
+//                        $group->leaderboard = $group->leaderboard
+//                            ->map(function ($position) use ($group, $viewingUser) {
+//                                $position['user'] = $group->memberships->firstWhere('user_id',
+//                                    $position['user_id'])->user;
+//
+//                                $position['can_be_seen_by_viewing_user'] = $position['user']->profileCanBeSeenBy($viewingUser);
+//                                $position['user']['public_name'] = $position['can_be_seen_by_viewing_user'] ? $position['user']->name : 'Anonymous User';
+//
+//                                return $position;
+//                            });
+//
+//                        // Get the all time leader.
+//
+//                        $group->leader = $group->leaderboard->isNotEmpty()
+//                            ? $group->leaderboard->first()['user']
+//                            : null;
 
                         return $group;
                     });

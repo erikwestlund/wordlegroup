@@ -4,7 +4,9 @@ namespace App\Concerns;
 
 use App\Models\Group;
 use App\Models\Leaderboard;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class GetsLeaderboards
 {
@@ -31,31 +33,45 @@ class GetsLeaderboards
             $when = app(WordleDate::class)->get(now());
         }
 
-        $leaderboards = [];
+        $leaderboards = $group->leaderboards()->forDate($when)->get();
 
-        if (in_array('forever', $this->leaderboards)) {
-            $leaderboards['forever'] = $this->getForever($group);
-        }
+//        dd($leaderboards);
+//
+//        $leaderboards = [];
+//
+//        if (in_array('forever', $this->leaderboards)) {
+//            $leaderboards['forever'] = $this->getForever($group);
+//        }
+//
+//        if (in_array('year', $this->leaderboards)) {
+//            $leaderboards['year'] = $this->getYear($group, $when->copy());
+//        }
+//
+//        if (in_array('month', $this->leaderboards)) {
+//            $leaderboards['month'] = $this->getMonth($group, $when->copy());
+//        }
+//
+//        if (in_array('week', $this->leaderboards)) {
+//            $leaderboards['week'] = $this->getWeek($group, $when->copy());
+//        }
 
-        if (in_array('year', $this->leaderboards)) {
-            $leaderboards['year'] = $this->getYear($group, $when->copy());
-        }
+        return $this->mapsUsersToLeaderboards($group, $leaderboards);
+    }
 
-        if (in_array('month', $this->leaderboards)) {
-            $leaderboards['month'] = $this->getMonth($group, $when->copy());
-        }
-
-        if (in_array('week', $this->leaderboards)) {
-            $leaderboards['week'] = $this->getWeek($group, $when->copy());
-        }
-
+    public function mapsUsersToLeaderboards($group, $leaderboards, User $viewingUser = null)
+    {
         return collect($leaderboards)
-            ->map(function ($leaderboard) use ($group) {
-
+            ->map(function ($leaderboard) use ($group, $viewingUser) {
                 if ($leaderboard) {
                     $leaderboard->leaderboard = $leaderboard->leaderboard
-                        ->map(function ($position) use ($group) {
+                        ->map(function ($position) use ($group, $viewingUser) {
                             $position['user'] = $group->memberships->firstWhere('user_id', $position['user_id'])->user;
+
+                            $position['can_be_seen_by_viewing_user'] = $viewingUser
+                                ? $position['user']->profileCanBeSeenBy($viewingUser)
+                                : true;
+
+                            $position['user']['public_name'] = $position['can_be_seen_by_viewing_user'] ? $position['user']->name : 'Anonymous User';
 
                             return $position;
                         });

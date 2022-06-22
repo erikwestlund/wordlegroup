@@ -33,6 +33,7 @@ class ScoreFeed extends Component
             'scores' => $this->user
                 ->dailyScores()
                 ->latest('date')
+                ->with('user')
                 ->paginate(6)
         ]);
     }

@@ -2,10 +2,11 @@
 
 namespace App\Concerns;
 
+use App\Models\Leaderboard;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class GetsUserGroupsWithMembershipsLoaded
+class GetsUserGroupsWithRelationshipsLoaded
 {
     public $user;
 
@@ -29,7 +30,7 @@ class GetsUserGroupsWithMembershipsLoaded
             return;
         }
 
-        $this->user->load('memberships.group.memberships.user');
+        $this->user->load(['memberships.group.memberships.user', 'memberships.group.activeLeaderboards']);
         $this->groups = $this->user->memberships->pluck('group');
     }
 }

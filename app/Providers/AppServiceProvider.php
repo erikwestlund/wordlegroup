@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Concerns\GetsUserGroupsWithMembershipsLoaded;
+use App\Concerns\GetsUserGroupsWithRelationshipsLoaded;
 use App\Concerns\GetsUsersInSharedGroupsWithAuthenticatedUser;
 use Illuminate\Support\ServiceProvider;
 

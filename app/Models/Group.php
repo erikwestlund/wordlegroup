@@ -117,6 +117,16 @@ class Group extends Model
         app(UpdatesLeaderboards::class)->update($this, $when);
     }
 
+    public function leaderboards()
+    {
+        return $this->hasMany(Leaderboard::class);
+    }
+
+    public function activeLeaderboards()
+    {
+        return $this->leaderboards()->active();
+    }
+
     public function memberships()
     {
         return $this->hasMany(GroupMembership::class, 'group_id');
@@ -223,4 +233,5 @@ class Group extends Model
     {
         $this->update(['verified_at' => now(), 'token' => null]);
     }
+
 }

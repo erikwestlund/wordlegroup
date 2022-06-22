@@ -20,7 +20,8 @@
                 @if($groupMembership->group->leaderboard->firstWhere('user_id', $user->id))
                     <li class="mt-0.5 first:mt-0">
                         <span class="font-medium">My Place:</span>
-                        {{ $groupMembership->group->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $groupMembership->group->leaderboard->pluck('place')->max() }}
+                        {{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'forever')->leaderboard->pluck('place')->max() }} Overall,
+                        {{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'month')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'month')->leaderboard->pluck('place')->max() }} This Month
                     </li>
                 @endif
             @endif
