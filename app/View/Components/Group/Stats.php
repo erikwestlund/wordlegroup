@@ -10,9 +10,12 @@ class Stats extends Component
 {
     public $group;
 
-    public function __construct(Group $group)
+    public $leaderboard;
+
+    public function __construct(Group $group, $leaderboard)
     {
         $this->group = $group;
+        $this->leaderboard = $leaderboard;
     }
 
     public function render()

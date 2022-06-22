@@ -53,6 +53,10 @@ class User extends Authenticatable
         'login_code_generated_at',
     ];
 
+    protected $casts = [
+        'score_distribution' => 'collection',
+    ];
+
     public function canBeNudged()
     {
         return $this->allow_reminder_emails &&
@@ -152,7 +156,7 @@ class User extends Authenticatable
 
     public function recordedScoreToday()
     {
-        return $this->scoresToday()->count() > 0;
+        return $this->scoresToday->count() > 0;
     }
 
     public function profileCanBeSeenBy(User $viewingUser = null)

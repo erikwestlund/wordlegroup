@@ -1,27 +1,27 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="flex flex-col">
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+    <div class="overflow-x-auto -my-2 sm:-mx-6 lg:-mx-8">
+        <div class="inline-block py-2 min-w-full align-middle sm:px-6 lg:px-8">
             <div class="overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200 border-b">
+                <table class="min-w-full border-b divide-y divide-gray-200">
                     <thead>
                     <tr>
-                        <th scope="col" class="w-16 pl-1 pr-3 py-1 sm:px-4 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Pl.</span><span class="hidden sm:inline">Place</span></th>
-                        <th scope="col" class="px-1 py-1 sm:px-4 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
-                        <th scope="col" class="whitespace-nowrap text-right px-2 py-1 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Avg.</span><span class="hidden sm:inline">Avg. Score</span></th>
-                        <th scope="col" class="whitespace-nowrap text-right px-2 py-1 sm:py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"><span class="inline sm:hidden">Num.</span><span class="hidden sm:inline">Games</span></th>
+                        <th scope="col" class="py-1 pr-3 pl-1 w-16 text-xs font-semibold tracking-wider text-left text-gray-500 uppercase sm:px-4 sm:py-2"><span class="inline sm:hidden">Place</span><span class="hidden sm:inline">Place</span></th>
+                        <th scope="col" class="px-1 py-1 text-xs font-semibold tracking-wider text-left text-gray-500 uppercase sm:px-4 sm:py-2">Name</th>
+                        <th scope="col" class="px-2 py-1 text-xs font-semibold tracking-wider text-left text-right text-gray-500 uppercase whitespace-nowrap sm:py-2"><span class="inline sm:hidden">Avg.</span><span class="hidden sm:inline">Avg. Score</span></th>
+                        <th scope="col" class="px-2 py-1 text-xs font-semibold tracking-wider text-left text-right text-gray-500 uppercase whitespace-nowrap sm:py-2"><span class="inline sm:hidden">Num.</span><span class="hidden sm:inline">Games</span></th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($leaderboard->leaderboard as $position)
                     <tr class="bg-white">
-                        <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap flex  justify-center items-start @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif">
+                        <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif">
                             @if($position['place'] === 1)
-                                <span class="h-6 md:h-10 w-6 md:w-10 inline-flex items-center justify-center text-sm md:text-xl bg-gold text-black font-extrabold rounded-full">{{ $position['place'] }}</span>
+                                <span class="inline-flex justify-center items-center w-6 h-6 text-sm font-extrabold text-black rounded-full md:h-10 md:w-10 md:text-xl bg-gold">{{ $position['place'] }}</span>
                             @elseif($position['place'] === 2)
-                                <span class="h-6 md:h-10 w-6 md:w-10 inline-flex items-center justify-center text-sm md:text-lg bg-silver text-black font-bold rounded-full">{{ $position['place'] }}</span>
+                                <span class="inline-flex justify-center items-center w-6 h-6 text-sm font-bold text-black rounded-full md:h-10 md:w-10 md:text-lg bg-silver">{{ $position['place'] }}</span>
                             @elseif($position['place'] === 3)
-                                <span class="h-6 md:h-10 w-6 md:w-10 inline-flex items-center justify-center text-sm md:text-lg bg-bronze text-black font-bold rounded-full">{{ $position['place'] }}</span>
+                                <span class="inline-flex justify-center items-center w-6 h-6 text-sm font-bold text-black rounded-full md:h-10 md:w-10 md:text-lg bg-bronze">{{ $position['place'] }}</span>
                             @else
                                 <span class="text-sm font-medium">{{ $position['place'] }}</span>
                             @endif

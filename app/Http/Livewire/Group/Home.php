@@ -38,6 +38,7 @@ class Home extends Component
             abort(403);
         }
 
+
         if ($this->isAdmin) {
             $this->group->load('pendingInvitations');
         }

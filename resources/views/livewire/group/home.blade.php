@@ -50,11 +50,10 @@
                 @endif
 
 
-                <x-layout.sub-heading class="text-center">Leaderboard</x-layout.sub-heading>
                 <div class="mt-8">
 
                     @if($group->scores->isNotEmpty())
-                        <x-group.leaderboard-tabs
+                        <x-group.statistics-tabs
                             :group="$group"
                             :member-of-group="$memberOfGroup"
                             :anonymize-private-users="$group->public && !$memberOfGroup"
@@ -66,14 +65,14 @@
                     @endif
                 </div>
 
-                @if($group->scores_recorded > 0)
-                    <div class="pt-10">
-                        <x-layout.sub-heading class="text-center">Group Stats</x-layout.sub-heading>
-                        <div class="mt-8">
-                            <x-group.stats :group="$group"/>
-                        </div>
-                    </div>
-                @endif
+{{--                @if($group->scores_recorded > 0)--}}
+{{--                    <div class="pt-10">--}}
+{{--                        <x-layout.sub-heading class="text-center">Group Stats</x-layout.sub-heading>--}}
+{{--                        <div class="mt-8">--}}
+{{--                            <x-group.stats :group="$group"/>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
             </div>
             @if($memberOfGroup)
                 @if($group->public)

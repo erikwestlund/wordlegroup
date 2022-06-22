@@ -1,4 +1,5 @@
 <div>
+
     <!-- Tabs -->
     <div
         x-data="{
@@ -44,10 +45,11 @@
                     type="button"
                     :tabindex="isSelected($el.id) ? 0 : -1"
                     :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'border-gray-200 font-bold bg-white' : 'border-transparent'"
+                    :class="isSelected($el.id) ? 'border-gray-200 font-bold text-green-700 bg-white' : 'border-transparent'"
                     class="inline-flex px-5 border-t border-l border-r py-2.5 rounded-t-md text-sm md:text-base"
                     role="tab"
-                >All Time</button>
+                >All Time
+                </button>
             </li>
 
             <li>
@@ -59,10 +61,11 @@
                     type="button"
                     :tabindex="isSelected($el.id) ? 0 : -1"
                     :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'border-gray-200 font-bold bg-white' : 'border-transparent'"
+                    :class="isSelected($el.id) ? 'border-gray-200 font-bold text-green-700 bg-white' : 'border-transparent'"
                     class="inline-flex px-5 py-2.5 border-t border-l border-r rounded-t-md text-sm md:text-base"
                     role="tab"
-                >This Month</button>
+                >This Month
+                </button>
             </li>
 
 
@@ -75,10 +78,11 @@
                     type="button"
                     :tabindex="isSelected($el.id) ? 0 : -1"
                     :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'border-gray-200 font-bold bg-white' : 'border-transparent'"
+                    :class="isSelected($el.id) ? 'border-gray-200 font-bold text-green-700 bg-white' : 'border-transparent'"
                     class="inline-flex px-5 py-2.5 border-t border-l border-r rounded-t-md text-sm md:text-base"
                     role="tab"
-                >This Week</button>
+                >This Week
+                </button>
             </li>
         </ul>
 
@@ -92,12 +96,24 @@
                 class="p-5"
                 x-cloak
             >
+                <x-layout.heading-divider class="mb-6 mt-2">Leaderboard</x-layout.heading-divider>
+
                 @if($leaderboards->firstWhere('for', 'forever'))
                     <x-group.leaderboard
                         :group="$group"
                         :anonymize-private-users="$group->public && !$memberOfGroup"
                         :leaderboard="$leaderboards->firstWhere('for', 'forever')"
                     />
+
+                    <div class="pt-10">
+                        <x-layout.sub-heading class="text-center">Group Stats</x-layout.sub-heading>
+                        <div class="mt-8">
+                            <x-group.stats
+                                :group="$group"
+                                :leaderboard="$leaderboards->firstWhere('for', 'forever')"
+                            />
+                        </div>
+                    </div>
                 @else
                     <span class="text-sm md:text-base">
                         No one in this group has recorded any scores.
@@ -111,6 +127,8 @@
                 role="tabpanel"
                 class="p-5"
             >
+                <x-layout.heading-divider class="mb-6 mt-2">Leaderboard</x-layout.heading-divider>
+
                 @if($leaderboards->firstWhere('for', 'month'))
                     <x-group.leaderboard
                         :group="$group"
@@ -118,9 +136,22 @@
                         :leaderboard="$leaderboards->firstWhere('for', 'month')"
                     />
 
+                    <div class="pt-10">
+                        <x-layout.sub-heading class="text-center">Group Stats</x-layout.sub-heading>
+                        <div class="mt-8">
+                            <x-group.stats
+                                :group="$group"
+                                :leaderboard="$leaderboards->firstWhere('for', 'month')"
+                            />
+                        </div>
+                    </div>
+
+
                 @else
                     No one in this group has recorded any scores this month.
                 @endif
+
+
             </section>
 
             <section
@@ -130,12 +161,25 @@
                 class="p-5"
                 x-cloak
             >
+
+                <x-layout.heading-divider class="mb-6 mt-2">Leaderboard</x-layout.heading-divider>
+
                 @if($leaderboards->firstWhere('for', 'week'))
                     <x-group.leaderboard
                         :group="$group"
                         :anonymize-private-users="$group->public && !$memberOfGroup"
                         :leaderboard="$leaderboards->firstWhere('for', 'week')"
                     />
+
+                    <div class="pt-10">
+                        <x-layout.sub-heading class="text-center">Group Stats</x-layout.sub-heading>
+                        <div class="mt-8">
+                            <x-group.stats
+                                :group="$group"
+                                :leaderboard="$leaderboards->firstWhere('for', 'week')"
+                            />
+                        </div>
+                    </div>
 
                 @else
                     No one in this group has recorded any scores this week.

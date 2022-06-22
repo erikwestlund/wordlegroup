@@ -17,7 +17,7 @@ class Nav extends Component
 
     public function __construct($activePage)
     {
-        $this->user = Auth::check() ? Auth::user()->load('memberships.group') : null;
+        $this->user = Auth::check() ? Auth::user()->load('memberships.group.activeLeaderboards') : null;
         $this->routeMap = $this->getRouteMap();
         $this->noneSelected = !in_array($activePage, array_keys($this->routeMap));
         $this->activePage = $this->noneSelected ? 'navigation' : $activePage;

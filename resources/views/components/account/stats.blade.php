@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="mt-8">
-        <x-score.bar-chart :scores="$user->dailyScores" />
+        <x-score.bar-chart :score-distribution="$user->score_distribution" />
     </div>
     <div class="mt-6">
         <div class="text-gray-500 text-sm text-center"><span class="font-semibold">{{ $user->daily_scores_recorded }}</span>

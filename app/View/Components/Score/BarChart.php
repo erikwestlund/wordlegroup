@@ -14,10 +14,12 @@ class BarChart extends Component
 
     public $stepSize;
 
-    public function __construct($scores, $stepSize = 1)
+    public $scoreDistribution;
+
+    public function __construct($scoreDistribution, $stepSize = 1)
     {
-        $this->scores = $scores;
-        $this->values = $this->getValues($scores);
+//        $this->scores = $scores;
+        $this->values = $scoreDistribution->values();
         $this->stepSize = $this->getStepSize($this->values);
     }
 

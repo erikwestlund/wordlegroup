@@ -6,7 +6,7 @@ use App\Concerns\GetsLeaderboards;
 use App\Models\Group;
 use Illuminate\View\Component;
 
-class LeaderboardTabs extends Component
+class StatisticsTabs extends Component
 {
     public $group;
 
@@ -27,6 +27,6 @@ class LeaderboardTabs extends Component
 
     public function render()
     {
-        return view('components.group.leaderboard-tabs');
+        return view('components.group.statistics-tabs');
     }
 }

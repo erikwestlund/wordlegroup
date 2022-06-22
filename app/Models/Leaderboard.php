@@ -13,7 +13,8 @@ class Leaderboard extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'leaderboard' => 'collection',
+        'leaderboard'        => 'collection',
+        'score_distribution' => 'collection',
     ];
 
     public function scopeGroup($query, $groupId)
