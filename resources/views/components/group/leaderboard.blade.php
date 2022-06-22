@@ -15,7 +15,7 @@
                     <tbody>
                     @foreach($leaderboard->leaderboard as $position)
                     <tr class="bg-white">
-                        <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif">
+                        <td class="text-center pl-1 pr-3 py-2 sm:px-4 sm:py-2 whitespace-nowrap @if(isset($leaderboard->leaderboard[$loop->index + 1]['place']) && $leaderboard->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif">
                             @if($position['place'] === 1)
                                 <span class="inline-flex justify-center items-center w-6 h-6 text-sm font-extrabold text-black rounded-full md:h-10 md:w-10 md:text-xl bg-gold">{{ $position['place'] }}</span>
                             @elseif($position['place'] === 2)
@@ -26,7 +26,7 @@
                                 <span class="text-sm font-medium">{{ $position['place'] }}</span>
                             @endif
                         </td>
-                        <td class="px-1 py-2 sm:px-4 sm:py-2  @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif
+                        <td class="px-1 py-2 sm:px-4 sm:py-2  @if(isset($leaderboard->leaderboard[$loop->index + 1]['place']) && $leaderboard->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif
                             @if($position['place'] === 1)
                             text-sm sm:text-base md:text-xl font-bold
                             @elseif($position['place'] === 2)
@@ -37,7 +37,7 @@
                             text-sm text-gray-900 font-medium
                             @endif
                         " title="{{ $position['name'] }}">@if($anonymizePrivateUsers && $position['user']->private_profile) Anonymous User @else {{ $position['name'] }} @endif</td>
-                        <td class="px-2 py-2 sm:py-2 whitespace-nowrap text-right @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif
+                        <td class="px-2 py-2 sm:py-2 whitespace-nowrap text-right @if(isset($leaderboard->leaderboard[$loop->index + 1]['place']) && $leaderboard->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif
                             @if($position['place'] === 1)
                             text-sm sm:text-base md:text-xl font-bold
                             @elseif($position['place'] === 2)
@@ -48,7 +48,7 @@
                             text-sm text-gray-900 font-medium
                             @endif
                         ">{!! $position['stats']['mean'] ?: "&#x2014;" !!}</td>
-                        <td class="px-2 py-2 sm:py-2 whitespace-nowrap  text-right @if(isset($group->leaderboard[$loop->index + 1]['place']) && $group->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif
+                        <td class="px-2 py-2 sm:py-2 whitespace-nowrap  text-right @if(isset($leaderboard->leaderboard[$loop->index + 1]['place']) && $leaderboard->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif
                             @if($position['place'] === 1)
                             text-sm sm:text-base md:text-xl font-bold
                             @elseif($position['place'] === 2)
