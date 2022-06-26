@@ -84,9 +84,9 @@ class UpdatesLeaderboards
 
         $leaderboard = $group->getLeaderBoard($startDate, $endDate);
 
-        $year = $this->getYear($for, $startDate);
-        $month = $this->getMonth($for, $startDate);
-        $week = $this->getWeek($for, $startDate);
+        $year = $this->getYear($for, $endDate);
+        $month = $this->getMonth($for, $endDate);
+        $week = $this->getWeek($for, $endDate);
 
         Leaderboard::updateOrCreate(
             ['group_id' => $group->id, 'for' => $for, 'year' => $year, 'month' => $month, 'week' => $week],
