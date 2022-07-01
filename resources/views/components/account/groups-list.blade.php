@@ -40,13 +40,15 @@
                                         <span class="font-semibold">Avg. Score:</span>
                                         {{ number_format($group->score_mean, 2) }}
                                     </li>
-                                    @if(
-                                        $group->leaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id)
-                                    )
+                                    @if($group->leaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id))
                                     <li>
                                         <span class="font-semibold">Place:</span>
                                         {{ $group->leaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $group->leaderboards->firstWhere('for', 'forever')->leaderboard->pluck('place')->max() }} Overall,
+                                        @if($group->leaderboards->firstWhere('for', 'month'))
                                         {{ $group->leaderboards->firstWhere('for', 'month')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $group->leaderboards->firstWhere('for', 'month')->leaderboard->pluck('place')->max() }} This Month
+                                        @else
+                                            none this month.
+                                        @endif
                                     </li>
                                     @endif
                                 @endif
