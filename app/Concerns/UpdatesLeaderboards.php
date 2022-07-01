@@ -113,7 +113,7 @@ class UpdatesLeaderboards
 
     public function getMonth($for, $date)
     {
-        if (in_array($for, ['forever', 'year'])) {
+        if (in_array($for, ['forever', 'year', 'week'])) {
             return null;
         }
 

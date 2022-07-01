@@ -73,7 +73,6 @@ class Leaderboard extends Model
                 $subQuery->orWhere(function ($q) use ($date) {
                     $q->where('for', 'week')
                       ->where('year', $date->year)
-                      ->where('month', $date->month)
                       ->where('week', $date->week);
                 });
             }
