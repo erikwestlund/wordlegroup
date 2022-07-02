@@ -44,7 +44,7 @@
                                     <li>
                                         <span class="font-semibold">Place:</span>
                                         {{ $group->leaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $group->leaderboards->firstWhere('for', 'forever')->leaderboard->pluck('place')->max() }} Overall,
-                                        @if($group->leaderboards->firstWhere('for', 'month'))
+                                        @if($group->leaderboards->firstWhere('for', 'month') && $group->leaderboards->firstWhere('for', 'month')->leaderboard->firstWhere('user_id', $user->id))
                                         {{ $group->leaderboards->firstWhere('for', 'month')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $group->leaderboards->firstWhere('for', 'month')->leaderboard->pluck('place')->max() }} This Month
                                         @else
                                             none this month.
