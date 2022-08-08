@@ -36,7 +36,7 @@
                             @else
                             text-sm text-gray-900 font-medium
                             @endif
-                        " title="{{ $position['name'] }}">@if($anonymizePrivateUsers && $position['user']->private_profile) Anonymous User @else {{ $position['name'] }} @endif</td>
+                        " title="{{ $position['name'] }}">@if($anonymizePrivateUsers && !$position['user']->public_profile) Anonymous User @else {{ $position['name'] }} @endif</td>
                         <td class="px-2 py-2 sm:py-2 whitespace-nowrap text-right @if(isset($leaderboard->leaderboard[$loop->index + 1]['place']) && $leaderboard->leaderboard[$loop->index + 1]['place'] != $position['place']) border-b border-gray-200 @endif
                             @if($position['place'] === 1)
                             text-sm sm:text-base md:text-xl font-bold
