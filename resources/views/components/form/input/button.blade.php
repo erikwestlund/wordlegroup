@@ -11,8 +11,10 @@
 >
     <span
         class="inline-flex items-center"
+        @if($loadingAction)
         wire:loading.remove
-        @if($loadingAction)wire:target="{{ $loadingAction }}"@endif
+        wire:target="{{ $loadingAction }}"
+        @endif
     >
         {{ $slot }}
     </span>

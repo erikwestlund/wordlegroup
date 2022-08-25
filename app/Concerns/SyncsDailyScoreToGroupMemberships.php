@@ -55,10 +55,12 @@ class SyncsDailyScoreToGroupMemberships
     {
         // First, filter out any scores that are from boards after the Wordle Group was created
         //  or that were created by someone who is not the score owner or the group administrator.
-        //  And take that record. (recording users always come first)
+        //  Then, order by date, and take the last one.
         return $scores
             ->filter(function ($score) use ($membership) {
                 return $score->validForMembership($membership);
-            })->first();
+            })
+            ->sortByDesc('id')
+            ->first();
     }
 }

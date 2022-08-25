@@ -16,7 +16,7 @@
                 />
             @endunless
             <div>
-                <x-form.input.button>Register</x-form.input.button>
+                <x-form.input.button loading-action="store">Register</x-form.input.button>
             </div>
         </div>
         </div>

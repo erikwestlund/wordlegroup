@@ -6,6 +6,7 @@ use App\Concerns\WordleBoard;
 use App\Models\Group;
 use App\Models\Score;
 use App\Models\User;
+use App\Rules\BoardNumberMustBeValid;
 use App\Rules\DateMustBeValid;
 use App\Rules\ValidWordleBoard;
 use Carbon\Carbon;
@@ -16,6 +17,8 @@ class RecordForm extends Component
 {
     public $board;
 
+    public $boardNumber;
+
     public $bricked;
 
     public $date;
@@ -24,6 +27,8 @@ class RecordForm extends Component
 
     public $hardMode;
 
+    public $hideEmail;
+
     public $isGroupAdmin;
 
     public $quick;
@@ -31,8 +36,6 @@ class RecordForm extends Component
     public $recordForUserId;
 
     public $recordingForSelf;
-
-    public $hideEmail;
 
     public $score;
 
@@ -44,6 +47,7 @@ class RecordForm extends Component
         $this->recordForUserId = $user->id;
         $this->recordingForSelf = $this->user->id === Auth::user()->id;
         $this->date = app(WordleBoard::class)->activeBoardStartTime->format('Y-m-d');
+        $this->boardNumber = app(WordleBoard::class)->getBoardNumberFromDate($this->date);
         $this->quick = $quick;
         $this->hideEmail = $hideEmail;
 
@@ -93,18 +97,31 @@ class RecordForm extends Component
     public function recordScoreManually()
     {
         $this->validate([
-            'date'  => ['required', 'date', new DateMustBeValid()],
-            'score' => ['required_without:bricked'],
+            'date'        => [new DateMustBeValid($this->boardNumber)], // passes if board number provided
+            'boardNumber' => [new BoardNumberMustBeValid($this->date)],
+            'score'       => ['required_without:bricked'],
         ]);
 
         $this->storeScore([
             'score'       => $this->bricked ? 7 : $this->score,
-            'boardNumber' => app(WordleBoard::class)->getBoardNumberFromDate($this->date),
+            'boardNumber' => $this->boardNumber ?? app(WordleBoard::class)->getBoardNumberFromDate($this->date),
             'date'        => $this->date,
             'hardMode'    => $this->hardMode ?? false,
         ]);
 
         $this->emitUp('scoreRecorded');
+    }
+
+    public function updatedDate($date)
+    {
+        $this->boardNumber = app(WordleBoard::class)->getBoardNumberFromDate(Carbon::parse($date));
+
+        if(!$this->boardNumber) {
+            $this->dispatchBrowserEvent('notify', [
+                'type' => 'error',
+                'content' => 'Cannot use a date from the future.'
+            ]);
+        }
     }
 
     public function updatedRecordForUserId($userId)

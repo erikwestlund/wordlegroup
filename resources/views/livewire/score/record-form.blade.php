@@ -118,9 +118,25 @@
                         label="Date"
                         :placeholder="$date"
                         :options="['defaultDate' => $date]"
-{{--                        wire:model="date"--}}
+                        wire:model="date"
                     />
+{{--                    <div class="col-span-1 pt-2 pb-4">--}}
+{{--                        <span class="text-gray-500 italic">or</span>--}}
+{{--                    </div>--}}
                 </div>
+                    <div class="col-span-1">
+                        <x-form.input.text
+                            :errors="$errors"
+                            name="boardNumber"
+                            type="number"
+                            label="Wordle Board Number"
+                            tip="The date is ignored if a board number is entered."
+                            placeholder="123"
+                            min="1"
+                            max="10000"
+                            wire:model.lazy="boardNumber"
+                        />
+                    </div>
 
                 <div class="col-span-1">
                     <x-form.input.text

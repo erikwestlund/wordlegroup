@@ -10,8 +10,19 @@ class DateMustBeValid implements Rule
 {
     public $message;
 
+    public $boardNumber;
+
+    public function __construct($boardNumber)
+    {
+        $this->boardNumber = $boardNumber;
+    }
+
     public function passes($attribute, $value)
     {
+        if($this->boardNumber){
+            return true;
+        }
+
         $day = Carbon::parse($value)->format('Y-m-d');
 
         $date = Carbon::parse($day . ' 06:00:00 GMT');
