@@ -69,7 +69,7 @@ class WordleDate
 
     public function getActiveBoardEndTime(): Carbon
     {
-        return $this->activeBoardStartTime->copy()->addDay()->subMicrosecond();
+        return $this->activeBoardStartTime->copy()->addDay()->->addHours(14)->subMicrosecond();
     }
 
     protected function getActiveBoardNumber(): int
