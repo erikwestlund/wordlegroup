@@ -70,7 +70,7 @@ class WordleDate
     public function getActiveBoardEndTime(): Carbon
     {
         // Add 14 hours for farthest time zone.
-        return $this->activeBoardStartTime->copy()->addDay()->->addHours(14)->subMicrosecond();
+        return $this->activeBoardStartTime->copy()->addDay()->addHours(14)->subMicrosecond();
     }
 
     protected function getActiveBoardNumber(): int
