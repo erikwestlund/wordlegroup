@@ -16,6 +16,7 @@ class Home extends Component
         $this->user = Auth::user();
 
         $this->user->load('memberships.group.admin');
+        $this->user->load('memberships');
     }
 
     public function scoreRecorded()
