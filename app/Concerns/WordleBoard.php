@@ -9,7 +9,7 @@ class WordleBoard
 {
     public $activeBoardEndTime;
 
-    public $activeBoardNumber + 1;
+    public $activeBoardNumber;
 
     public $activeBoardStartTime;
 
