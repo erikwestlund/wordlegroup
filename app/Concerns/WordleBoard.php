@@ -32,7 +32,7 @@ class WordleBoard
             : Carbon::parse('Today 06:00:00 UTC');
         $this->activeBoardEndTime = $this->activeBoardStartTime->copy()->addDays(2)->subMicrosecond();
 
-        $this->activeBoardNumber + 1 = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
+        $this->activeBoardNumber = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
     }
 
     public function getBoardNumberFromDate($date)
