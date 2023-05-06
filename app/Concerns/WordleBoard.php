@@ -9,7 +9,7 @@ class WordleBoard
 {
     public $activeBoardEndTime;
 
-    public $activeBoardNumber;
+    public $activeBoardNumber + 1;
 
     public $activeBoardStartTime;
 
@@ -30,9 +30,9 @@ class WordleBoard
         $this->activeBoardStartTime = now() <= Carbon::parse('Today 06:00:00 UTC')
             ? Carbon::parse('Yesterday 06:00:00 UTC')
             : Carbon::parse('Today 06:00:00 UTC');
-        $this->activeBoardEndTime = $this->activeBoardStartTime->copy()->addDay()->subMicrosecond();
+        $this->activeBoardEndTime = $this->activeBoardStartTime->copy()->addDays(2)->subMicrosecond();
 
-        $this->activeBoardNumber = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
+        $this->activeBoardNumber + 1 = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
     }
 
     public function getBoardNumberFromDate($date)
@@ -167,7 +167,7 @@ class WordleBoard
 
     public function validateBoardNumber($boardNumber)
     {
-        return $boardNumber >= 0 && $boardNumber <= $this->activeBoardNumber;
+        return $boardNumber >= 0 && $boardNumber <= $this->activeBoardNumber + 1;
     }
 
     public function validateWordleDate($date)
