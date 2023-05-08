@@ -47,8 +47,26 @@ class WordleDate
         return $this->firstBoardStartTime->copy()->addDay()->subMicrosecond();
     }
 
+    public function getLatestTime()
+    {
+        $latestTimeNow = now()->copy()->setTimezone('Pacific/Tongatapu');
+
+        return $this->get($latestTimeNow);
+    }
+
+    public function getLastPossibleBoardStartTime(): Carbon
+    {
+        return $this->getLatestTime();
+        $yesterdayWordleDate = $this->get($this->getLatestTime()->subDay());
+
+        return now() <= $todayWordleDate
+            ? $yesterdayWordleDate
+            : $todayWordleDate;
+    }
+
     public function getActiveBoardStartTime(): Carbon
     {
+        return $this->getLastPossibleBoardStartTime();
         $todayWordleDate = $this->get(now());
         $yesterdayWordleDate = $this->get(now()->subDay());
 
@@ -70,7 +88,7 @@ class WordleDate
     public function getActiveBoardEndTime(): Carbon
     {
         // Add 14 hours for farthest time zone.
-        return $this->activeBoardStartTime->copy()->addDay()->addHours(24)->subMicrosecond();
+        return $this->activeBoardStartTime->copy()->addDay()->subMicrosecond();
     }
 
     protected function getActiveBoardNumber(): int
@@ -80,6 +98,12 @@ class WordleDate
 
     public function get($date)
     {
+        if(! $date) {
+            $date = $this->getLatestTime()->copy()->endOfDay();
+        }
+
+        return Carbon::parse($date)->endOfDay();
+
         return Carbon::parse($date)
                      ->setHour(self::START_HOUR)
                      ->setMinute(0)

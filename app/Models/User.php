@@ -302,8 +302,6 @@ class User extends Authenticatable
 
     public function validateLoginCode($providedCode)
     {
-        ray($this->validLoginCode($providedCode));
-
         return $this->validLoginCode($providedCode) && $this->loginCodeActive();
     }
 

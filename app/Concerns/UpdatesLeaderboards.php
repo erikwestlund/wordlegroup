@@ -21,7 +21,7 @@ class UpdatesLeaderboards
     public function update(Group $group, Carbon $when = null)
     {
         if (!$when) {
-            $when = now();
+            $when = app(WordleDate::class)->getActiveBoardEndTime();
         }
 
         if (in_array('forever', $this->leaderboards)) {
@@ -52,7 +52,7 @@ class UpdatesLeaderboards
     public function updateYear(Group $group, Carbon $when)
     {
         $startDate = max($this->date->get($when->copy()->startOfYear()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get($when->copy()->endOfYear()), $this->date->getActiveBoardStartTime());
+        $endDate = min($this->date->get($when->copy()->endOfYear()), $this->date->getLastPossibleBoardStartTime());
 
         $this->saveLeaderboard($group, 'year', $startDate, $endDate);
     }
@@ -60,15 +60,15 @@ class UpdatesLeaderboards
     public function updateMonth(Group $group, Carbon $when)
     {
         $startDate = max($this->date->get($when->copy()->startOfMonth()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get($when->copy()->endOfMonth()), $this->date->getActiveBoardStartTime());
-
+        $endDate = min($this->date->get($when->copy()->endOfMonth()), $this->date->getLastPossibleBoardStartTime());
+ray($startDate, $endDate);
         $this->saveLeaderboard($group, 'month', $startDate, $endDate);
     }
 
     public function updateWeek(Group $group, Carbon $when)
     {
         $startDate = max($this->date->get($when->copy()->startOfWeek()), $this->date->getFirstBoardStartTime());
-        $endDate = min($this->date->get($when->copy()->endOfWeek()), $this->date->getActiveBoardStartTime());
+        $endDate = min($this->date->get($when->copy()->endOfWeek()), $this->date->getLastPossibleBoardStartTime());
 
         $this->saveLeaderboard($group, 'week', $startDate, $endDate);
     }

@@ -27,12 +27,13 @@ class WordleBoard
         $this->firstBoardStartTime = $this->wordleDate->firstBoardStartTime;
         $this->firstBoardEndTime = $this->wordleDate->firstBoardEndTime;
 
-        $this->activeBoardStartTime = now() <= Carbon::parse('Today 06:00:00 UTC')
-            ? Carbon::parse('Yesterday 06:00:00 UTC')
-            : Carbon::parse('Today 06:00:00 UTC');
-        $this->activeBoardEndTime = $this->activeBoardStartTime->copy()->addDays(2)->subMicrosecond();
+//        $this->activeBoardStartTime = now() <= Carbon::parse('Today 06:00:00 UTC')
+//            ? Carbon::parse('Yesterday 06:00:00 UTC')
+//            : Carbon::parse('Today 06:00:00 UTC');
+        $this->activeBoardStartTime = $this->wordleDate->getLatestTime()->startOfDay();
+        $this->activeBoardEndTime = $this->activeBoardStartTime->copy()->addDays(1)->subMicrosecond();
 
-        $this->activeBoardNumber = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardStartTime);
+        $this->activeBoardNumber = $this->firstBoardStartTime->copy()->diffInDays($this->activeBoardEndTime);
     }
 
     public function getBoardNumberFromDate($date)
@@ -167,7 +168,7 @@ class WordleBoard
 
     public function validateBoardNumber($boardNumber)
     {
-        return $boardNumber >= 0 && $boardNumber <= $this->activeBoardNumber + 1;
+        return $boardNumber >= 0 && $boardNumber <= $this->activeBoardNumber;
     }
 
     public function validateWordleDate($date)
@@ -202,7 +203,7 @@ class WordleBoard
         $startDate = app(WordleDate::class)->get($startDate);
 
         // End date = board date or active board end time.
-        $endDate = min(app(WordleDate::class)->get($endDate), app(WordleDate::class)->getActiveBoardStartTime());
+        $endDate = min(app(WordleDate::class)->get($endDate), app(WordleDate::class)->getActiveBoardEndTime());
 
         $startBoard = app(WordleBoard::class)->getBoardNumberFromDate($startDate);
         $endBoard = app(WordleBoard::class)->getBoardNumberFromDate($endDate);

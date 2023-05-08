@@ -93,7 +93,7 @@ class Group extends Model
     public function getSummaryStats($startDate = null, $endDate = null)
     {
         [$startBoard, $endBoard] = app(WordleBoard::class)->getStartAndEndBoardsFromDates($startDate, $endDate);
-
+//ray($startBoard, $endBoard);
         $scores = $this->scores
             ->where('board_number', '>=', $startBoard)
             ->where('board_number', '<=', $endBoard);
@@ -176,7 +176,7 @@ class Group extends Model
     public function getLeaderBoard($startDate = null, $endDate = null)
     {
         [$startBoard, $endBoard] = app(WordleBoard::class)->getStartAndEndBoardsFromDates($startDate, $endDate);
-
+ray($startBoard, $endBoard);
         $userScores = $this->memberships
             ->map(function ($membership) use ($startBoard, $endBoard) {
                 $userScores = $this->scores

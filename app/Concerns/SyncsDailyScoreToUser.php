@@ -24,7 +24,7 @@ class SyncsDailyScoreToUser
                            ->recordingUserScoreFirst($score->user->id)
                            ->first();
 
-        $score->user->dailyscoresForBoard($dailyScore->board_number)
+        $score->user->dailyScoresForBoard($dailyScore->board_number)
                     ->syncWithPivotValues(
                         $dailyScore->id,
                         [

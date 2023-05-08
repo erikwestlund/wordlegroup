@@ -181,11 +181,6 @@ class Score extends Model
         app(SyncsDailyScoreToGroupMemberships::class)->sync($this);
     }
 
-    public function updateMemberGroupStats()
-    {
-        $this->user->memberships->each->updateGroupStats();
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
