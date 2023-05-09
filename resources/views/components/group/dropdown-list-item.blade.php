@@ -17,7 +17,7 @@
                     <span class="font-medium">Avg. Score:</span>
                     {{ number_format($groupMembership->group->score_mean, 2) }}
                 </li>
-                @if($groupMembership->group->leaderboard->firstWhere('user_id', $user->id))
+                @if(!empty($groupMembership->group->leaderboard->firstWhere('user_id', $user->id)))
                     <li class="mt-0.5 first:mt-0">
                         <span class="font-medium">My Place:</span>
                         {{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'forever')->leaderboard->pluck('place')->max() }} Overall,
