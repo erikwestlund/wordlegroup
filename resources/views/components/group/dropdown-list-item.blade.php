@@ -7,7 +7,7 @@
     <div class="font-bold text-green-700">{{ $groupMembership->group->name }}</div>
     <div class="mt-1">
         <ul class=" text-sm">
-            @if($groupMembership->group->leaderboard && isset($groupMembership->group->leaderboard->first()['name']))
+            @if(!empty($groupMembership->group->leaderboard) && isset($groupMembership?->group?->leaderboard?->first()['name']))
                 <li class="mt-0.5 first:mt-0">
                     <span class="font-medium">Leader:</span>
                     {{ $groupMembership->group->leaderboard->first()['name']  }}

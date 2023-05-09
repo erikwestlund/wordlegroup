@@ -28,7 +28,7 @@
                                 class="text-gray-900 font-bold"
                             >{{ $group->name }}</span>
                             <ul class="mt-0.5 text-sm">
-                                @if($group->leaderboard && isset($group->leaderboard->first()['name']))
+                                @if(!empty($group->leaderboard) && isset($group->leaderboard?->first()['name']))
                                     @if($group['leader'])
                                     <li>
                                         <span class="font-semibold">Leader:</span>
@@ -40,7 +40,7 @@
                                         <span class="font-semibold">Avg. Score:</span>
                                         {{ number_format($group->score_mean, 2) }}
                                     </li>
-                                    @if($group->leaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id))
+                                    @if($group?->leaderboards?->firstWhere('for', 'forever')?->leaderboard?->firstWhere('user_id', $user->id))
                                     <li>
                                         <span class="font-semibold">Place:</span>
                                         {{ $group->leaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $group->leaderboards->firstWhere('for', 'forever')->leaderboard->pluck('place')->max() }} Overall,
