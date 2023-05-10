@@ -20,7 +20,9 @@
                 @if(!empty($groupMembership->group->leaderboard->firstWhere('user_id', $user->id)))
                     <li class="mt-0.5 first:mt-0">
                         <span class="font-medium">My Place:</span>
+                        @if(!empty($groupMembership->group->activeLeaderboards->firstWhere('for', 'forever')))
                         {{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'forever')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'forever')->leaderboard->pluck('place')->max() }} Overall,
+                        @endif
                         @if($groupMembership->group->activeLeaderboards->firstWhere('for', 'month') && $groupMembership->group->activeLeaderboards->firstWhere('for', 'month')->leaderboard->firstWhere('user_id', $user->id))
                             {{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'month')->leaderboard->firstWhere('user_id', $user->id)['place'] }}/{{ $groupMembership->group->activeLeaderboards->firstWhere('for', 'month')->leaderboard->pluck('place')->max() }} This Month
                         @else
