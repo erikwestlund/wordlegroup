@@ -25,7 +25,6 @@ class UpdatesLeaderboards
         }
 
         if (in_array('forever', $this->leaderboards)) {
-            ray('updating forever');
             $this->updateForever($group);
         }
 

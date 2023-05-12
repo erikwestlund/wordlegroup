@@ -87,8 +87,6 @@ class Group extends Model
             'leaderboard'        => $this->getLeaderBoard() // forever board
         ]);
 
-        ray('here');
-
         $this->updateLeaderboards(now());
     }
 

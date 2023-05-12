@@ -165,7 +165,6 @@ class Score extends Model
 
         // If user has submitted their score today.
         if ($viewingUser->recordedBoard($this->board_number) || $viewingUser->recordedScoreToday()) {
-            ray('not here');
             return true;
         }
 
