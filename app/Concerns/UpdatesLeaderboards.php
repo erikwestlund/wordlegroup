@@ -25,6 +25,7 @@ class UpdatesLeaderboards
         }
 
         if (in_array('forever', $this->leaderboards)) {
+            ray('updating forever');
             $this->updateForever($group);
         }
 
@@ -61,7 +62,7 @@ class UpdatesLeaderboards
     {
         $startDate = max($this->date->get($when->copy()->startOfMonth()), $this->date->getFirstBoardStartTime());
         $endDate = min($this->date->get($when->copy()->endOfMonth()), $this->date->getLastPossibleBoardStartTime());
-ray($startDate, $endDate);
+
         $this->saveLeaderboard($group, 'month', $startDate, $endDate);
     }
 
@@ -77,13 +78,13 @@ ray($startDate, $endDate);
     {
         $summaryStats = $group->getSummaryStats($startDate, $endDate);
 
+
         // If no scores recorded, do not save leaderboard and exit;
         if ($summaryStats['scores_recorded'] === 0) {
             return;
         }
 
         $leaderboard = $group->getLeaderBoard($startDate, $endDate);
-
         $year = $this->getYear($for, $endDate);
         $month = $this->getMonth($for, $endDate);
         $week = $this->getWeek($for, $endDate);

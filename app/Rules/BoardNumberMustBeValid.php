@@ -14,7 +14,7 @@ class BoardNumberMustBeValid implements Rule
     public function __construct($date)
     {
         $this->date = $date;
-        $this->lastPossibleBoard = app(WordleBoard::class)->getBoardNumberFromDate(now());
+        $this->lastPossibleBoard = app(WordleBoard::class)->activeBoardNumber;
     }
 
     public function passes($attribute, $value)

@@ -15,6 +15,8 @@ class GroupMembership extends Model
 
     protected $hidden = ['token', 'token_generated_at'];
 
+    protected $touches = ['group'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -157,6 +158,22 @@ class User extends Authenticatable
     public function recordedScoreToday()
     {
         return $this->scoresToday->count() > 0;
+    }
+
+    public function recordedBoard($boardNumber)
+    {
+        $key = "user:{$this->id}:recorded-board:{$boardNumber}";
+
+
+        return Cache::remember(
+            $key,
+            10,
+            function() use($boardNumber) {
+                return $this->scores()
+                            ->where('board_number', $boardNumber)
+                            ->count() > 0;
+            }
+        );
     }
 
     public function profileCanBeSeenBy(User $viewingUser = null)

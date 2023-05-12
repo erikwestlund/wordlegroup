@@ -49,14 +49,14 @@ class WordleDate
 
     public function getLatestTime()
     {
-        $latestTimeNow = now()->copy()->setTimezone('Pacific/Tongatapu');
+        $latestTimeNow = now()->copy()->endOfDay()->subSecond()->setTimezone('Pacific/Tongatapu');
 
         return $this->get($latestTimeNow);
     }
 
     public function getLastPossibleBoardStartTime(): Carbon
     {
-        return $this->getLatestTime();
+        return $this->getLatestTime()->startOfDay();
         $yesterdayWordleDate = $this->get($this->getLatestTime()->subDay());
 
         return now() <= $todayWordleDate

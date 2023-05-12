@@ -44,7 +44,8 @@
                                     @if($anonymizePrivateUsers && $score->user->private_profile) Anonymous
                                     User @else {{ $score->user->name }} @endif
                                 </h3>
-                                <p class="text-sm text-gray-500">Recorded
+                                <p class="text-sm text-gray-500">
+                                    Recorded
                                     a <span class="font-semibold">
                                         {{ $score->score === 7 ? 'X' : $score->score }}/6{{ $score->hard_mode ? '*' : '' }}
                                     </span>

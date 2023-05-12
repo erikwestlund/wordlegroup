@@ -2,11 +2,14 @@
 
 namespace App\View\Components\Group;
 
+use App\Concerns\GetsGroupData;
 use App\Models\Group;
 use Illuminate\View\Component;
 
 class Leaderboard extends Component
 {
+    use GetsGroupData;
+
     public $group;
 
     public $anonymizePrivateUsers;
@@ -15,8 +18,7 @@ class Leaderboard extends Component
 
     public function __construct(Group $group, $leaderboard, $anonymizePrivateUsers = false)
     {
-        $this->group = $group;
-        $this->group->load(['memberships.user']);
+        $this->group = $this->getGroupWithMemberships($group);
         $this->anonymizePrivateUsers = $anonymizePrivateUsers;
         $this->leaderboard = $leaderboard;
     }

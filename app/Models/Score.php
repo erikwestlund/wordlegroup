@@ -164,7 +164,8 @@ class Score extends Model
         // If user is not in any of your groups,
 
         // If user has submitted their score today.
-        if ($viewingUser->recordedScoreToday()) {
+        if ($viewingUser->recordedBoard($this->board_number) || $viewingUser->recordedScoreToday()) {
+            ray('not here');
             return true;
         }
 
