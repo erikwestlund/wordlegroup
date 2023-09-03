@@ -35,31 +35,13 @@ class GetsLeaderboards
 
         $leaderboards = $group->leaderboards()->forDate($when)->get();
 
-//        dd($leaderboards);
-//
-//        $leaderboards = [];
-//
-//        if (in_array('forever', $this->leaderboards)) {
-//            $leaderboards['forever'] = $this->getForever($group);
-//        }
-//
-//        if (in_array('year', $this->leaderboards)) {
-//            $leaderboards['year'] = $this->getYear($group, $when->copy());
-//        }
-//
-//        if (in_array('month', $this->leaderboards)) {
-//            $leaderboards['month'] = $this->getMonth($group, $when->copy());
-//        }
-//
-//        if (in_array('week', $this->leaderboards)) {
-//            $leaderboards['week'] = $this->getWeek($group, $when->copy());
-//        }
-
         return $this->mapsUsersToLeaderboards($group, $leaderboards);
     }
 
     public function mapsUsersToLeaderboards($group, $leaderboards, User $viewingUser = null)
     {
+        $group->loadMissing('memberships.user');
+
         return collect($leaderboards)
             ->map(function ($leaderboard) use ($group, $viewingUser) {
                 if ($leaderboard) {

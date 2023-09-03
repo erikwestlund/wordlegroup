@@ -32,7 +32,9 @@ class UserSelect extends Component
         $this->group = $group;
         $this->selectedUserId = $selectedUserId;
 
-        $this->options = $group->memberships
+        $this->options = $group->memberships()
+            ->with('user')
+            ->get()
             ->map(function ($membership) {
                 return [
                     'value' => $membership->user->id,

@@ -52,7 +52,7 @@
 
                 <div class="mt-8">
 
-                    @if($group->scores->isNotEmpty())
+                    @if($group->scores()->count() > 0)
                         <x-group.statistics-tabs
                             :group="$group"
                             :member-of-group="$memberOfGroup"
@@ -65,14 +65,6 @@
                     @endif
                 </div>
 
-{{--                @if($group->scores_recorded > 0)--}}
-{{--                    <div class="pt-10">--}}
-{{--                        <x-layout.sub-heading class="text-center">Group Stats</x-layout.sub-heading>--}}
-{{--                        <div class="mt-8">--}}
-{{--                            <x-group.stats :group="$group"/>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                @endif--}}
             </div>
             @if($memberOfGroup)
                 @if($group->public)
