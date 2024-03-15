@@ -87,10 +87,11 @@ class WordleBoard
 
     public function getBoardNumberFromBoard($board)
     {
-        preg_match_all('/(\d+|\d+,\d+).+(\d|x|X)\/6/', $board, $matches);
+        preg_match_all('/(\d+|\d+,\d+)(\s.+|\s)(\d|x|X)\/6/', $board, $matches);
 
-        $boardNumber = is_numeric($matches[1][0] ?? null)
-            ? $matches[1][0]
+        $boardNumberCandidate = Str::replace(',', '', $matches[1][0]);
+        $boardNumber = is_numeric($boardNumberCandidate ?? null)
+            ? $boardNumberCandidate
             : null;
 
         return $this->validateBoardNumber($boardNumber)
