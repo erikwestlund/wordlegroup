@@ -85,10 +85,12 @@ class User extends Authenticatable
 
     public function generateNewLoginCode()
     {
-        $this->update([
-            'login_code'              => app(Tokens::class)->generateDigits(6),
-            'login_code_generated_at' => now(),
-        ]);
+        self::withoutEvents(function() {
+            $this->update([
+                'login_code'              => app(Tokens::class)->generateDigits(6),
+                'login_code_generated_at' => now(),
+            ]);
+        });
     }
 
     public function getAccountUrlAttribute()
@@ -259,10 +261,12 @@ class User extends Authenticatable
 
     public function generateNewAuthToken()
     {
-        $this->update([
-            'auth_token'              => app(Tokens::class)->generate(),
-            'auth_token_generated_at' => now(),
-        ]);
+        self::withoutEvents(function() {
+            $this->update([
+                'auth_token'              => app(Tokens::class)->generate(),
+                'auth_token_generated_at' => now(),
+            ]);
+        });
     }
 
     public function updateStats()

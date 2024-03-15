@@ -49,7 +49,7 @@
                                     a <span class="font-semibold">
                                         {{ $score->score === 7 ? 'X' : $score->score }}/6{{ $score->hard_mode ? '*' : '' }}
                                     </span>
-                                    on <span class="font-semibold">Wordle {{ $score->board_number }}</span>.
+                                    on <span class="font-semibold">Wordle {{ number_format($score->board_number) }}</span>.
                                 </p>
                                 <p class="text-sm text-gray-400">{{ $score->created_at->diffForHumans() }}</p>
 
